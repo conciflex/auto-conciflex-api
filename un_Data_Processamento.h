@@ -1,0 +1,160 @@
+//---------------------------------------------------------------------------
+
+#ifndef un_Data_ProcessamentoH
+#define un_Data_ProcessamentoH
+//---------------------------------------------------------------------------
+#include <System.Classes.hpp>
+#include <Data.DB.hpp>
+#include <FireDAC.Comp.Client.hpp>
+#include <FireDAC.Comp.DataSet.hpp>
+#include <FireDAC.DApt.hpp>
+#include <FireDAC.DApt.Intf.hpp>
+#include <FireDAC.DatS.hpp>
+#include <FireDAC.Phys.Intf.hpp>
+#include <FireDAC.Stan.Async.hpp>
+#include <FireDAC.Stan.Error.hpp>
+#include <FireDAC.Stan.Intf.hpp>
+#include <FireDAC.Stan.Option.hpp>
+#include <FireDAC.Stan.Param.hpp>
+//---------------------------------------------------------------------------
+class TDataProcessamento : public TDataModule
+{
+__published:	// IDE-managed Components
+	TDataSource *DataClientes;
+	TFDQuery *tbClientes;
+	TStringField *tbClientesNOME;
+	TStringField *tbClientesNOME_FANTASIA;
+	TSingleField *tbClientesCOD_TIPO_PESSOA;
+	TStringField *tbClientesENDERECO;
+	TStringField *tbClientesCOMPLEMENTO;
+	TSingleField *tbClientesCOD_BAIRRO;
+	TSingleField *tbClientesCOD_CIDADE;
+	TSingleField *tbClientesCOD_UF;
+	TSingleField *tbClientesCOD_PAIS;
+	TStringField *tbClientesCEP;
+	TStringField *tbClientesFONE1;
+	TStringField *tbClientesFONE2;
+	TStringField *tbClientesRAMAL1;
+	TStringField *tbClientesRAMAL2;
+	TStringField *tbClientesTEL0800;
+	TStringField *tbClientesCONTATO1;
+	TStringField *tbClientesCONTATO2;
+	TStringField *tbClientesCELULAR1;
+	TStringField *tbClientesCELULAR2;
+	TStringField *tbClientesEMAIL;
+	TStringField *tbClientesCPF_CNPJ;
+	TStringField *tbClientesINSC_ESTADUAL;
+	TMemoField *tbClientesOBS;
+	TStringField *tbClientesEMAIL2;
+	TStringField *tbClientesNUMERO;
+	TStringField *tbClientesSALA_LOJA;
+	TStringField *tbClientesHOME_PAGE;
+	TStringField *tbClientesDDD;
+	TStringField *tbClientesDDI;
+	TDateField *tbClientesDATA_CADASTRO;
+	TDateField *tbClientesDATA_ALTERACAO;
+	TMemoField *tbClientesSERVICOS;
+	TSingleField *tbClientesN_ATENDIMENTOS;
+	TSingleField *tbClientesCOD_FUNCIONARIO;
+	TStringField *tbClientesIMPRIMIR;
+	TBlobField *tbClientesFOTO;
+	TStringField *tbClientesFLAG_CONTATO;
+	TDateField *tbClientesDATA_NASC;
+	TStringField *tbClientesTIPO_CLIENTE;
+	TSingleField *tbClientesLIMITE_CREDITO;
+	TIntegerField *tbClientesMES_ANIVERSARIO;
+	TDateField *tbClientesDATA_ULTIMA_COMPRA;
+	TDateField *tbClientesDATA_ULTIMO_SERVICO;
+	TStringField *tbClientesRESTRICAO_INTERNA;
+	TIntegerField *tbClientesNUM_OCORRENCIAS;
+	TIntegerField *tbClientesNUM_OCORRENCIAS_PEND;
+	TStringField *tbClientesNOTIF_CLIENTE;
+	TDateField *tbClientesULTIMO_CONTATO;
+	TSingleField *tbClientesCOD_ALTERNATIVO;
+	TStringField *tbClientesCONTROLA_FIDELIDADE;
+	TStringField *tbClientesMOTIVO_RESTRICAO;
+	TSingleField *tbClientesTOTAL_PONTOS;
+	TSingleField *tbClientesTOTAL_CREDITO;
+	TStringField *tbClientesLISTA_NEGRA;
+	TMemoField *tbClientesMOTIVO_LISTA_NEGRA_EXCLUSAO;
+	TDateField *tbClientesDATA_ULT_CONTATO;
+	TSingleField *tbClientesCOD_STATUS_TRANSMISSAO;
+	TStringField *tbClientesSUPORTE_BLOQUEADO;
+	TSingleField *tbClientesCOD_CATEGORIA_CLIENTE;
+	TStringField *tbClientesCODIGO_ANTERIOR;
+	TFloatField *tbClientesSALDO_TOTAL;
+	TFloatField *tbClientesSALDO_UTILIZADO;
+	TFloatField *tbClientesSALDO_DISPONIVEL;
+	TSingleField *tbClientesTAXA_JUROS;
+	TStringField *tbClientesUSUARIO;
+	TStringField *tbClientesSENHA;
+	TStringField *tbClientesBLOQUEADO;
+	TSingleField *tbClientesCOD_ERP;
+	TDateField *tbClientesDATA_ULTIMO_LOGIN;
+	TIntegerField *tbClientesDIAS_SEM_LOGAR;
+	TSingleField *tbClientesCOD_FUNCIONARIO_INTEGRACAO;
+	TSingleField *tbClientesCOD_COMERCIAL;
+	TStringField *tbClientesACCESS_TOKEN;
+	TStringField *tbClientesREFRESH_TOKEN;
+	TStringField *tbClientesREGISTER_ID;
+	TStringField *tbClientesMAIN_MERCHANT_ID;
+	TIntegerField *tbClientesCOD_CREDENCIMANTO;
+	TStringField *tbClientesGERA_PGTO_AUTO;
+	TIntegerField *tbClientesDIAS_AUTO;
+	TStringField *tbClientesCAMPO_ADICIONAL1;
+	TStringField *tbClientesCAMPO_ADICIONAL2;
+	TStringField *tbClientesCAMPO_ADICIONAL3;
+	TStringField *tbClientesINTEGRA_DIVERGENTE;
+	TStringField *tbClientesINTEGRACAO_HABILITADA;
+	TStringField *tbClientesINTEGRA_VENDAS;
+	TStringField *tbClientesINTEGRA_RECEBIMENTOS;
+	TTimeField *tbClientesHORA_RETORNO_VENDA;
+	TTimeField *tbClientesHORA_RETORNO_PAGAMENTO;
+	TIntegerField *tbClientesDIAS_RETORNO_BAIXA;
+	TIntegerField *tbClientesDIAS_RETORNO_VENDA;
+	TStringField *tbClientesARQUIVOS_PROCESSADOS;
+	TStringField *tbClientesINTEGRACAO_GLOBAL;
+	TFDAutoIncField *tbClientesCODIGO;
+	TDataSource *DataClienteOperadora;
+	TFDQuery *tbClienteOperadora;
+	TFDAutoIncField *tbClienteOperadoraCODIGO;
+	TSingleField *tbClienteOperadoraCOD_CLIENTE;
+	TSingleField *tbClienteOperadoraCOD_ADQUIRENTE;
+	TStringField *tbClienteOperadoraCODIGO_ESTABELECIMENTO;
+	TStringField *tbClienteOperadoraCNPJ_ESTABELECIMENTO;
+	TSingleField *tbClienteOperadoraCOD_GRUPO;
+	TStringField *tbClienteOperadoraAFFILIATION_KEY;
+	TStringField *tbClienteOperadoraINTEGRA_API_PAGSEGURO;
+	TStringField *tbClienteOperadoraRETORNO_VENDA_PGTO;
+	TDataSource *DataVendasDuplicidade;
+	TFDQuery *tbVendasDuplicidade;
+	TStringField *tbVendasDuplicidadeNSU;
+	TIntegerField *tbVendasDuplicidadePARCELA;
+	TStringField *tbVendasDuplicidadeAUTORIZACAO;
+	TDateField *tbVendasDuplicidadeDATA_VENDA;
+	TLargeintField *tbVendasDuplicidadetotal;
+	TStringField *tbVendasDuplicidadeCNPJ;
+	TDataSource *DataPagamentosDuplicidade;
+	TFDQuery *tbPagamentosDuplicidade;
+	TStringField *tbPagamentosDuplicidadeNSU;
+	TIntegerField *tbPagamentosDuplicidadePARCELA;
+	TDateField *tbPagamentosDuplicidadeDATA_PAGAMENTO;
+	TStringField *tbPagamentosDuplicidadeCNPJ;
+	TLargeintField *tbPagamentosDuplicidadetotal;
+	TDataSource *DataPagamentosDuplicidade2;
+	TFDQuery *tbPagamentosDuplicidade2;
+	TStringField *tbPagamentosDuplicidade2NSU;
+	TStringField *tbPagamentosDuplicidade2CODIGO_AUTORIZACAO;
+	TIntegerField *tbPagamentosDuplicidade2PARCELA;
+	TDateField *tbPagamentosDuplicidade2DATA_PAGAMENTO;
+	TDateField *tbPagamentosDuplicidade2DATA_VENDA;
+	TStringField *tbPagamentosDuplicidade2CNPJ;
+	TLargeintField *tbPagamentosDuplicidade2total;
+private:	// User declarations
+public:		// User declarations
+	__fastcall TDataProcessamento(TComponent* Owner);
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TDataProcessamento *DataProcessamento;
+//---------------------------------------------------------------------------
+#endif

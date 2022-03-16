@@ -1,0 +1,175 @@
+//---------------------------------------------------------------------------
+
+#ifndef un_Data_Verificacao2H
+#define un_Data_Verificacao2H
+//---------------------------------------------------------------------------
+#include <System.Classes.hpp>
+#include <Data.DB.hpp>
+#include <FireDAC.Comp.Client.hpp>
+#include <FireDAC.Comp.DataSet.hpp>
+#include <FireDAC.DApt.hpp>
+#include <FireDAC.DApt.Intf.hpp>
+#include <FireDAC.DatS.hpp>
+#include <FireDAC.Phys.Intf.hpp>
+#include <FireDAC.Stan.Async.hpp>
+#include <FireDAC.Stan.Error.hpp>
+#include <FireDAC.Stan.Intf.hpp>
+#include <FireDAC.Stan.Option.hpp>
+#include <FireDAC.Stan.Param.hpp>
+//---------------------------------------------------------------------------
+class TDataVerificacao2 : public TDataModule
+{
+__published:	// IDE-managed Components
+	TDataSource *DataSeguroVenda;
+	TFDQuery *tbSeguroVenda;
+	TFDAutoIncField *tbSeguroVendaCODIGO;
+	TStringField *tbSeguroVendaMOVIMENTO_API_CODIGO;
+	TIntegerField *tbSeguroVendaTIPO_REGISTRO;
+	TStringField *tbSeguroVendaESTABELECIMENTO;
+	TDateField *tbSeguroVendaDATA_INICIAL_TRANSACAO;
+	TDateField *tbSeguroVendaDATA_VENDA_AJUSTE;
+	TIntegerField *tbSeguroVendaTIPO_EVENTO;
+	TIntegerField *tbSeguroVendaTIPO_TRANSACAO;
+	TStringField *tbSeguroVendaNUMERO_SERIE_LEITOR;
+	TStringField *tbSeguroVendaCODIGO_TRANSACAO;
+	TStringField *tbSeguroVendaCODIGO_VENDA;
+	TFloatField *tbSeguroVendaVALOR_TOTAL_TRANSACAO;
+	TFloatField *tbSeguroVendaVALOR_PARCELA;
+	TStringField *tbSeguroVendaPAGAMENTO_PRAZO;
+	TIntegerField *tbSeguroVendaPLANO;
+	TIntegerField *tbSeguroVendaPARCELA;
+	TIntegerField *tbSeguroVendaQUANTIDADE_PARCELA;
+	TDateField *tbSeguroVendaDATA_PREVISTA_PAGAMENTO;
+	TFloatField *tbSeguroVendaTAXA_PARCELA_COMPRADOR;
+	TFloatField *tbSeguroVendaTARIFA_BOLETO_COMPRA;
+	TFloatField *tbSeguroVendaVALOR_ORIGINAL_TRANSACAO;
+	TFloatField *tbSeguroVendaTAXA_PARCELA_VENDEDOR;
+	TFloatField *tbSeguroVendaTAXA_INTERMEDIACAO;
+	TFloatField *tbSeguroVendaTARIFA_INTERMEDIACAO;
+	TFloatField *tbSeguroVendaTARIFA_BOLETO_VENDEDOR;
+	TFloatField *tbSeguroVendaTAXA_REP_APLICACAO;
+	TFloatField *tbSeguroVendaVALOR_LIQUIDO_TRANSACAO;
+	TIntegerField *tbSeguroVendaSTATUS_PAGAMENTO;
+	TStringField *tbSeguroVendaINSTITUICAO_FINANCEIRA;
+	TStringField *tbSeguroVendaCANAL_ENTRADA;
+	TStringField *tbSeguroVendaLEITOR;
+	TIntegerField *tbSeguroVendaMEIO_CAPTURA;
+	TStringField *tbSeguroVendaNUM_LOGICO;
+	TStringField *tbSeguroVendaNSU;
+	TStringField *tbSeguroVendaCARTAO_BIN;
+	TStringField *tbSeguroVendaCARTAO_HOLDER;
+	TStringField *tbSeguroVendaCODIGO_AUTORIZACAO;
+	TStringField *tbSeguroVendaCODIGO_CV;
+	TIntegerField *tbSeguroVendaMEIO_PAGAMENTO;
+	TIntegerField *tbSeguroVendaCOD_CADASTRO;
+	TTimeField *tbSeguroVendaHORA_VENDA_AJUSTE;
+	TStringField *tbSeguroVendaTRATADO;
+	TDateField *tbSeguroVendaDATA_LEITURA;
+	TTimeField *tbSeguroVendaHORA_LEITURA;
+	TIntegerField *tbSeguroVendaCOD_CLIENTE;
+	TDataSource *DataSeguroPagamento;
+	TFDQuery *tbSeguroPagamento;
+	TFDAutoIncField *tbSeguroPagamentoCODIGO;
+	TStringField *tbSeguroPagamentoMOVIMENTO_API_CODIGO;
+	TIntegerField *tbSeguroPagamentoTIPO_REGISTRO;
+	TStringField *tbSeguroPagamentoESTABELECIMENTO;
+	TDateField *tbSeguroPagamentoDATA_INICIAL_TRANSACAO;
+	TDateField *tbSeguroPagamentoDATA_VENDA_AJUSTE;
+	TTimeField *tbSeguroPagamentoHORA_VENDA_AJUSTE;
+	TIntegerField *tbSeguroPagamentoTIPO_EVENTO;
+	TIntegerField *tbSeguroPagamentoTIPO_TRANSACAO;
+	TStringField *tbSeguroPagamentoCODIGO_AUTORIZACAO;
+	TStringField *tbSeguroPagamentoCODIGO_VENDA;
+	TFloatField *tbSeguroPagamentoVALOR_TOTAL_TRANSACAO;
+	TFloatField *tbSeguroPagamentoVALOR_PARCELA;
+	TStringField *tbSeguroPagamentoPAGAMENTO_PRAZO;
+	TIntegerField *tbSeguroPagamentoPLANO;
+	TIntegerField *tbSeguroPagamentoPARCELA;
+	TIntegerField *tbSeguroPagamentoQUANTIDADE_PARCELA;
+	TDateField *tbSeguroPagamentoDATA_MOVIMENTACAO;
+	TFloatField *tbSeguroPagamentoTAXA_PARCELA_COMPRADOR;
+	TFloatField *tbSeguroPagamentoTARIFA_BOLETO_COMPRA;
+	TFloatField *tbSeguroPagamentoVALOR_ORIGINAL_TRANSACAO;
+	TFloatField *tbSeguroPagamentoTAXA_PARCELA_VENDEDOR;
+	TFloatField *tbSeguroPagamentoTAXA_INTERMEDIACAO;
+	TFloatField *tbSeguroPagamentoTARIFA_INTERMEDIACAO;
+	TFloatField *tbSeguroPagamentoTARIFA_BOLETO_VENDEDOR;
+	TFloatField *tbSeguroPagamentoTAXA_REP_APLICACAO;
+	TFloatField *tbSeguroPagamentoVALOR_LIQUIDO_TRANSACAO;
+	TFloatField *tbSeguroPagamentoTAXA_ANTECIPACAO;
+	TFloatField *tbSeguroPagamentoVALOR_LIQUIDO_ANTECIPACAO;
+	TIntegerField *tbSeguroPagamentoSTATUS_PAGAMENTO;
+	TFloatField *tbSeguroPagamentoIDENTIFICADOR_REVENDA;
+	TIntegerField *tbSeguroPagamentoMEIO_PAGAMENTO;
+	TStringField *tbSeguroPagamentoINSTITUICAO_FINANCEIRA;
+	TStringField *tbSeguroPagamentoCANAL_ENTRADA;
+	TStringField *tbSeguroPagamentoLEITOR;
+	TIntegerField *tbSeguroPagamentoMEIO_CAPTURA;
+	TIntegerField *tbSeguroPagamentoCOD_BANCO;
+	TStringField *tbSeguroPagamentoNUM_LOGICO;
+	TStringField *tbSeguroPagamentoNSU;
+	TStringField *tbSeguroPagamentoCARTAO_BIN;
+	TStringField *tbSeguroPagamentoCARTAO_HOLDER;
+	TStringField *tbSeguroPagamentoCODIGO_CV;
+	TStringField *tbSeguroPagamentoCODIGO_TRANSACAO;
+	TStringField *tbSeguroPagamentoBANCO_AGENCIA;
+	TStringField *tbSeguroPagamentoCONTA_BANCO;
+	TStringField *tbSeguroPagamentoTRATADO;
+	TDateField *tbSeguroPagamentoDATA_LEITURA;
+	TTimeField *tbSeguroPagamentoHORA_LEITURA;
+	TIntegerField *tbSeguroPagamentoCOD_CLIENTE;
+	TDataSource *DataSeguroAntecipacao;
+	TFDQuery *tbSeguroAntecipacao;
+	TFDAutoIncField *tbSeguroAntecipacaoCODIGO;
+	TStringField *tbSeguroAntecipacaoMOVIMENTO_API_CODIGO;
+	TIntegerField *tbSeguroAntecipacaoTIPO_REGISTRO;
+	TStringField *tbSeguroAntecipacaoESTABELECIMENTO;
+	TDateField *tbSeguroAntecipacaoDATA_INICIAL_TRANSACAO;
+	TDateField *tbSeguroAntecipacaoDATA_VENDA_AJUSTE;
+	TTimeField *tbSeguroAntecipacaoHORA_VENDA_AJUSTE;
+	TIntegerField *tbSeguroAntecipacaoTIPO_EVENTO;
+	TIntegerField *tbSeguroAntecipacaoTIPO_TRANSACAO;
+	TStringField *tbSeguroAntecipacaoNUMERO_SERIE_LEITOR;
+	TStringField *tbSeguroAntecipacaoCODIGO_TRANSACAO;
+	TStringField *tbSeguroAntecipacaoCODIGO_VENDA;
+	TFloatField *tbSeguroAntecipacaoVALOR_TOTAL_TRANSACAO;
+	TFloatField *tbSeguroAntecipacaoVALOR_PARCELA;
+	TStringField *tbSeguroAntecipacaoPAGAMENTO_PRAZO;
+	TIntegerField *tbSeguroAntecipacaoPLANO;
+	TIntegerField *tbSeguroAntecipacaoPARCELA;
+	TIntegerField *tbSeguroAntecipacaoQUANTIDADE_PARCELA;
+	TDateField *tbSeguroAntecipacaoDATA_PREVISTA_PAGAMENTO;
+	TFloatField *tbSeguroAntecipacaoTAXA_PARCELA_COMPRADOR;
+	TFloatField *tbSeguroAntecipacaoTARIFA_BOLETO_COMPRA;
+	TFloatField *tbSeguroAntecipacaoVALOR_ORIGINAL_TRANSACAO;
+	TFloatField *tbSeguroAntecipacaoTAXA_PARCELA_VENDEDOR;
+	TFloatField *tbSeguroAntecipacaoTAXA_INTERMEDIACAO;
+	TFloatField *tbSeguroAntecipacaoTARIFA_INTERMEDIACAO;
+	TFloatField *tbSeguroAntecipacaoTARIFA_BOLETO_VENDEDOR;
+	TFloatField *tbSeguroAntecipacaoTAXA_REP_APLICACAO;
+	TFloatField *tbSeguroAntecipacaoVALOR_LIQUIDO_TRANSACAO;
+	TIntegerField *tbSeguroAntecipacaoSTATUS_PAGAMENTO;
+	TStringField *tbSeguroAntecipacaoINSTITUICAO_FINANCEIRA;
+	TStringField *tbSeguroAntecipacaoCANAL_ENTRADA;
+	TStringField *tbSeguroAntecipacaoLEITOR;
+	TIntegerField *tbSeguroAntecipacaoMEIO_CAPTURA;
+	TStringField *tbSeguroAntecipacaoNUM_LOGICO;
+	TStringField *tbSeguroAntecipacaoNSU;
+	TStringField *tbSeguroAntecipacaoCARTAO_BIN;
+	TStringField *tbSeguroAntecipacaoCODIGO_AUTORIZACAO;
+	TStringField *tbSeguroAntecipacaoCODIGO_CV;
+	TIntegerField *tbSeguroAntecipacaoMEIO_PAGAMENTO;
+	TIntegerField *tbSeguroAntecipacaoCOD_CADASTRO;
+	TStringField *tbSeguroAntecipacaoCARTAO_HOLDER;
+	TStringField *tbSeguroAntecipacaoTRATADO;
+	TSingleField *tbSeguroAntecipacaoTAXA_ANTECIPACAO;
+	TFloatField *tbSeguroAntecipacaoVALOR_LIQUIDO_ANTECIPADO;
+	TDateField *tbSeguroAntecipacaoDATA_MOVIMENTACAO;
+private:	// User declarations
+public:		// User declarations
+	__fastcall TDataVerificacao2(TComponent* Owner);
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TDataVerificacao2 *DataVerificacao2;
+//---------------------------------------------------------------------------
+#endif

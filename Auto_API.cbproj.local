@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2022/02/15 10:24:30.000.059,=C:\Users\OS 70639\Documents\Embarcadero\Studio\Projects\Project1PCH1.h</Transaction>
+    <Transaction>2022/02/15 10:24:34.000.389,=C:\Users\OS 70639\Documents\Embarcadero\Studio\Projects\Unit1.cpp</Transaction>
+    <Transaction>2022/03/16 15:32:11.000.437,=C:\Users\OS 70639\Documents\Embarcadero\Studio\Projects\Project1PCH1.h</Transaction>
+    <Transaction>2022/03/16 15:32:15.000.413,=C:\Users\OS 70639\Documents\Embarcadero\Studio\Projects\Unit1.cpp</Transaction>
+    <Transaction>2022/03/16 15:32:48.000.276,C:\Users\OS 70639\Documents\Embarcadero\Studio\Projects\Unit1.dfm=C:\Auto Conciflex API\un_Principal.dfm</Transaction>
+    <Transaction>2022/03/16 15:32:48.000.276,C:\Users\OS 70639\Documents\Embarcadero\Studio\Projects\Unit1.cpp=C:\Auto Conciflex API\un_Principal.cpp</Transaction>
+    <Transaction>2022/03/16 15:32:48.000.276,C:\Users\OS 70639\Documents\Embarcadero\Studio\Projects\Unit1.h=C:\Auto Conciflex API\un_Principal.h</Transaction>
+    <Transaction>2022/03/16 15:32:54.000.669,C:\Users\OS 70639\Documents\Embarcadero\Studio\Projects\Project1PCH1.h=C:\Auto Conciflex API\Projeto_API.h</Transaction>
+    <Transaction>2022/03/16 15:33:00.000.458,C:\Users\OS 70639\Documents\Embarcadero\Studio\Projects\Project1.cbproj=C:\Auto Conciflex API\Auto_API.cbproj</Transaction>
+    <Transaction>2022/03/16 15:37:58.202,=C:\Auto Conciflex API\Unit1.cpp</Transaction>
+    <Transaction>2022/03/16 15:38:04.330,C:\Auto Conciflex API\un_Data1.h=C:\Auto Conciflex API\Unit1.h</Transaction>
+    <Transaction>2022/03/16 15:38:04.330,C:\Auto Conciflex API\un_Data1.cpp=C:\Auto Conciflex API\Unit1.cpp</Transaction>
+    <Transaction>2022/03/16 15:38:04.330,C:\Auto Conciflex API\un_Data1.dfm=C:\Auto Conciflex API\Unit1.dfm</Transaction>
+    <Transaction>2022/03/16 15:46:35.706,=C:\Auto Conciflex API\Unit1.cpp</Transaction>
+    <Transaction>2022/03/16 15:46:45.551,C:\Auto Conciflex API\un_Data_Processamento.dfm=C:\Auto Conciflex API\Unit1.dfm</Transaction>
+    <Transaction>2022/03/16 15:46:45.551,C:\Auto Conciflex API\un_Data_Processamento.h=C:\Auto Conciflex API\Unit1.h</Transaction>
+    <Transaction>2022/03/16 15:46:45.551,C:\Auto Conciflex API\un_Data_Processamento.cpp=C:\Auto Conciflex API\Unit1.cpp</Transaction>
+    <Transaction>2022/03/16 15:54:17.557,=C:\Auto Conciflex API\Unit1.cpp</Transaction>
+    <Transaction>2022/03/16 15:54:23.189,C:\Auto Conciflex API\un_Data2.dfm=C:\Auto Conciflex API\Unit1.dfm</Transaction>
+    <Transaction>2022/03/16 15:54:23.189,C:\Auto Conciflex API\un_Data2.h=C:\Auto Conciflex API\Unit1.h</Transaction>
+    <Transaction>2022/03/16 15:54:23.189,C:\Auto Conciflex API\un_Data2.cpp=C:\Auto Conciflex API\Unit1.cpp</Transaction>
+    <Transaction>2022/03/16 15:59:02.551,=C:\Auto Conciflex API\Unit1.cpp</Transaction>
+    <Transaction>2022/03/16 15:59:14.422,C:\Auto Conciflex API\un_Data_Resumo.h=C:\Auto Conciflex API\Unit1.h</Transaction>
+    <Transaction>2022/03/16 15:59:14.422,C:\Auto Conciflex API\un_Data_Resumo.dfm=C:\Auto Conciflex API\Unit1.dfm</Transaction>
+    <Transaction>2022/03/16 15:59:14.422,C:\Auto Conciflex API\un_Data_Resumo.cpp=C:\Auto Conciflex API\Unit1.cpp</Transaction>
+    <Transaction>2022/03/16 16:03:27.123,=C:\Auto Conciflex API\Unit1.cpp</Transaction>
+    <Transaction>2022/03/16 16:03:33.534,C:\Auto Conciflex API\un_Data3.cpp=C:\Auto Conciflex API\Unit1.cpp</Transaction>
+    <Transaction>2022/03/16 16:03:33.534,C:\Auto Conciflex API\un_Data3.h=C:\Auto Conciflex API\Unit1.h</Transaction>
+    <Transaction>2022/03/16 16:03:33.535,C:\Auto Conciflex API\un_Data3.dfm=C:\Auto Conciflex API\Unit1.dfm</Transaction>
+    <Transaction>2022/03/16 16:06:16.209,=C:\Auto Conciflex API\Unit1.cpp</Transaction>
+    <Transaction>2022/03/16 16:06:31.106,C:\Auto Conciflex API\un_Data_Verificacao2.h=C:\Auto Conciflex API\Unit1.h</Transaction>
+    <Transaction>2022/03/16 16:06:31.106,C:\Auto Conciflex API\un_Data_Verificacao2.cpp=C:\Auto Conciflex API\Unit1.cpp</Transaction>
+    <Transaction>2022/03/16 16:06:31.106,C:\Auto Conciflex API\un_Data_Verificacao2.dfm=C:\Auto Conciflex API\Unit1.dfm</Transaction>
+  </Transactions>
+</BorlandProject>
