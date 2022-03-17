@@ -3,7 +3,7 @@ object Principal: TPrincipal
   Top = 0
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'Auto Conciflex API'
-  ClientHeight = 402
+  ClientHeight = 422
   ClientWidth = 678
   Color = clGray
   Font.Charset = DEFAULT_CHARSET
@@ -243,7 +243,7 @@ object Principal: TPrincipal
         Left = 3
         Top = 3
         Width = 650
-        Height = 390
+        Height = 381
         Caption = 'Stone'
         Color = clWhite
         ParentBackground = False
@@ -514,15 +514,11 @@ object Principal: TPrincipal
     object TabSheet3: TTabSheet
       Caption = 'PagSeguro'
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object GroupBox5: TGroupBox
         Left = 3
         Top = 0
         Width = 650
-        Height = 390
+        Height = 383
         Caption = 'PagSeguro'
         Color = clWhite
         ParentBackground = False
@@ -822,12 +818,12 @@ object Principal: TPrincipal
   object Timer1: TTimer
     Interval = 60000
     OnTimer = Timer1Timer
-    Left = 712
-    Top = 224
+    Left = 728
+    Top = 232
   end
   object MainMenu1: TMainMenu
     Left = 720
-    Top = 87
+    Top = 71
     object Arquivo1: TMenuItem
       Caption = 'Arquivo'
       object Fechar1: TMenuItem
@@ -971,10 +967,60 @@ object Principal: TPrincipal
   object OpenDialog1: TOpenDialog
     Filter = '.txt|.txt|.csv|.csv'
     FilterIndex = 2
-    Left = 820
-    Top = 87
+    Left = 796
+    Top = 71
   end
   object IdHTTP2: TIdHTTP
+    IOHandler = IdSSLIOHandlerSocketOpenSSL2
+    MaxAuthRetries = 10
+    AllowCookies = True
+    HandleRedirects = True
+    ProxyParams.BasicAuthentication = False
+    ProxyParams.ProxyPort = 0
+    Request.ContentLength = -1
+    Request.ContentRangeEnd = -1
+    Request.ContentRangeStart = -1
+    Request.ContentRangeInstanceLength = -1
+    Request.Accept = 
+      'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp' +
+      ',image/apng,*/*;q=0.8'
+    Request.BasicAuthentication = False
+    Request.UserAgent = 
+      'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like ' +
+      'Gecko) Chrome/59.0.3071.104 Safari/537.36'
+    Request.Ranges.Units = 'bytes'
+    Request.Ranges = <>
+    HTTPOptions = [hoForceEncodeParams]
+    CookieManager = IdCookieManager2
+    Compressor = IdCompressorZLib2
+    Left = 716
+    Top = 124
+  end
+  object IdSSLIOHandlerSocketOpenSSL1: TIdSSLIOHandlerSocketOpenSSL
+    MaxLineAction = maException
+    Port = 0
+    DefaultPort = 0
+    SSLOptions.Method = sslvTLSv1_2
+    SSLOptions.SSLVersions = [sslvTLSv1_2]
+    SSLOptions.Mode = sslmUnassigned
+    SSLOptions.VerifyMode = []
+    SSLOptions.VerifyDepth = 0
+    Left = 908
+    Top = 341
+  end
+  object XMLDocument1: TXMLDocument
+    Left = 808
+    Top = 227
+  end
+  object IdCookieManager1: TIdCookieManager
+    Left = 804
+    Top = 288
+  end
+  object IdCompressorZLib1: TIdCompressorZLib
+    Left = 763
+    Top = 343
+  end
+  object IdHTTP1: TIdHTTP
     IOHandler = IdSSLIOHandlerSocketOpenSSL1
     MaxAuthRetries = 10
     AllowCookies = True
@@ -998,9 +1044,17 @@ object Principal: TPrincipal
     CookieManager = IdCookieManager1
     Compressor = IdCompressorZLib1
     Left = 716
-    Top = 156
+    Top = 292
   end
-  object IdSSLIOHandlerSocketOpenSSL1: TIdSSLIOHandlerSocketOpenSSL
+  object IdCookieManager2: TIdCookieManager
+    Left = 796
+    Top = 122
+  end
+  object IdCompressorZLib2: TIdCompressorZLib
+    Left = 763
+    Top = 175
+  end
+  object IdSSLIOHandlerSocketOpenSSL2: TIdSSLIOHandlerSocketOpenSSL
     MaxLineAction = maException
     Port = 0
     DefaultPort = 0
@@ -1009,19 +1063,7 @@ object Principal: TPrincipal
     SSLOptions.Mode = sslmUnassigned
     SSLOptions.VerifyMode = []
     SSLOptions.VerifyDepth = 0
-    Left = 852
-    Top = 32
-  end
-  object XMLDocument1: TXMLDocument
-    Left = 808
-    Top = 219
-  end
-  object IdCookieManager1: TIdCookieManager
-    Left = 820
-    Top = 152
-  end
-  object IdCompressorZLib1: TIdCompressorZLib
-    Left = 715
-    Top = 31
+    Left = 908
+    Top = 176
   end
 end

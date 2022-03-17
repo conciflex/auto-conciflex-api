@@ -164,6 +164,10 @@ __published:	// IDE-managed Components
 	TMenuItem *TratarVendasPagSeguro;
 	TMenuItem *TratarPagamentosPagSeguro;
 	TMenuItem *TratarAntecipacoesPagSeguro;
+	TIdHTTP *IdHTTP1;
+	TIdCookieManager *IdCookieManager2;
+	TIdCompressorZLib *IdCompressorZLib2;
+	TIdSSLIOHandlerSocketOpenSSL *IdSSLIOHandlerSocketOpenSSL2;
 	void __fastcall FormCreate(TObject *Sender);
 	void __fastcall Button17Click(TObject *Sender);
 	void __fastcall Button6Click(TObject *Sender);

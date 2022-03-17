@@ -37,6 +37,7 @@ int numero_processos = 2;
 int processo_atual = 1;
 bool lido_stone = false;
 bool autentificado = false;
+bool reprocessado_seguro = false;
 //---------------------------------------------------------------------------
 __fastcall TPrincipal::TPrincipal(TComponent* Owner)
 	: TForm(Owner)
@@ -318,11 +319,11 @@ TDate ontem  = Date() - 1;
 
 		Label15->Caption = DateOf(DateTimePicker1->Date + contador_dias);
 
-		IdHTTP2->Request->CustomHeaders->Clear();
-        IdHTTP2->Request->BasicAuthentication = false;
-		IdHTTP2->Request->CustomHeaders->AddValue("authorization", "Bearer 028f2e66-0134-477a-8d4c-12f122767680");
-		IdHTTP2->Request->CustomHeaders->AddValue("x-authorization-raw-data", "Conciflex");
-		IdHTTP2->Request->CustomHeaders->AddValue("x-authorization-encrypted-data", "1351f414d687764000a993974029f1f20ac5b37e4b66e86841e22f85d5671926489dd848a0563c67e63ec61a5cdaff9756e3c142ae253e8d0a69b13338ebad40");
+		IdHTTP1->Request->CustomHeaders->Clear();
+        IdHTTP1->Request->BasicAuthentication = false;
+		IdHTTP1->Request->CustomHeaders->AddValue("authorization", "Bearer 028f2e66-0134-477a-8d4c-12f122767680");
+		IdHTTP1->Request->CustomHeaders->AddValue("x-authorization-raw-data", "Conciflex");
+		IdHTTP1->Request->CustomHeaders->AddValue("x-authorization-encrypted-data", "1351f414d687764000a993974029f1f20ac5b37e4b66e86841e22f85d5671926489dd848a0563c67e63ec61a5cdaff9756e3c142ae253e8d0a69b13338ebad40");
 
         	if(cod_cliente > 0)
             {
@@ -412,10 +413,10 @@ TDate ontem  = Date() - 1;
 
                     if(Data2->tbCredenciadosStoneLIBERADO->AsString != 'S')
                     {
-                    IdHTTP2->Request->CustomHeaders->Clear();
-                    IdHTTP2->Request->CustomHeaders->AddValue("authorization", "Bearer 028f2e66-0134-477a-8d4c-12f122767680");
-                    IdHTTP2->Request->CustomHeaders->AddValue("x-authorization-raw-data", "Conciflex");
-                    IdHTTP2->Request->CustomHeaders->AddValue("x-authorization-encrypted-data", "1351f414d687764000a993974029f1f20ac5b37e4b66e86841e22f85d5671926489dd848a0563c67e63ec61a5cdaff9756e3c142ae253e8d0a69b13338ebad40");
+                    IdHTTP1->Request->CustomHeaders->Clear();
+                    IdHTTP1->Request->CustomHeaders->AddValue("authorization", "Bearer 028f2e66-0134-477a-8d4c-12f122767680");
+                    IdHTTP1->Request->CustomHeaders->AddValue("x-authorization-raw-data", "Conciflex");
+                    IdHTTP1->Request->CustomHeaders->AddValue("x-authorization-encrypted-data", "1351f414d687764000a993974029f1f20ac5b37e4b66e86841e22f85d5671926489dd848a0563c67e63ec61a5cdaff9756e3c142ae253e8d0a69b13338ebad40");
 
                     url = "https://conciliation.stone.com.br/v1/merchant/" + Data2->tbCredenciadosStoneSTONECODE->AsString;
                     url += "/access-authorization/status?since=" + data_consulta;
@@ -426,19 +427,19 @@ TDate ontem  = Date() - 1;
                         {
                         Application->ProcessMessages();
 
-                        Memo3->Text = IdHTTP2->Get(url);
+                        Memo3->Text = IdHTTP1->Get(url);
                         }
                         catch (EIdHTTPProtocolException &E)
                         {
                             try
                             {
-                            Memo3->Text = IdHTTP2->Get(url);
+                            Memo3->Text = IdHTTP1->Get(url);
                             }
                             catch (EIdHTTPProtocolException &E)
                             {
                                 try
                                 {
-                                Memo3->Text = IdHTTP2->Get(url);
+                                Memo3->Text = IdHTTP1->Get(url);
                                 }
                                 catch (EIdHTTPProtocolException &E)
                                 {
@@ -454,7 +455,7 @@ TDate ontem  = Date() - 1;
                             }
                         }
 
-                        if(IdHTTP2->ResponseCode == 200 && continuar)
+                        if(IdHTTP1->ResponseCode == 200 && continuar)
                         {
                         json = (TJSONObject*) TJSONObject::ParseJSONValue(TEncoding::ASCII->GetBytes(Memo3->Lines->Text),0);
 
@@ -481,19 +482,19 @@ TDate ontem  = Date() - 1;
                         try
                         {
                         Application->ProcessMessages();
-                        Memo3->Text = IdHTTP2->Get(url);
+                        Memo3->Text = IdHTTP1->Get(url);
                         }
                         catch (EIdHTTPProtocolException &E)
                         {
                             try
                             {
-                            Memo3->Text = IdHTTP2->Get(url);
+                            Memo3->Text = IdHTTP1->Get(url);
                             }
                             catch (EIdHTTPProtocolException &E)
                             {
                                 try
                                 {
-                                Memo3->Text = IdHTTP2->Get(url);
+                                Memo3->Text = IdHTTP1->Get(url);
                                 }
                                 catch (EIdHTTPProtocolException &E)
                                 {
@@ -509,7 +510,7 @@ TDate ontem  = Date() - 1;
                             }
                         }
 
-                        if(IdHTTP2->ResponseCode == 200 && continuar)
+                        if(IdHTTP1->ResponseCode == 200 && continuar)
                         {
                         Memo3->Text = "C:/SFTP_Root/stone/" + data_consulta + "_" + Data2->tbCredenciadosStoneSTONECODE->AsString + ".xml";
 
@@ -8563,6 +8564,7 @@ Edit3->Text = Time();
     	if(Time() <= "05:00")
         {
         lido_stone = false;
+        reprocessado_seguro = false;
         }
 
         if(processo_atual == 1)
@@ -8580,10 +8582,19 @@ Edit3->Text = Time();
         }
         else if(processo_atual == 2)
         {
-            try {
+            try
+            {
             Label21->Caption = "Leitura de Arquivos PagSeguro";
 
-            DateTimePicker3->Date = Date() - 1;
+                if(Time() >= "05:10" && !reprocessado_seguro)
+                {
+                DateTimePicker3->Date = Date() - 1;
+                }
+                else
+                {
+                DateTimePicker3->Date = Date();
+                }
+
             DateTimePicker4->Date = Date();
 
             AutomaticoPagSeguroClick(Sender);
