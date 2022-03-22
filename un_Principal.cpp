@@ -35,6 +35,7 @@ TPrincipal *Principal;
 //VARIÁVEL GLOBAL
 int numero_processos = 2;
 int processo_atual = 1;
+int num_loop = 0;
 bool lido_stone = false;
 bool autentificado = false;
 bool reprocessado_seguro = false;
@@ -219,11 +220,32 @@ AnsiString formatarData(int formato, AnsiString data)
     {
     return data.SubString(7,4) + "" + data.SubString(4,2) + "" + data.SubString(1,2);
     }
+    //yyyy-mm-dd -> dd/mm/yyyy
+    else if(formato == 7)
+    {
+    return data.SubString(9,2) + "/" + data.SubString(6,2) + "/" + data.SubString(1,4);
+    }
 }
 
 AnsiString formatarHora(AnsiString hora)
 {
-	return hora.SubString(1,2) + ":" + hora.SubString(3,2) + ":" + hora.SubString(5,2);
+return hora.SubString(1,2) + ":" + hora.SubString(3,2) + ":" + hora.SubString(5,2);
+}
+
+AnsiString retirar_caracteres(AnsiString dado)
+{
+AnsiString resultado = "";
+
+	 for(int i = 1; i <= StrLen(dado.c_str()); i++)
+	 {
+        if(dado[i] != ',' && dado[i] != '-' && dado[i] != 'º' && dado[i] != 'ª' && dado[i] != '%' &&
+             dado[i] != '.' && dado[i] != '/')
+        {
+             resultado += dado[i];
+        }
+	 }
+
+return resultado;
 }
 
 //---------------------------------------------------------------------------
@@ -237,6 +259,9 @@ DateTimePicker2->Date = Date() - 1;
 
 DateTimePicker3->Date = Date();
 DateTimePicker4->Date = Date();
+
+DateTimePicker5->Date = StrToDate("02/01/2022");
+DateTimePicker6->Date = StrToDate("02/01/2022");
 
 DataProcessamento->tbClientes->Close();
 DataProcessamento->tbClientes->SQL->Clear();
@@ -284,7 +309,7 @@ TDate ontem  = Date() - 1;
     double valor_estornado, valor_cancelamento, desconto_antecipacao, valor_pago, valor_pendente, valor_evento;
     bool cadastrado, continuar, duplicidade, reprocessamento, cliente = false;
 
-    TJSONObject *json, *jsonOperations;
+    TJSONObject *json;
     _di_IXMLNode nodeTransaction, nodeParcelas, nodeParcela;
     _di_IXMLNode nodeAuxiliar, nodeAuxiliar2, node, nodeHeader;
     _di_IXMLNodeList nodes;
@@ -467,6 +492,8 @@ TDate ontem  = Date() - 1;
                             Data2->tbCredenciadosStoneLIBERADO->Value = 'S';
                             Data2->tbCredenciadosStone->ApplyUpdates(0);
                             }
+
+                        json->Free();
                         }
                     }
 
@@ -1735,6 +1762,9 @@ TDate ontem  = Date() - 1;
         Application->ProcessMessages();
         ProgressBar2->Position = contador_dias + 1;
         }
+
+//    json->Free();
+//    jsonOperations->Free();
     }
 }
 //---------------------------------------------------------------------------
@@ -2109,6 +2139,8 @@ void __fastcall TPrincipal::Button2Click(TObject *Sender)
 
                                         proxima_pagina = true;
                                         }
+
+                                    json->Free();
                                 	}
                                     else
                                     {
@@ -2319,6 +2351,8 @@ void __fastcall TPrincipal::Button2Click(TObject *Sender)
 
                                         proxima_pagina = true;
                                         }
+
+                                    json->Free();
                                 	}
                                     else
                                     {
@@ -2506,6 +2540,8 @@ void __fastcall TPrincipal::Button2Click(TObject *Sender)
 
                                         proxima_pagina = true;
                                         }
+
+                                    json->Free();
                                 	}
                                     else
                                     {
@@ -8586,7 +8622,7 @@ Edit3->Text = Time();
             {
             Label21->Caption = "Leitura de Arquivos PagSeguro";
 
-                if(Time() >= "05:10" && !reprocessado_seguro)
+                if(Time() <= "05:10" && !reprocessado_seguro)
                 {
                 DateTimePicker3->Date = Date() - 1;
                 }
@@ -8610,6 +8646,9 @@ Edit3->Text = Time();
 		if(processo_atual > numero_processos)
 		{
 		processo_atual = 1;
+
+        num_loop++;
+		Label79->Caption = num_loop;
 		}
 	}
 	else
@@ -8650,6 +8689,1112 @@ DBLookupComboBox2->KeyValue = 0;
 void __fastcall TPrincipal::Label57Click(TObject *Sender)
 {
 Memo4->Lines->Clear();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TPrincipal::Button1Click(TObject *Sender)
+{
+Label21->Caption = "Iniciando Leitura de API BônusCred";
+Label27->Caption = "Iniciando Leitura de API BônusCred";
+
+TDate ontem  = Date() - 1;
+
+	if(DateOf(DateTimePicker6->Date) > ontem)
+	{
+	Application->MessageBoxA(L"A Data Final deve ser do dia anterior!", L"Mensagem do Sistema", MB_OK);
+	}
+	else if(DateTimePicker6->Date < DateTimePicker5->Date)
+	{
+	Application->MessageBoxA(L"A Data Final deve ser maior ou igual a data inicial!", L"Mensagem do Sistema", MB_OK);
+	}
+	else
+	{
+    int dias = DaysBetween(DateTimePicker5->Date, DateTimePicker6->Date) + 1;
+    int erro = 0, pagina;
+    bool continuar = false;
+    TJSONObject *json, *detalhe, *item, *detalheOperadora, *itemVencimentos;
+    Word Year, Month, Day;
+    TDateTime dtPresent;
+
+    TStringStream *stream;
+
+    AnsiString auxiliar, consulta, retorno, dados, body, operadora;
+    AnsiString data, url, ispb, banco, agencia, conta;
+    AnsiString cnpj;
+    int cod_banco;
+
+    Label52->Caption = "0";
+    Label53->Caption = "0";
+    Label6->Caption = 0;
+    Label7->Caption = 0;
+    Label49->Caption = "";
+    Label41->Caption = erro;
+
+    Data2->tbBonuscredVenda->Close();
+    Data2->tbBonuscredVenda->SQL->Clear();
+    Data2->tbBonuscredVenda->SQL->Add("select * from edi_bonuscred_venda where edi_bonuscred_venda.CODIGO is null");
+    Data2->tbBonuscredVenda->Open();
+
+    Data2->tbBonuscredPagamento->Close();
+    Data2->tbBonuscredPagamento->SQL->Clear();
+    Data2->tbBonuscredPagamento->SQL->Add("select * from edi_bonuscred_pagamento where edi_bonuscred_pagamento.CODIGO is null");
+    Data2->tbBonuscredPagamento->Open();
+
+    Data2->tbBonuscredExtra->Close();
+    Data2->tbBonuscredExtra->SQL->Clear();
+    Data2->tbBonuscredExtra->SQL->Add("select * from edi_bonuscred_extras where edi_bonuscred_extras.CODIGO is null");
+    Data2->tbBonuscredExtra->Open();
+
+    	if(DBLookupComboBox3->KeyValue > 0)
+        {
+        Edit1->Text = DBLookupComboBox3->KeyValue;
+
+        consulta = "Select * from cliente_operadora where cliente_operadora.COD_ADQUIRENTE in ('111', '112', '113', '114') and cliente_operadora.INTEGRA_API_BONUSCRED = 'S'";
+        consulta  += " and cliente_operadora.COD_CLIENTE = " + Edit1->Text;
+        }
+        else
+        {
+        consulta = "Select * from cliente_operadora where cliente_operadora.COD_ADQUIRENTE in ('111', '112', '113', '114') and cliente_operadora.INTEGRA_API_BONUSCRED = 'S'";
+        }
+
+    //SELECIONA OS ESTABELECIMENTOS
+    Data2->tbBonuscredCadastro->Close();
+    Data2->tbBonuscredCadastro->SQL->Clear();
+    Data2->tbBonuscredCadastro->SQL->Add(consulta);
+    Data2->tbBonuscredCadastro->Open();
+
+    Data2->tbBonuscredCadastro->Last();
+    int total_cadastros = Data2->tbBonuscredCadastro->RecordCount;
+    Data2->tbBonuscredCadastro->First();
+
+    ProgressBar6->Position = 0;
+    ProgressBar6->Max = dias;
+    ProgressBar7->Position = 0;
+    ProgressBar7->Max = total_cadastros;
+
+    Label66->Caption = 0;
+    Label67->Caption = total_cadastros;
+
+    Application->ProcessMessages();
+
+        for(int contador_dias = 0; contador_dias < dias; contador_dias++)
+        {
+        Button6Click(Sender);
+
+        Label43->Caption = DateOf(DateTimePicker5->Date + contador_dias);
+
+        Data2->tbBonuscredCadastro->First();
+        ProgressBar5->Position = 0;
+
+        Application->ProcessMessages();
+
+            for(int contador_cadastros = 0; contador_cadastros < total_cadastros; contador_cadastros++)
+            {
+            cnpj = Data2->tbBonuscredCadastroCODIGO_ESTABELECIMENTO->AsString;
+
+            continuar = true;
+            Label45->Caption = cnpj;
+            Label46->Caption = contador_cadastros + 1;
+
+            dtPresent = DateTimePicker5->Date + contador_dias;
+            DecodeDate(dtPresent, Year, Month, Day);
+
+            Edit1->Text = Year;
+            data = Edit1->Text + "-";
+            Edit1->Text = Month;
+
+                if(Edit1->Text.Length() == 1)
+                {
+                auxiliar = Month;
+                Edit1->Text = "0" + auxiliar;
+                }
+
+            data += Edit1->Text + "-";
+            Edit1->Text = Day;
+
+                if(Edit1->Text.Length() == 1)
+                {
+                auxiliar = Day;
+                Edit1->Text = "0" + auxiliar;
+                }
+
+            data += Edit1->Text;
+
+            Application->ProcessMessages();
+
+            IdHTTP1->Request->CustomHeaders->Clear();
+
+            body = "{";
+            body += "\"key\" : \"98659823-7898-6092-6619-539826956897\", ";
+            body += "\"key_parceiro\" : \"6B9FD1E6-DDE9-48F7-AA8C-6BC413C1D8FC\", ";
+            body += "\"cpf_ou_cnpj\" : \"" + cnpj + "\", ";
+            body += "\"data\" : \"" + data + "\"";
+            body += "}";
+
+            stream = new TStringStream(body, TEncoding::UTF8, false);
+            url = "https://api.bonuscred.com.br/conciliacao/dados";
+
+            continuar = true;
+
+                try
+                {
+                Memo3->Text = IdHTTP1->Post(url, stream);
+                }
+                catch (EIdHTTPProtocolException &E)
+                {
+                    try
+                    {
+                    Memo3->Text = IdHTTP1->Post(url, stream);
+                    }
+                    catch (EIdHTTPProtocolException &E)
+                    {
+                    erro++;
+                    Label63->Caption = erro;
+                    continuar = false;
+
+                    consulta = "- Não foi possível consultar os dados do cnpj " + cnpj + " na data: " + data;
+                    Memo1->Lines->Add(consulta);
+                    }
+                }
+
+                //INÍCIO DO PROCESSO DE VENDAS
+                if(continuar)
+                {
+                Application->ProcessMessages();
+
+                    if(IdHTTP1->ResponseCode == 200)
+                    {
+                    json = (TJSONObject*) TJSONObject::ParseJSONValue(TEncoding::ASCII->GetBytes(Memo3->Lines->Text),0);
+
+                        //Bônuscred
+                        if(Data2->tbBonuscredCadastroCOD_ADQUIRENTE->AsInteger == 111)
+                        {
+                        detalheOperadora = (TJSONObject*) json->GetValue("bnc");
+                        operadora = "bnc";
+                        }
+                        //Cartão Pré-Datado
+                        else if(Data2->tbBonuscredCadastroCOD_ADQUIRENTE->AsInteger == 113)
+                        {
+                        detalheOperadora = (TJSONObject*) json->GetValue("cpd");
+                        operadora = "cpd";
+                        }
+                        //Nutricard
+                        else if(Data2->tbBonuscredCadastroCOD_ADQUIRENTE->AsInteger == 112)
+                        {
+                        detalheOperadora = (TJSONObject*) json->GetValue("ntc");
+                        operadora = "ntc";
+                        }
+                        //Alimentare
+                        else if(Data2->tbBonuscredCadastroCOD_ADQUIRENTE->AsInteger == 114)
+                        {
+                        detalheOperadora = (TJSONObject*) json->GetValue("ali");
+                        operadora = "ali";
+                        }
+
+                    //DADOS BANCÁRIOS
+                    detalhe = (TJSONObject*) detalheOperadora->GetValue("dados_bancarios");
+
+                    Label72->Caption = 1;
+                    Label73->Caption = 1;
+                    Label69->Caption = "Leitura de Dados Bancários";
+
+                    Label6->Caption = 1;
+                    Label7->Caption = 1;
+                    Label2->Caption = "Leitura de Dados Bancários";
+
+                    Application->ProcessMessages();
+
+                    ispb = detalhe->GetValue("ispb")->Value();
+                    cod_banco = StrToInt(detalhe->GetValue("numero_codigo")->Value());
+                    banco = detalhe->GetValue("banco")->Value();
+                    agencia = detalhe->GetValue("agencia")->Value();
+                    conta = detalhe->GetValue("conta")->Value();
+
+                    //VENDAS
+                    detalhe = (TJSONObject*) detalheOperadora->GetValue("vendas");
+
+                    Label72->Caption = 0;
+                    Label73->Caption = detalhe->Count;
+                    Label69->Caption = "Leitura de Vendas";
+
+                    Label6->Caption = 0;
+                    Label7->Caption = detalhe->Count;
+                    Label2->Caption = "Leitura de Vendas";
+
+                    Application->ProcessMessages();
+
+                        for(int cont_detalhe = 0; cont_detalhe < detalhe->Count; cont_detalhe++)
+                        {
+                        item = (TJSONObject*) detalhe->Get(cont_detalhe);
+
+                        Data2->tbBonuscredVenda->Insert();
+
+                        Data2->tbBonuscredVendaDATA_PROCESSAMENTO->Value = Date();
+                        Data2->tbBonuscredVendaHORA_PROCESSAMENTO->Value = Time();
+                        Data2->tbBonuscredVendaTRATADO->Value = 'N';
+                        Data2->tbBonuscredVendaCOD_CLIENTE->Value = Data2->tbBonuscredCadastroCOD_CLIENTE->AsInteger;
+
+                        Data2->tbBonuscredVendaOPERADORA->Value = operadora;
+                        Data2->tbBonuscredVendaISPB->Value = ispb;
+                        Data2->tbBonuscredVendaNUMERO_CODIGO->Value = cod_banco;
+                        Data2->tbBonuscredVendaBANCO->Value = banco;
+                        Data2->tbBonuscredVendaAGENCIA->Value = agencia;
+                        Data2->tbBonuscredVendaCONTA->Value = conta;
+                        Data2->tbBonuscredVendaCPF_CNPJ->Value = cnpj;
+                        Data2->tbBonuscredVendaDATA_MOVIMENTO->Value = StrToDate(formatarData(7, data));
+
+                        Data2->tbBonuscredVendaAUTORIZACAO->Value = item->GetValue("autorizacao")->Value();;
+                        Data2->tbBonuscredVendaNSU_HOST->Value = item->GetValue("nsu_host")->Value();
+                        Data2->tbBonuscredVendaNSU_PDV->Value = item->GetValue("nsu_pdv")->Value();
+                        Data2->tbBonuscredVendaPDV->Value = item->GetValue("pdv")->Value();
+                        Data2->tbBonuscredVendaHORA_VENDA->Value = StrToTime(item->GetValue("hora_venda")->Value());
+                        Data2->tbBonuscredVendaCARTAO->Value = item->GetValue("cartao")->Value();
+                        Data2->tbBonuscredVendaTIPO_CARTAO->Value = item->GetValue("tipo_cartao")->Value();
+                        Data2->tbBonuscredVendaVALOR_BRUTO->Value = StrToFloat(item->GetValue("valor_bruto")->Value());
+                        Data2->tbBonuscredVendaVALOR_LIQUIDO->Value = StrToFloat(item->GetValue("valor_liquido")->Value());
+                        Data2->tbBonuscredVendaTAXA_PERCENTUAL->Value = StrToFloat(item->GetValue("taxa_percentual")->Value());
+                        Data2->tbBonuscredVendaPARCELAS->Value = StrToInt(item->GetValue("parcelas")->Value());
+
+                        itemVencimentos = (TJSONObject*) item->GetValue("vencimentos");
+
+                        Data2->tbBonuscredVendaDATA_VENCIMENTO->Value = StrToDate(itemVencimentos->Get(0)->ToString().SubString(3, 10));
+
+                        consulta = "select * from edi_bonuscred_venda where edi_bonuscred_venda.CPF_CNPJ = '" + cnpj + "'";
+                        consulta += " and edi_bonuscred_venda.DATA_MOVIMENTO = '" + data + "'";
+                        consulta += " and edi_bonuscred_venda.AUTORIZACAO = '" + Data2->tbBonuscredVendaAUTORIZACAO->AsString + "'";
+                        consulta += " and edi_bonuscred_venda.NSU_HOST = '" + Data2->tbBonuscredVendaNSU_HOST->AsString + "'";
+                        consulta += " and edi_bonuscred_venda.PARCELAS = '" + Data2->tbBonuscredVendaPARCELAS->AsString + "'";
+
+                            if(DataVerificacao2->tbBonuscredVenda->Active)
+                            {
+                            DataVerificacao2->tbBonuscredVenda->EmptyDataSet();
+                            }
+
+                        DataVerificacao2->tbBonuscredVenda->Close();
+                        DataVerificacao2->tbBonuscredVenda->SQL->Clear();
+                        DataVerificacao2->tbBonuscredVenda->SQL->Add(consulta);
+                        DataVerificacao2->tbBonuscredVenda->Open();
+
+                            if(DataVerificacao2->tbBonuscredVenda->RecordCount == 1)
+                            {
+                            Data2->tbBonuscredVenda->Cancel();
+                            }
+                            else
+                            {
+                            Data2->tbBonuscredVenda->ApplyUpdates(0);
+                            }
+
+                        Label72->Caption = cont_detalhe + 1;
+                        Label6->Caption = cont_detalhe + 1;
+                        Application->ProcessMessages();
+                        }
+
+
+                    //--------------------------------------------------------------
+
+                    //PAGAMENTOS
+                    detalhe = (TJSONObject*) detalheOperadora->GetValue("pagamentos");
+
+                    Label72->Caption = 0;
+                    Label73->Caption = detalhe->Count;
+                    Label69->Caption = "Leitura de Pagamentos";
+
+                    Label6->Caption = 0;
+                    Label7->Caption = detalhe->Count;
+                    Label2->Caption = "Leitura de Pagamentos";
+
+                    Application->ProcessMessages();
+
+                        for(int cont_detalhe = 0; cont_detalhe < detalhe->Count; cont_detalhe++)
+                        {
+                        item = (TJSONObject*) detalhe->Get(cont_detalhe);
+
+                        Data2->tbBonuscredPagamento->Insert();
+
+                        Data2->tbBonuscredPagamentoDATA_PROCESSAMENTO->Value = Date();
+                        Data2->tbBonuscredPagamentoHORA_PROCESSAMENTO->Value = Time();
+                        Data2->tbBonuscredPagamentoTRATADO->Value = 'N';
+                        Data2->tbBonuscredPagamentoCOD_CLIENTE->Value = Data2->tbBonuscredCadastroCOD_CLIENTE->AsInteger;
+
+                        Data2->tbBonuscredPagamentoOPERADORA->Value = operadora;
+                        Data2->tbBonuscredPagamentoISPB->Value = ispb;
+                        Data2->tbBonuscredPagamentoNUMERO_CODIGO->Value = cod_banco;
+                        Data2->tbBonuscredPagamentoBANCO->Value = banco;
+                        Data2->tbBonuscredPagamentoAGENCIA->Value = agencia;
+                        Data2->tbBonuscredPagamentoCONTA->Value = conta;
+                        Data2->tbBonuscredPagamentoCPF_CNPJ->Value = cnpj;
+                        Data2->tbBonuscredPagamentoDATA_MOVIMENTO->Value = StrToDate(formatarData(7, data));
+
+                        Data2->tbBonuscredPagamentoAUTORIZACAO->Value = item->GetValue("autorizacao")->Value();;
+                        Data2->tbBonuscredPagamentoNSU_HOST->Value = item->GetValue("nsu_host")->Value();
+                        Data2->tbBonuscredPagamentoNSU_PDV->Value = item->GetValue("nsu_pdv")->Value();
+                        Data2->tbBonuscredPagamentoPDV->Value = item->GetValue("pdv")->Value();
+                        Data2->tbBonuscredPagamentoDATA_VENDA->Value = StrToDate(formatarData(7, item->GetValue("data_venda")->Value()));
+                        Data2->tbBonuscredPagamentoHORA_VENDA->Value = StrToTime(item->GetValue("hora_venda")->Value());
+                        Data2->tbBonuscredPagamentoCARTAO->Value = item->GetValue("cartao")->Value();
+                        Data2->tbBonuscredPagamentoTIPO_CARTAO->Value = item->GetValue("tipo_cartao")->Value();
+                        Data2->tbBonuscredPagamentoVALOR_BRUTO->Value = StrToFloat(item->GetValue("valor_bruto_venda")->Value());
+                        Data2->tbBonuscredPagamentoVALOR_LIQUIDO->Value = StrToFloat(item->GetValue("valor_parcela")->Value());
+                        Data2->tbBonuscredPagamentoANTECIPACAO->Value = StrToBool(item->GetValue("antecipacao")->Value());
+                        Data2->tbBonuscredPagamentoPARCELA->Value = StrToInt(item->GetValue("parcela")->Value());
+                        Data2->tbBonuscredPagamentoQUANTIDADE_PARCELAS->Value = StrToInt(item->GetValue("quantidade_parcelas")->Value());
+
+                        consulta = "select * from edi_bonuscred_pagamento where edi_bonuscred_pagamento.CPF_CNPJ = '" + cnpj + "'";
+                        consulta += " and edi_bonuscred_pagamento.DATA_MOVIMENTO = '" + data + "'";
+                        consulta += " and edi_bonuscred_pagamento.AUTORIZACAO = '" + Data2->tbBonuscredPagamentoAUTORIZACAO->AsString + "'";
+                        consulta += " and edi_bonuscred_pagamento.NSU_HOST = '" + Data2->tbBonuscredPagamentoNSU_HOST->AsString + "'";
+                        consulta += " and edi_bonuscred_pagamento.PARCELA = '" + Data2->tbBonuscredPagamentoPARCELA->AsString + "'";
+
+                            if(DataVerificacao2->tbBonuscredPagamento->Active)
+                            {
+                            DataVerificacao2->tbBonuscredPagamento->EmptyDataSet();
+                            }
+
+                        DataVerificacao2->tbBonuscredPagamento->Close();
+                        DataVerificacao2->tbBonuscredPagamento->SQL->Clear();
+                        DataVerificacao2->tbBonuscredPagamento->SQL->Add(consulta);
+                        DataVerificacao2->tbBonuscredPagamento->Open();
+
+                            if(DataVerificacao2->tbBonuscredPagamento->RecordCount == 1)
+                            {
+                            Data2->tbBonuscredPagamento->Cancel();
+                            }
+                            else
+                            {
+                            Data2->tbBonuscredPagamento->ApplyUpdates(0);
+                            }
+
+                        Label72->Caption = cont_detalhe + 1;
+                        Label6->Caption = cont_detalhe + 1;
+                        Application->ProcessMessages();
+                        }
+
+                    //EXTRAS
+                    detalhe = (TJSONObject*) detalheOperadora->GetValue("extras");
+
+                    Label72->Caption = 0;
+                    Label73->Caption = detalhe->Count;
+                    Label69->Caption = "Leitura de Extras";
+
+                    Label6->Caption = 0;
+                    Label7->Caption = detalhe->Count;
+                    Label2->Caption = "Leitura de Extras";
+
+                    Application->ProcessMessages();
+
+                    	for(int cont_detalhe = 0; cont_detalhe < detalhe->Count; cont_detalhe++)
+                        {
+                        item = (TJSONObject*) detalhe->Get(cont_detalhe);
+
+                        Data2->tbBonuscredExtra->Insert();
+
+                        Data2->tbBonuscredExtraDATA_PROCESSAMENTO->Value = Date();
+                        Data2->tbBonuscredExtraHORA_PROCESSAMENTO->Value = Time();
+                        Data2->tbBonuscredExtraTRATADO->Value = 'N';
+                        Data2->tbBonuscredExtraCOD_CLIENTE->Value = Data2->tbBonuscredCadastroCOD_CLIENTE->AsInteger;
+
+                        Data2->tbBonuscredExtraOPERADORA->Value = operadora;
+                        Data2->tbBonuscredExtraISPB->Value = ispb;
+                        Data2->tbBonuscredExtraNUMERO_CODIGO->Value = cod_banco;
+                        Data2->tbBonuscredExtraBANCO->Value = banco;
+                        Data2->tbBonuscredExtraAGENCIA->Value = agencia;
+                        Data2->tbBonuscredExtraCONTA->Value = conta;
+                        Data2->tbBonuscredExtraCPF_CNPJ->Value = cnpj;
+                        Data2->tbBonuscredExtraDATA_MOVIMENTO->Value = StrToDate(formatarData(7, data));
+
+                        Data2->tbBonuscredExtraDOCUMENTO->Value = item->GetValue("documento")->Value();;
+                        Data2->tbBonuscredExtraHISTORICO->Value = item->GetValue("historico")->Value();
+                        Data2->tbBonuscredExtraVALOR_LIQUIDO->Value = StrToFloat(item->GetValue("valor_liquido")->Value());
+
+                        consulta = "select * from edi_bonuscred_extras where edi_bonuscred_extras.CPF_CNPJ = '" + cnpj + "'";
+                        consulta += " and edi_bonuscred_extras.DATA_MOVIMENTO = '" + data + "'";
+                        consulta += " and edi_bonuscred_extras.DOCUMENTO = '" + Data2->tbBonuscredExtraDOCUMENTO->AsString + "'";
+                        consulta += " and edi_bonuscred_extras.HISTORICO = '" + Data2->tbBonuscredExtraHISTORICO->AsString + "'";
+
+                            if(DataVerificacao2->tbBonuscredExtra->Active)
+                            {
+                            DataVerificacao2->tbBonuscredExtra->EmptyDataSet();
+                            }
+
+                        DataVerificacao2->tbBonuscredExtra->Close();
+                        DataVerificacao2->tbBonuscredExtra->SQL->Clear();
+                        DataVerificacao2->tbBonuscredExtra->SQL->Add(consulta);
+                        DataVerificacao2->tbBonuscredExtra->Open();
+
+                            if(DataVerificacao2->tbBonuscredExtra->RecordCount == 1)
+                            {
+                            Data2->tbBonuscredExtra->Cancel();
+                            }
+                            else
+                            {
+                            Data2->tbBonuscredExtra->ApplyUpdates(0);
+                            }
+
+                        Label72->Caption = cont_detalhe + 1;
+                        Label6->Caption = cont_detalhe + 1;
+                        Application->ProcessMessages();
+                        }
+
+                    //CANCELAMENTOS
+                    detalhe = (TJSONObject*) detalheOperadora->GetValue("cancelamentos");
+
+                    Label72->Caption = 0;
+                    Label73->Caption = detalhe->Count;
+                    Label69->Caption = "Leitura de Cancelamentos";
+
+                    Label6->Caption = 0;
+                    Label7->Caption = detalhe->Count;
+                    Label2->Caption = "Leitura de Cancelamentos";
+
+                    Application->ProcessMessages();
+
+                        if(detalhe->Count > 0)
+                        {
+                        ShowMessage("Cancelamentos");
+                        }
+
+                    json->Free();
+                    }
+                    else
+                    {
+                    erro++;
+                    Label63->Caption = erro;
+                    }
+                }
+
+            Data2->tbBonuscredCadastro->Next();
+            Label66->Caption = contador_cadastros + 1;
+            ProgressBar7->Position = contador_cadastros + 1;
+
+            Application->ProcessMessages();
+
+            stream->Free();
+            }
+
+        ProgressBar6->Position = contador_dias + 1;
+
+        Application->ProcessMessages();
+        }
+    }
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TPrincipal::ratarVendas1Click(TObject *Sender)
+{
+AnsiString consulta, cnpj_cliente, bandeira, operadora, atualiza;
+int auxiliar, cod_bandeira, cod_operadora;
+
+//SELECIONA TODAS AS VENDAS
+Data2->tbBonuscredVenda->Close();
+Data2->tbBonuscredVenda->SQL->Clear();
+Data2->tbBonuscredVenda->SQL->Add("Select * from edi_bonuscred_venda where edi_bonuscred_venda.TRATADO = 'N'");
+Data2->tbBonuscredVenda->Open();
+
+Data2->tbBonuscredVenda->Last();
+int final = Data2->tbBonuscredVenda->RecordCount;
+Data2->tbBonuscredVenda->First();
+
+Label21->Caption = "Tratando Arquivos BônusCred";
+Label2->Caption = "Tratando Vendas";
+Label10->Caption = 0;
+Label6->Caption = 0;
+Label7->Caption = final;
+
+ProgressBar1->Max = final;
+ProgressBar1->Position = 0;
+
+Application->ProcessMessages();
+
+	//EFETUA ESSE BLOCO ATÉ TRATAR TODAS AS VENDAS
+	for(int contador = 0; contador < final; contador++)
+	{
+    cnpj_cliente = "";
+
+    	if(Data2->tbBonuscredVendaOPERADORA->AsString == "bnc")
+        {
+        cod_operadora = 111;
+        cod_bandeira = 201;
+        operadora = "Bonuscred";
+        bandeira = "Bonuscred";
+        }
+        else if(Data2->tbBonuscredVendaOPERADORA->AsString == "cpd")
+        {
+        cod_operadora = 113;
+        cod_bandeira = 203;
+        operadora = "Cartão Pre Datado";
+        bandeira = "Cartão Pre Datado";
+        }
+        else if(Data2->tbBonuscredVendaOPERADORA->AsString == "ntc")
+        {
+        cod_operadora = 112;
+        cod_bandeira = 194;
+        operadora = "Nutricard";
+        bandeira = "Nutricard";
+        }
+        else if(Data2->tbBonuscredVendaOPERADORA->AsString == "ali")
+        {
+        cod_operadora = 114;
+        cod_bandeira = 202;
+        operadora = "Alimentare";
+        bandeira = "Alimentare";
+        }
+
+    //LOCALIZA O CLIENTE
+    Edit1->Text = Data2->tbBonuscredVendaCPF_CNPJ->AsAnsiString;
+
+    consulta = "Select * from cliente_operadora where cliente_operadora.COD_ADQUIRENTE = '" + IntToStr(cod_operadora) + "'";
+    consulta += " and cliente_operadora.CODIGO_ESTABELECIMENTO = '" + Edit1->Text + "' ";
+
+        if(DataResumo->tbClientesOperadoras->Active)
+        {
+        DataResumo->tbClientesOperadoras->EmptyDataSet();
+        }
+
+    DataResumo->tbClientesOperadoras->Close();
+    DataResumo->tbClientesOperadoras->SQL->Clear();
+    DataResumo->tbClientesOperadoras->SQL->Add(consulta);
+    DataResumo->tbClientesOperadoras->Open();
+
+        if(DataResumo->tbClientesOperadoras->RecordCount == 1)
+        {
+        cnpj_cliente = DataResumo->tbClientesOperadorasCNPJ_ESTABELECIMENTO->AsString;
+        }
+
+    //CONTROLE DE DUPLICIDADE
+    consulta = "SELECT * FROM vendas where vendas.CNPJ = '" + cnpj_cliente + "'";
+    consulta += " and vendas.ADQID = '" + IntToStr(cod_operadora) + "'";
+    consulta += " and vendas.PARCELA = '" + Data2->tbBonuscredVendaPARCELAS->AsString + "'";
+    consulta += " and vendas.NSU = '" + Data2->tbBonuscredVendaNSU_HOST->AsString + "'";
+    consulta += " and vendas.AUTORIZACAO = '" + Data2->tbBonuscredVendaAUTORIZACAO->AsString + "'";
+
+    Edit1->Text = formatarData(3, Data2->tbBonuscredVendaDATA_MOVIMENTO->AsString);
+    consulta += " and vendas.DATA_VENDA = '" + Edit1->Text + "'";
+
+        if(DataResumo->tbVendasOperadoras->Active)
+        {
+        DataResumo->tbVendasOperadoras->EmptyDataSet();
+        }
+
+    DataResumo->tbVendasOperadoras->Close();
+    DataResumo->tbVendasOperadoras->SQL->Clear();
+    DataResumo->tbVendasOperadoras->SQL->Add(consulta);
+    DataResumo->tbVendasOperadoras->Open();
+
+        if(DataResumo->tbVendasOperadoras->RecordCount == 0)
+        {
+        DataResumo->tbVendasOperadoras->Insert();
+
+        DataResumo->tbVendasOperadorasDATA_PROCESSAMENTO->Value = Date();
+        DataResumo->tbVendasOperadorasHORA_PROCESSAMENTO->Value = Time();
+
+        DataResumo->tbVendasOperadorasADQID->Value = cod_operadora;
+        DataResumo->tbVendasOperadorasADQUIRENTE->Value = operadora;
+
+        DataResumo->tbVendasOperadorasESTABELECIMENTO->Value = Data2->tbBonuscredVendaCPF_CNPJ->AsString;
+
+            //CONFIRMA QUE FOI LOCALIZADO OS DADOS DO CLIENTE / OPERADORA
+            if(DataResumo->tbClientesOperadoras->RecordCount == 1)
+            {
+            //BUSCA OS DADOS DO CLIENTE NA TABELA DE GRUPOS
+            Edit1->Text = DataResumo->tbClientesOperadorasCOD_GRUPO->AsFloat;
+
+            consulta = "Select * from grupos_clientes where grupos_clientes.CODIGO = '" + Edit1->Text + "' ";
+
+            Data1->tbGrupos->Close();
+            Data1->tbGrupos->SQL->Clear();
+            Data1->tbGrupos->SQL->Add(consulta);
+            Data1->tbGrupos->Open();
+
+                if(Data1->tbGrupos->RecordCount == 1)
+                {
+                DataResumo->tbVendasOperadorasEMPRESA->Value = Data1->tbGruposNOME_EMPRESA->AsString;
+                DataResumo->tbVendasOperadorasCNPJ->Value = Data1->tbGruposCNPJ->AsString;
+                DataResumo->tbVendasOperadorasCOD_CLIENTE->Value = Data1->tbGruposCOD_CLIENTE->AsFloat;
+                DataResumo->tbVendasOperadorasCOD_GRUPO_CLIENTE->Value = Data1->tbGruposCODIGO->AsFloat;
+
+                //MARCA O CLIENTE COMO PENDENTE DE CÁLCULO
+                Edit1->Text = DataResumo->tbVendasOperadorasCOD_CLIENTE->AsFloat;
+
+                consulta = "Select * from clientes where clientes.CODIGO = '" + Edit1->Text + "' ";
+
+                Data1->tbClientes->Close();
+                Data1->tbClientes->SQL->Clear();
+                Data1->tbClientes->SQL->Add(consulta);
+                Data1->tbClientes->Open();
+
+                    if(Data1->tbClientes->RecordCount == 1)
+                    {
+                    Data1->tbClientes->Edit();
+                    Data1->tbClientesARQUIVOS_PROCESSADOS->Value = "N";
+                    Data1->tbClientes->ApplyUpdates(0);
+                    }
+                }
+            }
+
+
+        DataResumo->tbVendasOperadorasCOD_BANDEIRA->Value = cod_bandeira;
+
+        DataResumo->tbVendasOperadorasPARCELA->Value = Data2->tbBonuscredVendaPARCELAS->AsInteger;
+        DataResumo->tbVendasOperadorasTOTAL_PARCELAS->Value = Data2->tbBonuscredVendaPARCELAS->AsInteger;
+
+        	//PRODUTO
+            if(Data2->tbBonuscredVendaTIPO_CARTAO->AsString == "Credito")
+            {
+            //Credito
+        	DataResumo->tbVendasOperadorasCODIGO_MODALIDADE->Value = 1;
+            DataResumo->tbVendasOperadorasCOD_PRODUTO->Value = 20;
+            }
+            else
+            {
+            //Vouncher
+        	DataResumo->tbVendasOperadorasCODIGO_MODALIDADE->Value = 3;
+
+                if(Data2->tbBonuscredVendaTIPO_CARTAO->AsString == "Alimentacao")
+                {
+                DataResumo->tbVendasOperadorasCOD_PRODUTO->Value = 2;
+                }
+                else if(Data2->tbBonuscredVendaTIPO_CARTAO->AsString == "Refeicao")
+                {
+                DataResumo->tbVendasOperadorasCOD_PRODUTO->Value = 3;
+                }
+                else
+                {
+                DataResumo->tbVendasOperadorasCOD_PRODUTO->Value = 54;
+                }
+            }
+
+        //STATUS = NÃO CONCILIADA
+        DataResumo->tbVendasOperadorasCOD_STATUS_CONCILIACAO->Value = 2;
+
+        //STATUS FINANCEIRO = PREVISTO
+        DataResumo->tbVendasOperadorasCOD_STATUS_FINANCEIRO->Value = 1;
+
+        DataResumo->tbVendasOperadorasVALOR_BRUTO->Value = Data2->tbBonuscredVendaVALOR_BRUTO->AsFloat;
+        DataResumo->tbVendasOperadorasVALOR_LIQUIDO->Value = Data2->tbBonuscredVendaVALOR_LIQUIDO->AsFloat;
+        DataResumo->tbVendasOperadorasPERCENTUAL_TAXA->Value = Data2->tbBonuscredVendaTAXA_PERCENTUAL->AsFloat;
+        DataResumo->tbVendasOperadorasVALOR_TAXA->Value = Data2->tbBonuscredVendaVALOR_BRUTO->AsFloat - Data2->tbBonuscredVendaVALOR_LIQUIDO->AsFloat;
+
+        DataResumo->tbVendasOperadorasDATA_VENDA->Value = Data2->tbBonuscredVendaDATA_MOVIMENTO->AsDateTime;
+        DataResumo->tbVendasOperadorasHORA_TRANSACAO->Value = Data2->tbBonuscredVendaHORA_VENDA->AsDateTime;
+        DataResumo->tbVendasOperadorasNSU->Value = Data2->tbBonuscredVendaNSU_HOST->AsString;
+        DataResumo->tbVendasOperadorasDATA_PREVISTA_PAGTO->Value = dataValida(Data2->tbBonuscredVendaDATA_VENCIMENTO->AsDateTime);
+        DataResumo->tbVendasOperadorasAUTORIZACAO->Value = Data2->tbBonuscredVendaAUTORIZACAO->AsString;
+        DataResumo->tbVendasOperadorasCARTAO->Value = Data2->tbBonuscredVendaCARTAO->AsString;
+
+        //CONFIGURA O MEIO DE CAPTURA
+
+            if(Data2->tbBonuscredVendaPDV->AsString == "POS")
+            {
+            //POS
+            DataResumo->tbVendasOperadorasCOD_MEIO_CAPTURA->Value = 1;
+            }
+            else if(Data2->tbBonuscredVendaPDV->AsString == "TEF")
+            {
+            //TEF
+            DataResumo->tbVendasOperadorasCOD_MEIO_CAPTURA->Value = 2;
+            }
+            else
+            {
+            DataResumo->tbVendasOperadorasCOD_MEIO_CAPTURA->Value = 13;
+            }
+
+        DataResumo->tbVendasOperadorasBANCO->Value = Data2->tbBonuscredVendaNUMERO_CODIGO->AsInteger;
+        DataResumo->tbVendasOperadorasAGENCIA->Value = retirar_caracteres(Data2->tbBonuscredVendaAGENCIA->AsString);
+        DataResumo->tbVendasOperadorasCONTA->Value = retirar_caracteres(Data2->tbBonuscredVendaCONTA->AsString);
+
+        DataResumo->tbVendasOperadoras->ApplyUpdates(0);
+
+        atualiza = "update vendas set vendas.VALOR_LIQUIDO = ROUND(vendas.VALOR_LIQUIDO, 2), vendas.VALOR_BRUTO = ROUND(vendas.VALOR_BRUTO, 2) ";
+        atualiza += " where vendas.CODIGO = " + DataResumo->tbVendasOperadorasCODIGO->AsString;
+
+        Data1->tbExcluir->Close();
+        Data1->tbExcluir->SQL->Clear();
+        Data1->tbExcluir->SQL->Add(atualiza);
+        Data1->tbExcluir->ExecSQL();
+        }
+
+	Data2->tbBonuscredVenda->Edit();
+	Data2->tbBonuscredVendaTRATADO->Value = 'S';
+	Data2->tbBonuscredVenda->ApplyUpdates(0);
+
+    Data2->tbBonuscredVenda->Next();
+
+	Label6->Caption = contador + 1;
+    ProgressBar1->Position = contador + 1;
+
+	Application->ProcessMessages();
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TPrincipal::ratarPagamentoa1Click(TObject *Sender)
+{
+AnsiString consulta, cnpj_cliente, atualiza, data, bandeira, operadora;
+int cod_bandeira, cod_operadora;
+double taxa;
+Word Year, Month, Day;
+TDate dtPresent;
+
+//SELECIONA TODAS AS VENDAS DO PAGSEGURO EM TABELA BRUTA AINDA NÃO TRATADOS
+Data2->tbBonuscredPagamento->Close();
+Data2->tbBonuscredPagamento->SQL->Clear();
+Data2->tbBonuscredPagamento->SQL->Add("Select * from edi_bonuscred_pagamento where edi_bonuscred_pagamento.TRATADO = 'N' and edi_bonuscred_pagamento.ANTECIPACAO = 0");
+Data2->tbBonuscredPagamento->Open();
+
+Data2->tbBonuscredPagamento->Last();
+int final = Data2->tbBonuscredPagamento->RecordCount;
+Data2->tbBonuscredPagamento->First();
+
+Label21->Caption = "Tratando Arquivos Bônuscred";
+Label2->Caption = "Tratando Pagamentos";
+Label10->Caption = 0;
+Label6->Caption = 0;
+Label7->Caption = final;
+
+ProgressBar1->Max = final;
+ProgressBar1->Position = 0;
+
+Application->ProcessMessages();
+
+	//EFETUA ESSE BLOCO ATÉ TRATAR TODAS AS VENDAS
+	for(int contador = 0; contador < final; contador++)
+	{
+    cnpj_cliente = "";
+
+        if(Data2->tbBonuscredPagamentoOPERADORA->AsString == "bnc")
+        {
+        cod_operadora = 111;
+        cod_bandeira = 201;
+        operadora = "Bonuscred";
+        bandeira = "Bonuscred";
+        }
+        else if(Data2->tbBonuscredPagamentoOPERADORA->AsString == "cpd")
+        {
+        cod_operadora = 113;
+        cod_bandeira = 203;
+        operadora = "Cartão Pre Datado";
+        bandeira = "Cartão Pre Datado";
+        }
+        else if(Data2->tbBonuscredPagamentoOPERADORA->AsString == "ntc")
+        {
+        cod_operadora = 112;
+        cod_bandeira = 194;
+        operadora = "Nutricard";
+        bandeira = "Nutricard";
+        }
+        else if(Data2->tbBonuscredPagamentoOPERADORA->AsString == "ali")
+        {
+        cod_operadora = 114;
+        cod_bandeira = 202;
+        operadora = "Alimentare";
+        bandeira = "Alimentare";
+        }
+
+    //LOCALIZA O CLIENTE
+    Edit1->Text = Data2->tbBonuscredPagamentoCPF_CNPJ->AsAnsiString;
+
+    consulta = "Select * from cliente_operadora where cliente_operadora.COD_ADQUIRENTE = '" + IntToStr(cod_operadora) + "'";
+    consulta += " and cliente_operadora.CODIGO_ESTABELECIMENTO = '" + Edit1->Text + "' ";
+
+        if(DataResumo->tbClientesOperadoras->Active)
+        {
+        DataResumo->tbClientesOperadoras->EmptyDataSet();
+        }
+
+    DataResumo->tbClientesOperadoras->Close();
+    DataResumo->tbClientesOperadoras->SQL->Clear();
+    DataResumo->tbClientesOperadoras->SQL->Add(consulta);
+    DataResumo->tbClientesOperadoras->Open();
+
+        if(DataResumo->tbClientesOperadoras->RecordCount == 1)
+        {
+        cnpj_cliente = DataResumo->tbClientesOperadorasCNPJ_ESTABELECIMENTO->AsString;
+        }
+
+    //CONTROLE DE DUPLICIDADE
+    consulta = "Select * from pagamentos_operadoras where pagamentos_operadoras.CNPJ = '" + cnpj_cliente + "'";
+    consulta += " and pagamentos_operadoras.COD_ADQUIRENTE = '" + IntToStr(cod_operadora) + "'";
+    consulta += " and pagamentos_operadoras.NSU = '" + Data2->tbBonuscredPagamentoNSU_HOST->AsString + "'";
+    consulta += " and pagamentos_operadoras.CODIGO_AUTORIZACAO = '" + Data2->tbBonuscredPagamentoAUTORIZACAO->AsString + "'";
+    consulta += " and pagamentos_operadoras.PARCELA = '" + Data2->tbBonuscredPagamentoPARCELA->AsString + "' ";
+
+    Edit1->Text = formatarData(3, Data2->tbBonuscredPagamentoDATA_VENDA->AsString);
+    consulta += " and pagamentos_operadoras.DATA_VENDA = '" + Edit1->Text + "'";
+
+    dtPresent = dataValida(Data2->tbBonuscredPagamentoDATA_MOVIMENTO->AsDateTime);
+    DecodeDate(dtPresent, Year, Month, Day);
+
+    Edit1->Text = Year;
+    data = Edit1->Text + "-";
+    Edit1->Text = Month;
+    data = data + Edit1->Text + "-";
+    Edit1->Text = Day;
+    data = data + Edit1->Text;
+
+    consulta += " and pagamentos_operadoras.DATA_PAGAMENTO = '" + data + "'";
+
+        if(DataResumo->tbPagamentosOperadoras->Active)
+        {
+        DataResumo->tbPagamentosOperadoras->EmptyDataSet();
+        }
+
+    DataResumo->tbPagamentosOperadoras->Close();
+    DataResumo->tbPagamentosOperadoras->SQL->Clear();
+    DataResumo->tbPagamentosOperadoras->SQL->Add(consulta);
+    DataResumo->tbPagamentosOperadoras->Open();
+
+        if(DataResumo->tbPagamentosOperadoras->RecordCount == 0)
+        {
+        DataResumo->tbPagamentosOperadoras->Insert();
+
+        //PAGSEGURO
+        DataResumo->tbPagamentosOperadorasCOD_ADQUIRENTE->Value = cod_operadora;
+
+        DataResumo->tbPagamentosOperadorasID_LOJA->Value = Data2->tbBonuscredPagamentoCPF_CNPJ->AsAnsiString;
+        DataResumo->tbPagamentosOperadorasAGENCIA->Value = retirar_caracteres(Data2->tbBonuscredPagamentoAGENCIA->AsString);
+        DataResumo->tbPagamentosOperadorasBANCO->Value = Data2->tbBonuscredPagamentoNUMERO_CODIGO->AsInteger;
+        DataResumo->tbPagamentosOperadorasCOD_BANCO->Value = DataResumo->tbPagamentosOperadorasBANCO->AsInteger;
+        DataResumo->tbPagamentosOperadorasCONTA->Value = retirar_caracteres(Data2->tbBonuscredPagamentoCONTA->AsString);
+
+            //CONFIRMA QUE FOI LOCALIZADO OS DADOS DO CLIENTE / OPERADORA
+            if(DataResumo->tbClientesOperadoras->RecordCount == 1)
+            {
+            //BUSCA OS DADOS DO CLIENTE NA TABELA DE GRUPOS
+            Edit1->Text = DataResumo->tbClientesOperadorasCOD_GRUPO->AsFloat;
+
+            consulta = "Select * from grupos_clientes where grupos_clientes.CODIGO = '" + Edit1->Text + "' ";
+
+            Data1->tbGrupos->Close();
+            Data1->tbGrupos->SQL->Clear();
+            Data1->tbGrupos->SQL->Add(consulta);
+            Data1->tbGrupos->Open();
+
+                if(Data1->tbGrupos->RecordCount == 1)
+                {
+                DataResumo->tbPagamentosOperadorasEMPRESA->Value = Data1->tbGruposNOME_EMPRESA->AsString;
+                DataResumo->tbPagamentosOperadorasCNPJ->Value = Data1->tbGruposCNPJ->AsString;
+                DataResumo->tbPagamentosOperadorasCOD_CLIENTE->Value = Data1->tbGruposCOD_CLIENTE->AsFloat;
+                DataResumo->tbPagamentosOperadorasCOD_GRUPO_CLIENTE->Value = Data1->tbGruposCODIGO->AsFloat;
+
+                //MARCA O CLIENTE COMO PENDENTE DE CÁLCULO
+                Edit1->Text = DataResumo->tbPagamentosOperadorasCOD_CLIENTE->AsFloat;
+
+                consulta = "Select * from clientes where clientes.CODIGO = '" + Edit1->Text + "' ";
+
+                Data1->tbClientes->Close();
+                Data1->tbClientes->SQL->Clear();
+                Data1->tbClientes->SQL->Add(consulta);
+                Data1->tbClientes->Open();
+
+                    if(Data1->tbClientes->RecordCount == 1)
+                    {
+                    Data1->tbClientes->Edit();
+                    Data1->tbClientesARQUIVOS_PROCESSADOS->Value = "N";
+                    Data1->tbClientes->ApplyUpdates(0);
+                    }
+                }
+            }
+
+            //PRODUTO
+            if(Data2->tbBonuscredPagamentoTIPO_CARTAO->AsString == "Credito")
+            {
+            //Credito
+        	DataResumo->tbPagamentosOperadorasCOD_FORMA_PAGAMENTO->Value = 1;
+            DataResumo->tbPagamentosOperadorasCOD_PRODUTO->Value = 20;
+            }
+            else
+            {
+            //Vouncher
+        	DataResumo->tbPagamentosOperadorasCOD_FORMA_PAGAMENTO->Value = 3;
+
+                if(Data2->tbBonuscredPagamentoTIPO_CARTAO->AsString == "Alimentacao")
+                {
+                DataResumo->tbPagamentosOperadorasCOD_PRODUTO->Value = 2;
+                }
+                else if(Data2->tbBonuscredPagamentoTIPO_CARTAO->AsString == "Refeicao")
+                {
+                DataResumo->tbPagamentosOperadorasCOD_PRODUTO->Value = 3;
+                }
+                else
+                {
+                DataResumo->tbPagamentosOperadorasCOD_PRODUTO->Value = 54;
+                }
+            }
+
+        DataResumo->tbPagamentosOperadorasCOD_BANDEIRA->Value = cod_bandeira;
+        DataResumo->tbPagamentosOperadorasPARCELA->Value = Data2->tbBonuscredPagamentoPARCELA->AsFloat;
+        DataResumo->tbPagamentosOperadorasTOTAL_PARCELAS->Value = Data2->tbBonuscredPagamentoQUANTIDADE_PARCELAS->AsFloat;
+
+        //STATUS = NÃO CONCILIADA
+        DataResumo->tbPagamentosOperadorasCOD_STATUS->Value = 2;
+
+        //STATUS FINANCEIRO = PREVISTO
+        DataResumo->tbPagamentosOperadorasCOD_STATUS_FINANCEIRO->Value = 1;
+
+        //TIPO DE LANÇAMENTO = PAGAMENTO
+        DataResumo->tbPagamentosOperadorasCOD_TIPO_LANCAMENTO->Value = 1;
+
+        //TIPO DE LANÇAMENTO = NORMAL
+        DataResumo->tbPagamentosOperadorasCOD_TIPO_PAGAMENTO->Value = 1;
+
+        DataResumo->tbPagamentosOperadorasVALOR_BRUTO->Value = Data2->tbBonuscredPagamentoVALOR_BRUTO->AsFloat;
+        DataResumo->tbPagamentosOperadorasVALOR_LIQUIDO->Value = Data2->tbBonuscredPagamentoVALOR_LIQUIDO->AsFloat;
+        DataResumo->tbPagamentosOperadorasVALOR_TAXA->Value = Data2->tbBonuscredPagamentoVALOR_BRUTO->AsFloat - Data2->tbBonuscredPagamentoVALOR_LIQUIDO->AsFloat;
+
+        taxa = 0;
+        taxa = DataResumo->tbPagamentosOperadorasVALOR_TAXA->AsFloat / DataResumo->tbPagamentosOperadorasVALOR_BRUTO->AsFloat;
+        taxa = taxa * 100;
+
+        DataResumo->tbPagamentosOperadorasTAXA_PERCENTUAL->Value = taxa;
+        DataResumo->tbPagamentosOperadorasPERCENTUAL_TAXA_CALC->Value = 'S';
+
+        DataResumo->tbPagamentosOperadorasDATA_VENDA->Value = Data2->tbBonuscredPagamentoDATA_VENDA->AsDateTime;
+        DataResumo->tbPagamentosOperadorasHORA_VENDA->Value = Data2->tbBonuscredPagamentoHORA_VENDA->AsDateTime;
+        DataResumo->tbPagamentosOperadorasDATA_PREV_PAG_ORIGINAL->Value = dataValida(Data2->tbBonuscredPagamentoDATA_MOVIMENTO->AsDateTime);
+        DataResumo->tbPagamentosOperadorasDATA_PAGAMENTO->Value = dataValida(Data2->tbBonuscredPagamentoDATA_MOVIMENTO->AsDateTime);
+        DataResumo->tbPagamentosOperadorasDATA_PROCESSAMENTO->Value = Date();
+        DataResumo->tbPagamentosOperadorasHORA_PROCESSAMENTO->Value = Time();
+
+        DataResumo->tbPagamentosOperadorasNSU->Value = Data2->tbBonuscredPagamentoNSU_HOST->AsString;
+        DataResumo->tbPagamentosOperadorasCODIGO_AUTORIZACAO->Value = Data2->tbBonuscredPagamentoAUTORIZACAO->AsString;
+        //CONFIGURA O MEIO DE CAPTURA
+
+            if(Data2->tbBonuscredPagamentoPDV->AsString == "POS")
+            {
+            //POS
+            DataResumo->tbPagamentosOperadorasCOD_MEIO_CAPTURA->Value = 1;
+            }
+            else if(Data2->tbBonuscredPagamentoPDV->AsString == "TEF")
+            {
+            //TEF
+            DataResumo->tbPagamentosOperadorasCOD_MEIO_CAPTURA->Value = 2;
+            }
+            else
+            {
+            DataResumo->tbPagamentosOperadorasCOD_MEIO_CAPTURA->Value = 13;
+            }
+
+        DataResumo->tbPagamentosOperadorasNUMERO_CARTAO->Value = Data2->tbBonuscredPagamentoCARTAO->AsString;
+
+        DataResumo->tbPagamentosOperadoras->ApplyUpdates(0);
+
+        atualiza = "update pagamentos_operadoras set pagamentos_operadoras.VALOR_LIQUIDO = ROUND(pagamentos_operadoras.VALOR_LIQUIDO, 2), pagamentos_operadoras.VALOR_BRUTO = ROUND(pagamentos_operadoras.VALOR_BRUTO, 2) ";
+        atualiza += " where pagamentos_operadoras.CODIGO = " + DataResumo->tbPagamentosOperadorasCODIGO->AsString;
+
+        Data1->tbExcluir->Close();
+        Data1->tbExcluir->SQL->Clear();
+        Data1->tbExcluir->SQL->Add(atualiza);
+        Data1->tbExcluir->ExecSQL();
+
+        //TENTA LOCALIZAR A VENDA
+        consulta = "SELECT * FROM vendas where vendas.COD_STATUS_FINANCEIRO = '1' and vendas.CNPJ = '" + cnpj_cliente + "'";
+        consulta += " and vendas.ADQID = '" + IntToStr(cod_operadora) + "'";
+        consulta += " and vendas.PARCELA = '" + DataResumo->tbPagamentosOperadorasPARCELA->AsString + "'";
+        consulta += " and vendas.NSU = '" + DataResumo->tbPagamentosOperadorasNSU->AsString + "'";
+        consulta += " and vendas.AUTORIZACAO = '" + DataResumo->tbPagamentosOperadorasCODIGO_AUTORIZACAO->AsString + "'";
+
+        Edit1->Text = formatarData(3, Data2->tbBonuscredPagamentoDATA_VENDA->AsString);
+        consulta += " and vendas.DATA_VENDA = '" + Edit1->Text + "'";
+
+            if(DataResumo->tbVendasOperadoras->Active)
+            {
+            DataResumo->tbVendasOperadoras->EmptyDataSet();
+            }
+
+        DataResumo->tbVendasOperadoras->Close();
+        DataResumo->tbVendasOperadoras->SQL->Clear();
+        DataResumo->tbVendasOperadoras->SQL->Add(consulta);
+        DataResumo->tbVendasOperadoras->Open();
+
+            if(DataResumo->tbVendasOperadoras->RecordCount == 1)
+            {
+            DataResumo->tbPagamentosOperadoras->Edit();
+
+            //CONCILIADA
+            DataResumo->tbPagamentosOperadorasCOD_STATUS->Value = 1;
+
+            //STATUS = LIQUIDADO
+            DataResumo->tbPagamentosOperadorasCOD_STATUS_FINANCEIRO->Value = 2;
+
+            DataResumo->tbPagamentosOperadorasVINCULADO_VENDA->Value = 'S';
+            DataResumo->tbPagamentosOperadorasENCONTRADA_VENDA->Value = 'S';
+            DataResumo->tbPagamentosOperadorasCOD_VENDA->Value = DataResumo->tbVendasOperadorasCODIGO->AsFloat;
+            DataResumo->tbPagamentosOperadoras->ApplyUpdates(0);
+
+            DataResumo->tbVendasOperadoras->Edit();
+            DataResumo->tbVendasOperadorasCOD_STATUS_FINANCEIRO->Value = 2;
+            DataResumo->tbVendasOperadorasVINCULADO_PAGAMENTO->Value = 'S';
+            DataResumo->tbVendasOperadorasCOD_PAGAMENTO->Value = DataResumo->tbPagamentosOperadorasCODIGO->AsFloat;
+            DataResumo->tbVendasOperadorasDATA_PAGAMENTO->Value = DataResumo->tbPagamentosOperadorasDATA_PAGAMENTO->AsDateTime;
+
+            DataResumo->tbVendasOperadoras->ApplyUpdates(0);
+            }
+        }
+
+	Data2->tbBonuscredPagamento->Edit();
+	Data2->tbBonuscredPagamentoTRATADO->Value = 'S';
+	Data2->tbBonuscredPagamento->ApplyUpdates(0);
+
+	Label6->Caption = contador + 1;
+    ProgressBar1->Position = contador + 1;
+
+	Data2->tbBonuscredPagamento->Next();
+	Application->ProcessMessages();
+	}
+
+Button6Click(Sender);
+
+Edit2->Text = Date();
+Edit3->Text = Time();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TPrincipal::ExcluirVendas1Click(TObject *Sender)
+{
+    //VERIFICA SE O USUÁRIO DESEJA REALMENTE EXCLUIR TODOS OS DADOS DA OPERADORA
+	if(Application->MessageBoxA(L"Deseja realmente excluir os dados de vendas da operadora Bônuscred ?",L"Mensagem do Sistema",MB_YESNO) == ID_YES)
+	{
+	Data1->tbExcluir->Close();
+	Data1->tbExcluir->SQL->Clear();
+	Data1->tbExcluir->SQL->Add("delete from vendas where vendas.ADQID in (111, 112, 113, 114)");
+	Data1->tbExcluir->ExecSQL();
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TPrincipal::ExcluirPagamentos1Click(TObject *Sender)
+{
+	//VERIFICA SE O USUÁRIO DESEJA REALMENTE EXCLUIR TODOS OS DADOS DA OPERADORA
+	if(Application->MessageBoxA(L"Deseja realmente excluir os dados de pagamento da operadora Bônuscred ?",L"Mensagem do Sistema",MB_YESNO) == ID_YES)
+	{
+	Data1->tbExcluir->Close();
+	Data1->tbExcluir->SQL->Clear();
+	Data1->tbExcluir->SQL->Add("delete from pagamentos_operadoras where pagamentos_operadoras.COD_ADQUIRENTE in (111, 112, 113, 114)");
+	Data1->tbExcluir->ExecSQL();
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TPrincipal::Marcardadosbrutospa1Click(TObject *Sender)
+{
+	//VERIFICA SE O USUÁRIO DESEJA REALMENTE EXCLUIR TODOS OS DADOS DA OPERADORA
+	if(Application->MessageBoxA(L"Deseja realmente marcar os dados da operadora Bônuscred para TRATADO = 'N'?",L"Mensagem do Sistema",MB_YESNO) == ID_YES)
+	{
+	Data1->tbExcluir->Close();
+	Data1->tbExcluir->SQL->Clear();
+	Data1->tbExcluir->SQL->Add("update edi_bonuscred_venda set edi_bonuscred_venda.TRATADO = 'N'");
+	Data1->tbExcluir->ExecSQL();
+
+    Data1->tbExcluir->Close();
+	Data1->tbExcluir->SQL->Clear();
+	Data1->tbExcluir->SQL->Add("update edi_bonuscred_pagamento set edi_bonuscred_pagamento.TRATADO = 'N'");
+	Data1->tbExcluir->ExecSQL();
+
+    Data1->tbExcluir->Close();
+	Data1->tbExcluir->SQL->Clear();
+	Data1->tbExcluir->SQL->Add("update edi_bonuscred_extras set edi_bonuscred_extras.TRATADO = 'N'");
+	Data1->tbExcluir->ExecSQL();
+	}
 }
 //---------------------------------------------------------------------------
 

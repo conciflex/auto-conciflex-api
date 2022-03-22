@@ -595,4 +595,485 @@ object Data2: TData2
       Size = 30
     end
   end
+  object DataBonuscredVenda: TDataSource
+    DataSet = tbBonuscredVenda
+    Left = 43
+    Top = 158
+  end
+  object tbBonuscredVenda: TFDQuery
+    CachedUpdates = True
+    Connection = Data1.Conexao
+    SQL.Strings = (
+      
+        'select * from edi_bonuscred_venda where edi_bonuscred_venda.CODI' +
+        'GO is null')
+    Left = 43
+    Top = 145
+    object tbBonuscredVendaCODIGO: TFDAutoIncField
+      FieldName = 'CODIGO'
+      Origin = 'CODIGO'
+      ProviderFlags = [pfInWhere, pfInKey]
+    end
+    object tbBonuscredVendaOPERADORA: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'OPERADORA'
+      Origin = 'OPERADORA'
+      Size = 15
+    end
+    object tbBonuscredVendaDATA_MOVIMENTO: TDateField
+      AutoGenerateValue = arDefault
+      FieldName = 'DATA_MOVIMENTO'
+      Origin = 'DATA_MOVIMENTO'
+    end
+    object tbBonuscredVendaCPF_CNPJ: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'CPF_CNPJ'
+      Origin = 'CPF_CNPJ'
+      Size = 15
+    end
+    object tbBonuscredVendaAUTORIZACAO: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'AUTORIZACAO'
+      Origin = 'AUTORIZACAO'
+    end
+    object tbBonuscredVendaNSU_HOST: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'NSU_HOST'
+      Origin = 'NSU_HOST'
+    end
+    object tbBonuscredVendaNSU_PDV: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'NSU_PDV'
+      Origin = 'NSU_PDV'
+    end
+    object tbBonuscredVendaPDV: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'PDV'
+      Origin = 'PDV'
+      Size = 5
+    end
+    object tbBonuscredVendaHORA_VENDA: TTimeField
+      AutoGenerateValue = arDefault
+      FieldName = 'HORA_VENDA'
+      Origin = 'HORA_VENDA'
+    end
+    object tbBonuscredVendaCARTAO: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'CARTAO'
+      Origin = 'CARTAO'
+      Size = 30
+    end
+    object tbBonuscredVendaTIPO_CARTAO: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'TIPO_CARTAO'
+      Origin = 'TIPO_CARTAO'
+    end
+    object tbBonuscredVendaVALOR_BRUTO: TFloatField
+      AutoGenerateValue = arDefault
+      FieldName = 'VALOR_BRUTO'
+      Origin = 'VALOR_BRUTO'
+    end
+    object tbBonuscredVendaVALOR_LIQUIDO: TFloatField
+      AutoGenerateValue = arDefault
+      FieldName = 'VALOR_LIQUIDO'
+      Origin = 'VALOR_LIQUIDO'
+    end
+    object tbBonuscredVendaTAXA_PERCENTUAL: TFloatField
+      AutoGenerateValue = arDefault
+      FieldName = 'TAXA_PERCENTUAL'
+      Origin = 'TAXA_PERCENTUAL'
+    end
+    object tbBonuscredVendaPARCELAS: TIntegerField
+      AutoGenerateValue = arDefault
+      FieldName = 'PARCELAS'
+      Origin = 'PARCELAS'
+    end
+    object tbBonuscredVendaDATA_VENCIMENTO: TDateField
+      AutoGenerateValue = arDefault
+      FieldName = 'DATA_VENCIMENTO'
+      Origin = 'DATA_VENCIMENTO'
+    end
+    object tbBonuscredVendaISPB: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'ISPB'
+      Origin = 'ISPB'
+    end
+    object tbBonuscredVendaNUMERO_CODIGO: TIntegerField
+      AutoGenerateValue = arDefault
+      FieldName = 'NUMERO_CODIGO'
+      Origin = 'NUMERO_CODIGO'
+    end
+    object tbBonuscredVendaBANCO: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'BANCO'
+      Origin = 'BANCO'
+      Size = 80
+    end
+    object tbBonuscredVendaAGENCIA: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'AGENCIA'
+      Origin = 'AGENCIA'
+      Size = 8
+    end
+    object tbBonuscredVendaCONTA: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'CONTA'
+      Origin = 'CONTA'
+      Size = 15
+    end
+    object tbBonuscredVendaTRATADO: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'TRATADO'
+      Origin = 'TRATADO'
+      Size = 1
+    end
+    object tbBonuscredVendaDATA_PROCESSAMENTO: TDateField
+      AutoGenerateValue = arDefault
+      FieldName = 'DATA_PROCESSAMENTO'
+      Origin = 'DATA_PROCESSAMENTO'
+    end
+    object tbBonuscredVendaHORA_PROCESSAMENTO: TTimeField
+      AutoGenerateValue = arDefault
+      FieldName = 'HORA_PROCESSAMENTO'
+      Origin = 'HORA_PROCESSAMENTO'
+    end
+    object tbBonuscredVendaCOD_CLIENTE: TIntegerField
+      AutoGenerateValue = arDefault
+      FieldName = 'COD_CLIENTE'
+      Origin = 'COD_CLIENTE'
+    end
+  end
+  object DataBonuscredPagamento: TDataSource
+    DataSet = tbBonuscredPagamento
+    Left = 172
+    Top = 158
+  end
+  object tbBonuscredPagamento: TFDQuery
+    CachedUpdates = True
+    Connection = Data1.Conexao
+    SQL.Strings = (
+      
+        'select * from edi_bonuscred_pagamento where edi_bonuscred_pagame' +
+        'nto.CODIGO is null')
+    Left = 172
+    Top = 145
+    object tbBonuscredPagamentoCODIGO: TFDAutoIncField
+      FieldName = 'CODIGO'
+      Origin = 'CODIGO'
+      ProviderFlags = [pfInWhere, pfInKey]
+    end
+    object tbBonuscredPagamentoOPERADORA: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'OPERADORA'
+      Origin = 'OPERADORA'
+      Size = 15
+    end
+    object tbBonuscredPagamentoDATA_MOVIMENTO: TDateField
+      AutoGenerateValue = arDefault
+      FieldName = 'DATA_MOVIMENTO'
+      Origin = 'DATA_MOVIMENTO'
+    end
+    object tbBonuscredPagamentoCPF_CNPJ: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'CPF_CNPJ'
+      Origin = 'CPF_CNPJ'
+      Size = 15
+    end
+    object tbBonuscredPagamentoAUTORIZACAO: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'AUTORIZACAO'
+      Origin = 'AUTORIZACAO'
+    end
+    object tbBonuscredPagamentoNSU_HOST: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'NSU_HOST'
+      Origin = 'NSU_HOST'
+    end
+    object tbBonuscredPagamentoNSU_PDV: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'NSU_PDV'
+      Origin = 'NSU_PDV'
+    end
+    object tbBonuscredPagamentoPDV: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'PDV'
+      Origin = 'PDV'
+      Size = 5
+    end
+    object tbBonuscredPagamentoDATA_VENDA: TDateField
+      AutoGenerateValue = arDefault
+      FieldName = 'DATA_VENDA'
+      Origin = 'DATA_VENDA'
+    end
+    object tbBonuscredPagamentoHORA_VENDA: TTimeField
+      AutoGenerateValue = arDefault
+      FieldName = 'HORA_VENDA'
+      Origin = 'HORA_VENDA'
+    end
+    object tbBonuscredPagamentoCARTAO: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'CARTAO'
+      Origin = 'CARTAO'
+      Size = 30
+    end
+    object tbBonuscredPagamentoTIPO_CARTAO: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'TIPO_CARTAO'
+      Origin = 'TIPO_CARTAO'
+    end
+    object tbBonuscredPagamentoVALOR_BRUTO: TFloatField
+      AutoGenerateValue = arDefault
+      FieldName = 'VALOR_BRUTO'
+      Origin = 'VALOR_BRUTO'
+    end
+    object tbBonuscredPagamentoVALOR_LIQUIDO: TFloatField
+      AutoGenerateValue = arDefault
+      FieldName = 'VALOR_LIQUIDO'
+      Origin = 'VALOR_LIQUIDO'
+    end
+    object tbBonuscredPagamentoPARCELA: TIntegerField
+      AutoGenerateValue = arDefault
+      FieldName = 'PARCELA'
+      Origin = 'PARCELA'
+    end
+    object tbBonuscredPagamentoQUANTIDADE_PARCELAS: TIntegerField
+      AutoGenerateValue = arDefault
+      FieldName = 'QUANTIDADE_PARCELAS'
+      Origin = 'QUANTIDADE_PARCELAS'
+    end
+    object tbBonuscredPagamentoANTECIPACAO: TBooleanField
+      AutoGenerateValue = arDefault
+      FieldName = 'ANTECIPACAO'
+      Origin = 'ANTECIPACAO'
+    end
+    object tbBonuscredPagamentoISPB: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'ISPB'
+      Origin = 'ISPB'
+    end
+    object tbBonuscredPagamentoNUMERO_CODIGO: TIntegerField
+      AutoGenerateValue = arDefault
+      FieldName = 'NUMERO_CODIGO'
+      Origin = 'NUMERO_CODIGO'
+    end
+    object tbBonuscredPagamentoBANCO: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'BANCO'
+      Origin = 'BANCO'
+      Size = 80
+    end
+    object tbBonuscredPagamentoAGENCIA: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'AGENCIA'
+      Origin = 'AGENCIA'
+      Size = 8
+    end
+    object tbBonuscredPagamentoCONTA: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'CONTA'
+      Origin = 'CONTA'
+      Size = 15
+    end
+    object tbBonuscredPagamentoTRATADO: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'TRATADO'
+      Origin = 'TRATADO'
+      Size = 1
+    end
+    object tbBonuscredPagamentoDATA_PROCESSAMENTO: TDateField
+      AutoGenerateValue = arDefault
+      FieldName = 'DATA_PROCESSAMENTO'
+      Origin = 'DATA_PROCESSAMENTO'
+    end
+    object tbBonuscredPagamentoHORA_PROCESSAMENTO: TTimeField
+      AutoGenerateValue = arDefault
+      FieldName = 'HORA_PROCESSAMENTO'
+      Origin = 'HORA_PROCESSAMENTO'
+    end
+    object tbBonuscredPagamentoCOD_CLIENTE: TIntegerField
+      AutoGenerateValue = arDefault
+      FieldName = 'COD_CLIENTE'
+      Origin = 'COD_CLIENTE'
+    end
+  end
+  object DataBonuscredExtra: TDataSource
+    DataSet = tbBonuscredExtra
+    Left = 300
+    Top = 158
+  end
+  object tbBonuscredExtra: TFDQuery
+    CachedUpdates = True
+    Connection = Data1.Conexao
+    SQL.Strings = (
+      
+        'select * from edi_bonuscred_extras where edi_bonuscred_extras.CO' +
+        'DIGO is null')
+    Left = 300
+    Top = 145
+    object tbBonuscredExtraCODIGO: TFDAutoIncField
+      FieldName = 'CODIGO'
+      Origin = 'CODIGO'
+      ProviderFlags = [pfInWhere, pfInKey]
+    end
+    object tbBonuscredExtraOPERADORA: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'OPERADORA'
+      Origin = 'OPERADORA'
+      Size = 15
+    end
+    object tbBonuscredExtraDATA_MOVIMENTO: TDateField
+      AutoGenerateValue = arDefault
+      FieldName = 'DATA_MOVIMENTO'
+      Origin = 'DATA_MOVIMENTO'
+    end
+    object tbBonuscredExtraCPF_CNPJ: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'CPF_CNPJ'
+      Origin = 'CPF_CNPJ'
+      Size = 15
+    end
+    object tbBonuscredExtraDOCUMENTO: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'DOCUMENTO'
+      Origin = 'DOCUMENTO'
+    end
+    object tbBonuscredExtraHISTORICO: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'HISTORICO'
+      Origin = 'HISTORICO'
+      Size = 100
+    end
+    object tbBonuscredExtraVALOR_LIQUIDO: TFloatField
+      AutoGenerateValue = arDefault
+      FieldName = 'VALOR_LIQUIDO'
+      Origin = 'VALOR_LIQUIDO'
+    end
+    object tbBonuscredExtraISPB: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'ISPB'
+      Origin = 'ISPB'
+    end
+    object tbBonuscredExtraNUMERO_CODIGO: TIntegerField
+      AutoGenerateValue = arDefault
+      FieldName = 'NUMERO_CODIGO'
+      Origin = 'NUMERO_CODIGO'
+    end
+    object tbBonuscredExtraBANCO: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'BANCO'
+      Origin = 'BANCO'
+      Size = 80
+    end
+    object tbBonuscredExtraAGENCIA: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'AGENCIA'
+      Origin = 'AGENCIA'
+      Size = 8
+    end
+    object tbBonuscredExtraCONTA: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'CONTA'
+      Origin = 'CONTA'
+      Size = 15
+    end
+    object tbBonuscredExtraTRATADO: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'TRATADO'
+      Origin = 'TRATADO'
+      Size = 1
+    end
+    object tbBonuscredExtraDATA_PROCESSAMENTO: TDateField
+      AutoGenerateValue = arDefault
+      FieldName = 'DATA_PROCESSAMENTO'
+      Origin = 'DATA_PROCESSAMENTO'
+    end
+    object tbBonuscredExtraHORA_PROCESSAMENTO: TTimeField
+      AutoGenerateValue = arDefault
+      FieldName = 'HORA_PROCESSAMENTO'
+      Origin = 'HORA_PROCESSAMENTO'
+    end
+    object tbBonuscredExtraCOD_CLIENTE: TIntegerField
+      AutoGenerateValue = arDefault
+      FieldName = 'COD_CLIENTE'
+      Origin = 'COD_CLIENTE'
+    end
+  end
+  object DataBonuscredCadastro: TDataSource
+    DataSet = tbBonuscredCadastro
+    Left = 424
+    Top = 156
+  end
+  object tbBonuscredCadastro: TFDQuery
+    CachedUpdates = True
+    Connection = Data1.Conexao
+    SQL.Strings = (
+      
+        'Select * from cliente_operadora where cliente_operadora.COD_ADQU' +
+        'IRENTE in ('#39'111'#39', '#39'112'#39', '#39'113'#39', '#39'114'#39') and cliente_operadora.INT' +
+        'EGRA_API_BONUSCRED = '#39'S'#39
+      'and cliente_operadora.CODIGO is null')
+    Left = 424
+    Top = 143
+    object tbBonuscredCadastroCODIGO: TFDAutoIncField
+      FieldName = 'CODIGO'
+      Origin = 'CODIGO'
+      ProviderFlags = [pfInWhere, pfInKey]
+    end
+    object tbBonuscredCadastroCOD_CLIENTE: TSingleField
+      AutoGenerateValue = arDefault
+      FieldName = 'COD_CLIENTE'
+      Origin = 'COD_CLIENTE'
+    end
+    object tbBonuscredCadastroCOD_ADQUIRENTE: TSingleField
+      AutoGenerateValue = arDefault
+      FieldName = 'COD_ADQUIRENTE'
+      Origin = 'COD_ADQUIRENTE'
+    end
+    object tbBonuscredCadastroCODIGO_ESTABELECIMENTO: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'CODIGO_ESTABELECIMENTO'
+      Origin = 'CODIGO_ESTABELECIMENTO'
+      Size = 50
+    end
+    object tbBonuscredCadastroCNPJ_ESTABELECIMENTO: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'CNPJ_ESTABELECIMENTO'
+      Origin = 'CNPJ_ESTABELECIMENTO'
+      Size = 45
+    end
+    object tbBonuscredCadastroCOD_GRUPO: TSingleField
+      AutoGenerateValue = arDefault
+      FieldName = 'COD_GRUPO'
+      Origin = 'COD_GRUPO'
+    end
+    object tbBonuscredCadastroAFFILIATION_KEY: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'AFFILIATION_KEY'
+      Origin = 'AFFILIATION_KEY'
+      Size = 60
+    end
+    object tbBonuscredCadastroINTEGRA_API_PAGSEGURO: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'INTEGRA_API_PAGSEGURO'
+      Origin = 'INTEGRA_API_PAGSEGURO'
+      Size = 1
+    end
+    object tbBonuscredCadastroRETORNO_VENDA_PGTO: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'RETORNO_VENDA_PGTO'
+      Origin = 'RETORNO_VENDA_PGTO'
+      Size = 1
+    end
+    object tbBonuscredCadastroCONCLUIDO: TIntegerField
+      AutoGenerateValue = arDefault
+      FieldName = 'CONCLUIDO'
+      Origin = 'CONCLUIDO'
+    end
+    object tbBonuscredCadastroINTEGRA_API_BONUSCRED: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'INTEGRA_API_BONUSCRED'
+      Origin = 'INTEGRA_API_BONUSCRED'
+      Size = 1
+    end
+  end
 end

@@ -17,7 +17,6 @@ object Data1: TData1
     ResourceOptions.AutoReconnect = True
     UpdateOptions.AssignedValues = [uvLockWait, uvAutoCommitUpdates]
     UpdateOptions.AutoCommitUpdates = True
-    Connected = True
     LoginPrompt = False
     Transaction = FDTransaction1
     UpdateTransaction = FDTransaction1

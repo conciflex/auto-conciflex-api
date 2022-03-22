@@ -3,8 +3,8 @@ object Principal: TPrincipal
   Top = 0
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'Auto Conciflex API'
-  ClientHeight = 422
-  ClientWidth = 678
+  ClientHeight = 402
+  ClientWidth = 683
   Color = clGray
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,7 +20,7 @@ object Principal: TPrincipal
   object TPageControl: TPageControl
     Left = 2
     Top = 4
-    Width = 671
+    Width = 675
     Height = 413
     ActivePage = TabSheet1
     DockSite = True
@@ -53,6 +53,20 @@ object Principal: TPrincipal
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
         ParentFont = False
+      end
+      object Label78: TLabel
+        Left = 578
+        Top = 38
+        Width = 27
+        Height = 13
+        Caption = 'Loop:'
+      end
+      object Label79: TLabel
+        Left = 610
+        Top = 38
+        Width = 6
+        Height = 13
+        Caption = '0'
       end
       object Edit2: TEdit
         Left = 176
@@ -90,7 +104,7 @@ object Principal: TPrincipal
       object GroupBox1: TGroupBox
         Left = 8
         Top = 204
-        Width = 329
+        Width = 652
         Height = 176
         Caption = 'PROCESSO ATUAL'
         TabOrder = 3
@@ -239,6 +253,10 @@ object Principal: TPrincipal
     object TabSheet2: TTabSheet
       Caption = 'Stone'
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 663
+      ExplicitHeight = 0
       object GroupBox4: TGroupBox
         Left = 3
         Top = 3
@@ -514,6 +532,10 @@ object Principal: TPrincipal
     object TabSheet3: TTabSheet
       Caption = 'PagSeguro'
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 663
+      ExplicitHeight = 0
       object GroupBox5: TGroupBox
         Left = 3
         Top = 0
@@ -814,9 +836,288 @@ object Principal: TPrincipal
         end
       end
     end
+    object TabSheet4: TTabSheet
+      Caption = 'B'#244'nusCred'
+      ImageIndex = 3
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 663
+      ExplicitHeight = 0
+      object GroupBox2: TGroupBox
+        Left = 3
+        Top = 1
+        Width = 650
+        Height = 381
+        Caption = 'B'#244'nusCred'
+        Color = clWhite
+        ParentBackground = False
+        ParentColor = False
+        TabOrder = 0
+        object Label18: TLabel
+          Left = 21
+          Top = 16
+          Width = 64
+          Height = 13
+          Caption = 'Data Inicial'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object Label19: TLabel
+          Left = 168
+          Top = 16
+          Width = 56
+          Height = 13
+          Caption = 'Data Final'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object Label42: TLabel
+          Left = 21
+          Top = 102
+          Width = 117
+          Height = 13
+          Caption = 'Progresso de Leitura'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object Label43: TLabel
+          Left = 21
+          Top = 146
+          Width = 23
+          Height = 13
+          Caption = 'Data'
+        end
+        object Label62: TLabel
+          Left = 21
+          Top = 182
+          Width = 72
+          Height = 13
+          Caption = 'Erro na leitura:'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsItalic]
+          ParentFont = False
+        end
+        object Label63: TLabel
+          Left = 99
+          Top = 182
+          Width = 72
+          Height = 13
+          AutoSize = False
+          Caption = '0'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsItalic]
+          ParentFont = False
+        end
+        object Label64: TLabel
+          Left = 21
+          Top = 117
+          Width = 85
+          Height = 13
+          Caption = 'Estabelecimento: '
+        end
+        object Label65: TLabel
+          Left = 107
+          Top = 117
+          Width = 78
+          Height = 13
+          Caption = 'Estabelecimento'
+        end
+        object Label66: TLabel
+          Left = 517
+          Top = 114
+          Width = 6
+          Height = 13
+          Caption = '0'
+        end
+        object Label67: TLabel
+          Left = 582
+          Top = 114
+          Width = 6
+          Height = 13
+          Caption = '0'
+        end
+        object Label68: TLabel
+          Left = 550
+          Top = 114
+          Width = 4
+          Height = 13
+          Caption = '-'
+        end
+        object TLabel
+          Left = 155
+          Top = 102
+          Width = 3
+          Height = 13
+        end
+        object Label69: TLabel
+          Left = 21
+          Top = 213
+          Width = 54
+          Height = 13
+          Caption = 'PROCESSO'
+        end
+        object Label70: TLabel
+          Left = 21
+          Top = 232
+          Width = 49
+          Height = 13
+          Caption = 'Contador:'
+        end
+        object Label71: TLabel
+          Left = 21
+          Top = 251
+          Width = 26
+          Height = 13
+          Caption = 'Final:'
+        end
+        object Label72: TLabel
+          Left = 76
+          Top = 232
+          Width = 6
+          Height = 13
+          Caption = '0'
+        end
+        object Label73: TLabel
+          Left = 76
+          Top = 251
+          Width = 6
+          Height = 13
+          Caption = '0'
+        end
+        object Label74: TLabel
+          Left = 21
+          Top = 62
+          Width = 39
+          Height = 13
+          Caption = 'Cliente'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object Label75: TLabel
+          Left = 341
+          Top = 62
+          Width = 31
+          Height = 13
+          Cursor = crHandPoint
+          Caption = 'Limpar'
+          OnClick = Label33Click
+        end
+        object Label76: TLabel
+          Left = 21
+          Top = 270
+          Width = 22
+          Height = 13
+          Caption = 'LOG'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object Label77: TLabel
+          Left = 596
+          Top = 270
+          Width = 31
+          Height = 13
+          Cursor = crHandPoint
+          Caption = 'Limpar'
+          OnClick = Label35Click
+        end
+        object DateTimePicker5: TDateTimePicker
+          Left = 21
+          Top = 35
+          Width = 128
+          Height = 21
+          Date = 44097.000000000000000000
+          Time = 44097.000000000000000000
+          TabOrder = 0
+        end
+        object DateTimePicker6: TDateTimePicker
+          Left = 168
+          Top = 35
+          Width = 128
+          Height = 21
+          Date = 44097.000000000000000000
+          Time = 44097.000000000000000000
+          TabOrder = 1
+        end
+        object Button1: TButton
+          Left = 316
+          Top = 24
+          Width = 113
+          Height = 32
+          Cursor = crHandPoint
+          Cancel = True
+          Caption = 'Iniciar Processo'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 2
+          OnClick = Button1Click
+        end
+        object ProgressBar6: TProgressBar
+          Left = 21
+          Top = 165
+          Width = 620
+          Height = 11
+          TabOrder = 3
+        end
+        object ProgressBar7: TProgressBar
+          Left = 21
+          Top = 133
+          Width = 620
+          Height = 11
+          TabOrder = 4
+        end
+        object DBLookupComboBox3: TDBLookupComboBox
+          Left = 21
+          Top = 79
+          Width = 351
+          Height = 21
+          KeyField = 'CODIGO'
+          ListField = 'NOME'
+          ListSource = DataProcessamento.DataClientes
+          TabOrder = 5
+        end
+        object Memo1: TMemo
+          Left = 21
+          Top = 289
+          Width = 612
+          Height = 88
+          ScrollBars = ssVertical
+          TabOrder = 6
+        end
+      end
+    end
   end
   object Timer1: TTimer
-    Interval = 60000
+    Interval = 300000
     OnTimer = Timer1Timer
     Left = 728
     Top = 232
@@ -850,9 +1151,27 @@ object Principal: TPrincipal
           OnClick = MarcarDadosBrutosparaTRATADON2Click
         end
       end
+      object Bnuscred3: TMenuItem
+        Caption = 'B'#244'nuscred'
+        object Marcardadosbrutospa1: TMenuItem
+          Caption = 'Marcar dados brutos para TRATADO = '#39'N'#39
+          OnClick = Marcardadosbrutospa1Click
+        end
+      end
     end
     object Funcoes1: TMenuItem
       Caption = 'Fun'#231#245'es'
+      object BnusCred1: TMenuItem
+        Caption = 'B'#244'nusCred'
+        object ratarVendas1: TMenuItem
+          Caption = 'Tratar Vendas'
+          OnClick = ratarVendas1Click
+        end
+        object ratarPagamentoa1: TMenuItem
+          Caption = 'Tratar Pagamentos'
+          OnClick = ratarPagamentoa1Click
+        end
+      end
       object PagSeguro1: TMenuItem
         Caption = 'PagSeguro'
         object TratarVendasPagSeguro: TMenuItem
@@ -890,6 +1209,17 @@ object Principal: TPrincipal
     end
     object Excluses1: TMenuItem
       Caption = 'Exclus'#245'es'
+      object Bnuscred2: TMenuItem
+        Caption = 'B'#244'nuscred'
+        object ExcluirVendas1: TMenuItem
+          Caption = 'Excluir Vendas'
+          OnClick = ExcluirVendas1Click
+        end
+        object ExcluirPagamentos1: TMenuItem
+          Caption = 'Excluir Pagamentos'
+          OnClick = ExcluirPagamentos1Click
+        end
+      end
       object PagSeguro3: TMenuItem
         Caption = 'PagSeguro'
         object ExcluirDuplicidadedeVendas2: TMenuItem
