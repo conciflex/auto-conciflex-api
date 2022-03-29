@@ -200,13 +200,15 @@ __published:	// IDE-managed Components
 	TLabel *Label78;
 	TLabel *Label79;
 	TMenuItem *BnusCred1;
-	TMenuItem *ratarVendas1;
-	TMenuItem *ratarPagamentoa1;
+	TMenuItem *VendasBonuscred;
+	TMenuItem *PagamentosBonuscred;
 	TMenuItem *Bnuscred2;
 	TMenuItem *ExcluirVendas1;
 	TMenuItem *ExcluirPagamentos1;
 	TMenuItem *Bnuscred3;
 	TMenuItem *Marcardadosbrutospa1;
+	TMenuItem *AjustesBonuscred;
+	TMenuItem *AutomaticoBonuscred;
 	void __fastcall FormCreate(TObject *Sender);
 	void __fastcall Button17Click(TObject *Sender);
 	void __fastcall Button6Click(TObject *Sender);
@@ -241,11 +243,14 @@ __published:	// IDE-managed Components
 	void __fastcall Label55Click(TObject *Sender);
 	void __fastcall Label57Click(TObject *Sender);
 	void __fastcall Button1Click(TObject *Sender);
-	void __fastcall ratarVendas1Click(TObject *Sender);
-	void __fastcall ratarPagamentoa1Click(TObject *Sender);
+	void __fastcall VendasBonuscredClick(TObject *Sender);
+	void __fastcall PagamentosBonuscredClick(TObject *Sender);
 	void __fastcall ExcluirVendas1Click(TObject *Sender);
 	void __fastcall ExcluirPagamentos1Click(TObject *Sender);
 	void __fastcall Marcardadosbrutospa1Click(TObject *Sender);
+	void __fastcall AjustesBonuscredClick(TObject *Sender);
+	void __fastcall Label77Click(TObject *Sender);
+	void __fastcall AutomaticoBonuscredClick(TObject *Sender);
 private:	// User declarations
 public:		// User declarations
 	__fastcall TPrincipal(TComponent* Owner);

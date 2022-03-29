@@ -3,8 +3,8 @@ object Principal: TPrincipal
   Top = 0
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'Auto Conciflex API'
-  ClientHeight = 402
-  ClientWidth = 683
+  ClientHeight = 420
+  ClientWidth = 904
   Color = clGray
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -22,7 +22,7 @@ object Principal: TPrincipal
     Top = 4
     Width = 675
     Height = 413
-    ActivePage = TabSheet1
+    ActivePage = TabSheet3
     DockSite = True
     TabOrder = 0
     object TabSheet1: TTabSheet
@@ -253,10 +253,6 @@ object Principal: TPrincipal
     object TabSheet2: TTabSheet
       Caption = 'Stone'
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 663
-      ExplicitHeight = 0
       object GroupBox4: TGroupBox
         Left = 3
         Top = 3
@@ -532,10 +528,6 @@ object Principal: TPrincipal
     object TabSheet3: TTabSheet
       Caption = 'PagSeguro'
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 663
-      ExplicitHeight = 0
       object GroupBox5: TGroupBox
         Left = 3
         Top = 0
@@ -839,10 +831,6 @@ object Principal: TPrincipal
     object TabSheet4: TTabSheet
       Caption = 'B'#244'nusCred'
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 663
-      ExplicitHeight = 0
       object GroupBox2: TGroupBox
         Left = 3
         Top = 1
@@ -934,7 +922,7 @@ object Principal: TPrincipal
           Caption = 'Estabelecimento: '
         end
         object Label65: TLabel
-          Left = 107
+          Left = 112
           Top = 117
           Width = 78
           Height = 13
@@ -1038,13 +1026,13 @@ object Principal: TPrincipal
           ParentFont = False
         end
         object Label77: TLabel
-          Left = 596
+          Left = 602
           Top = 270
           Width = 31
           Height = 13
           Cursor = crHandPoint
           Caption = 'Limpar'
-          OnClick = Label35Click
+          OnClick = Label77Click
         end
         object DateTimePicker5: TDateTimePicker
           Left = 21
@@ -1133,6 +1121,10 @@ object Principal: TPrincipal
     end
     object Automaticva1: TMenuItem
       Caption = 'Autom'#225'tico'
+      object AutomaticoBonuscred: TMenuItem
+        Caption = 'B'#244'nusCred'
+        OnClick = AutomaticoBonuscredClick
+      end
       object AutomaticoPagSeguro: TMenuItem
         Caption = 'PagSeguro'
         OnClick = AutomaticoPagSeguroClick
@@ -1163,13 +1155,17 @@ object Principal: TPrincipal
       Caption = 'Fun'#231#245'es'
       object BnusCred1: TMenuItem
         Caption = 'B'#244'nusCred'
-        object ratarVendas1: TMenuItem
+        object VendasBonuscred: TMenuItem
           Caption = 'Tratar Vendas'
-          OnClick = ratarVendas1Click
+          OnClick = VendasBonuscredClick
         end
-        object ratarPagamentoa1: TMenuItem
+        object PagamentosBonuscred: TMenuItem
           Caption = 'Tratar Pagamentos'
-          OnClick = ratarPagamentoa1Click
+          OnClick = PagamentosBonuscredClick
+        end
+        object AjustesBonuscred: TMenuItem
+          Caption = 'Tratar Ajustes'
+          OnClick = AjustesBonuscredClick
         end
       end
       object PagSeguro1: TMenuItem
