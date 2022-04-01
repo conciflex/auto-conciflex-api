@@ -3,7 +3,7 @@ object Principal: TPrincipal
   Top = 0
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'Auto Conciflex API'
-  ClientHeight = 420
+  ClientHeight = 429
   ClientWidth = 904
   Color = clGray
   Font.Charset = DEFAULT_CHARSET
@@ -22,7 +22,7 @@ object Principal: TPrincipal
     Top = 4
     Width = 675
     Height = 413
-    ActivePage = TabSheet3
+    ActivePage = TabSheet1
     DockSite = True
     TabOrder = 0
     object TabSheet1: TTabSheet
