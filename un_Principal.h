@@ -209,6 +209,8 @@ __published:	// IDE-managed Components
 	TMenuItem *Marcardadosbrutospa1;
 	TMenuItem *AjustesBonuscred;
 	TMenuItem *AutomaticoBonuscred;
+	TMenuItem *ratarCancelamentos1;
+	TMenuItem *Corrigirndeparcelarecebimentonico1;
 	void __fastcall FormCreate(TObject *Sender);
 	void __fastcall Button17Click(TObject *Sender);
 	void __fastcall Button6Click(TObject *Sender);
@@ -251,6 +253,8 @@ __published:	// IDE-managed Components
 	void __fastcall AjustesBonuscredClick(TObject *Sender);
 	void __fastcall Label77Click(TObject *Sender);
 	void __fastcall AutomaticoBonuscredClick(TObject *Sender);
+	void __fastcall ratarCancelamentos1Click(TObject *Sender);
+	void __fastcall Corrigirndeparcelarecebimentonico1Click(TObject *Sender);
 private:	// User declarations
 public:		// User declarations
 	__fastcall TPrincipal(TComponent* Owner);

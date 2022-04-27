@@ -3,8 +3,8 @@ object Principal: TPrincipal
   Top = 0
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'Auto Conciflex API'
-  ClientHeight = 429
-  ClientWidth = 904
+  ClientHeight = 422
+  ClientWidth = 681
   Color = clGray
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -102,7 +102,7 @@ object Principal: TPrincipal
         TabOrder = 2
       end
       object GroupBox1: TGroupBox
-        Left = 8
+        Left = 12
         Top = 204
         Width = 652
         Height = 176
@@ -110,7 +110,7 @@ object Principal: TPrincipal
         TabOrder = 3
         object Label1: TLabel
           Left = 12
-          Top = 45
+          Top = 41
           Width = 61
           Height = 13
           Caption = 'PROCESSO:'
@@ -123,13 +123,13 @@ object Principal: TPrincipal
         end
         object Label2: TLabel
           Left = 12
-          Top = 62
+          Top = 60
           Width = 43
           Height = 13
           Caption = 'Processo'
         end
         object Label4: TLabel
-          Left = 12
+          Left = 9
           Top = 79
           Width = 64
           Height = 13
@@ -189,7 +189,7 @@ object Principal: TPrincipal
           Caption = '0'
         end
         object Label11: TLabel
-          Left = 13
+          Left = 12
           Top = 14
           Width = 61
           Height = 13
@@ -203,7 +203,7 @@ object Principal: TPrincipal
         end
         object Label21: TLabel
           Left = 12
-          Top = 30
+          Top = 27
           Width = 43
           Height = 13
           Caption = 'Processo'
@@ -253,6 +253,10 @@ object Principal: TPrincipal
     object TabSheet2: TTabSheet
       Caption = 'Stone'
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object GroupBox4: TGroupBox
         Left = 3
         Top = 3
@@ -528,6 +532,10 @@ object Principal: TPrincipal
     object TabSheet3: TTabSheet
       Caption = 'PagSeguro'
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object GroupBox5: TGroupBox
         Left = 3
         Top = 0
@@ -831,6 +839,10 @@ object Principal: TPrincipal
     object TabSheet4: TTabSheet
       Caption = 'B'#244'nusCred'
       ImageIndex = 3
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object GroupBox2: TGroupBox
         Left = 3
         Top = 1
@@ -1182,6 +1194,10 @@ object Principal: TPrincipal
           Caption = 'Tratar Antecipa'#231#245'es'
           OnClick = TratarAntecipacoesPagSeguroClick
         end
+        object ratarCancelamentos1: TMenuItem
+          Caption = 'Tratar Cancelamentos'
+          OnClick = ratarCancelamentos1Click
+        end
       end
       object Stone2: TMenuItem
         Caption = 'Stone'
@@ -1263,6 +1279,10 @@ object Principal: TPrincipal
         object Vincularvendasepagamentosoperadora1: TMenuItem
           Caption = 'Vincular vendas e pagamentos operadora'
           OnClick = Vincularvendasepagamentosoperadora1Click
+        end
+        object Corrigirndeparcelarecebimentonico1: TMenuItem
+          Caption = 'Corrigir n'#186' de parcela recebimento '#250'nico'
+          OnClick = Corrigirndeparcelarecebimentonico1Click
         end
       end
       object Stone4: TMenuItem

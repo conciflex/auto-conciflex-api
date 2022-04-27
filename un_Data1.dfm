@@ -17,6 +17,7 @@ object Data1: TData1
     ResourceOptions.AutoReconnect = True
     UpdateOptions.AssignedValues = [uvLockWait, uvAutoCommitUpdates]
     UpdateOptions.AutoCommitUpdates = True
+    Connected = True
     LoginPrompt = False
     Transaction = FDTransaction1
     UpdateTransaction = FDTransaction1
@@ -857,6 +858,11 @@ object Data1: TData1
       AutoGenerateValue = arDefault
       FieldName = 'COD_ADQUIRENTE'
       Origin = 'COD_ADQUIRENTE'
+    end
+    object tbDomicilioClienteCOD_ESTABELECIMENTO: TIntegerField
+      AutoGenerateValue = arDefault
+      FieldName = 'COD_ESTABELECIMENTO'
+      Origin = 'COD_ESTABELECIMENTO'
     end
   end
   object DataControleAjustes: TDataSource

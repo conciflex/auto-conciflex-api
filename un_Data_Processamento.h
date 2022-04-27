@@ -150,6 +150,15 @@ __published:	// IDE-managed Components
 	TDateField *tbPagamentosDuplicidade2DATA_VENDA;
 	TStringField *tbPagamentosDuplicidade2CNPJ;
 	TLargeintField *tbPagamentosDuplicidade2total;
+	TDataSource *DataPagamentosDuplicidade3;
+	TFDQuery *tbPagamentosDuplicidade3;
+	TStringField *tbPagamentosDuplicidade3NSU;
+	TStringField *tbPagamentosDuplicidade3CODIGO_AUTORIZACAO;
+	TStringField *tbPagamentosDuplicidade3ID_LOJA;
+	TIntegerField *tbPagamentosDuplicidade3PARCELA;
+	TIntegerField *tbPagamentosDuplicidade3TOTAL_PARCELAS;
+	TDateField *tbPagamentosDuplicidade3DATA_PAGAMENTO;
+	TLargeintField *tbPagamentosDuplicidade3total;
 private:	// User declarations
 public:		// User declarations
 	__fastcall TDataProcessamento(TComponent* Owner);

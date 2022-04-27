@@ -1,7 +1,7 @@
 object DataProcessamento: TDataProcessamento
   OldCreateOrder = False
   Height = 250
-  Width = 431
+  Width = 603
   object DataClientes: TDataSource
     DataSet = tbClientes
     Left = 36
@@ -765,6 +765,67 @@ object DataProcessamento: TDataProcessamento
       Size = 45
     end
     object tbPagamentosDuplicidade2total: TLargeintField
+      AutoGenerateValue = arDefault
+      FieldName = 'total'
+      Origin = 'total'
+      ProviderFlags = []
+      ReadOnly = True
+    end
+  end
+  object DataPagamentosDuplicidade3: TDataSource
+    DataSet = tbPagamentosDuplicidade3
+    Left = 365
+    Top = 86
+  end
+  object tbPagamentosDuplicidade3: TFDQuery
+    CachedUpdates = True
+    Connection = Data1.Conexao
+    SQL.Strings = (
+      
+        'select NSU, CODIGO_AUTORIZACAO, ID_LOJA, PARCELA, TOTAL_PARCELAS' +
+        ', DATA_PAGAMENTO, count(pagamentos_operadoras.CODIGO) as total '
+      'from pagamentos_operadoras'
+      ' where CODIGO is null'
+      
+        'group by NSU, CODIGO_AUTORIZACAO, ID_LOJA, PARCELA, TOTAL_PARCEL' +
+        'AS, DATA_PAGAMENTO'
+      'HAVING COUNT(pagamentos_operadoras.CODIGO) > 1')
+    Left = 365
+    Top = 73
+    object tbPagamentosDuplicidade3NSU: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'NSU'
+      Origin = 'NSU'
+      Size = 50
+    end
+    object tbPagamentosDuplicidade3CODIGO_AUTORIZACAO: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'CODIGO_AUTORIZACAO'
+      Origin = 'CODIGO_AUTORIZACAO'
+      Size = 50
+    end
+    object tbPagamentosDuplicidade3ID_LOJA: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'ID_LOJA'
+      Origin = 'ID_LOJA'
+      Size = 25
+    end
+    object tbPagamentosDuplicidade3PARCELA: TIntegerField
+      AutoGenerateValue = arDefault
+      FieldName = 'PARCELA'
+      Origin = 'PARCELA'
+    end
+    object tbPagamentosDuplicidade3TOTAL_PARCELAS: TIntegerField
+      AutoGenerateValue = arDefault
+      FieldName = 'TOTAL_PARCELAS'
+      Origin = 'TOTAL_PARCELAS'
+    end
+    object tbPagamentosDuplicidade3DATA_PAGAMENTO: TDateField
+      AutoGenerateValue = arDefault
+      FieldName = 'DATA_PAGAMENTO'
+      Origin = 'DATA_PAGAMENTO'
+    end
+    object tbPagamentosDuplicidade3total: TLargeintField
       AutoGenerateValue = arDefault
       FieldName = 'total'
       Origin = 'total'

@@ -252,6 +252,7 @@ __published:	// IDE-managed Components
 	TFloatField *tbPagamentosOperadorasVALOR_TAXA_ANTECIPACAO;
 	TStringField *tbPagamentosOperadorasNUMERO_OPERACAO_ANTECIPACAO;
 	TDateField *tbPagamentosOperadorasDATA_CANCELAMENTO;
+	TIntegerField *tbDomicilioClienteCOD_ESTABELECIMENTO;
 private:	// User declarations
 public:		// User declarations
 	__fastcall TData1(TComponent* Owner);
