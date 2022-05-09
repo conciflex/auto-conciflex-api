@@ -3,7 +3,7 @@ object Principal: TPrincipal
   Top = 0
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'Auto Conciflex API'
-  ClientHeight = 422
+  ClientHeight = 420
   ClientWidth = 681
   Color = clGray
   Font.Charset = DEFAULT_CHARSET

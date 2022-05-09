@@ -2822,25 +2822,32 @@ Label6->Caption = 0;
                     {
                         if(Data1->tbDomicilioCliente->RecordCount > 1)
                         {
-                        //SELECIONA O DOMICÍLIO BANCÁRIO DO CLIENTE
-                        Edit1->Text = DataResumo->tbVendasOperadorasADQID->AsString;
-                        consulta = "select * from domicilio_cliente where domicilio_cliente.CODIGO is not null and domicilio_cliente.COD_ADQUIRENTE = '" + Edit1->Text + "'";
-                        Edit1->Text = DataResumo->tbVendasOperadorasCOD_CLIENTE->AsString;
-                        consulta += " and domicilio_cliente.COD_CLIENTE = '" + Edit1->Text + "'";
-                        consulta += " and domicilio_cliente.CNPJ = '" + DataResumo->tbVendasOperadorasCNPJ->AsString + "'";
-                        consulta += " and domicilio_cliente.COD_ESTABELECIMENTO = '" + DataResumo->tbVendasOperadorasESTABELECIMENTO->AsString + "'";
-
-                            if(Data1->tbDomicilioCliente->Active)
+                            if(DataResumo->tbClientesOperadoras->RecordCount == 1)
                             {
-                            Data1->tbDomicilioCliente->EmptyDataSet();
+                            //SELECIONA O DOMICÍLIO BANCÁRIO DO CLIENTE
+                            Edit1->Text = DataResumo->tbVendasOperadorasADQID->AsString;
+                            consulta = "select * from domicilio_cliente where domicilio_cliente.CODIGO is not null and domicilio_cliente.COD_ADQUIRENTE = '" + Edit1->Text + "'";
+                            Edit1->Text = DataResumo->tbVendasOperadorasCOD_CLIENTE->AsString;
+                            consulta += " and domicilio_cliente.COD_CLIENTE = '" + Edit1->Text + "'";
+                            consulta += " and domicilio_cliente.CNPJ = '" + DataResumo->tbVendasOperadorasCNPJ->AsString + "'";
+                            consulta += " and domicilio_cliente.COD_ESTABELECIMENTO = '" + DataResumo->tbClientesOperadorasCODIGO->AsString + "'";
+
+                                if(Data1->tbDomicilioCliente->Active)
+                                {
+                                Data1->tbDomicilioCliente->EmptyDataSet();
+                                }
+
+                            Data1->tbDomicilioCliente->Close();
+                            Data1->tbDomicilioCliente->SQL->Clear();
+                            Data1->tbDomicilioCliente->SQL->Add(consulta);
+                            Data1->tbDomicilioCliente->Open();
+
+                                if(Data1->tbDomicilioCliente->RecordCount != 1)
+                                {
+                                continuar_domicilio = false;
+                                }
                             }
-
-                        Data1->tbDomicilioCliente->Close();
-                        Data1->tbDomicilioCliente->SQL->Clear();
-                        Data1->tbDomicilioCliente->SQL->Add(consulta);
-                        Data1->tbDomicilioCliente->Open();
-
-                        	if(Data1->tbDomicilioCliente->RecordCount != 1)
+                            else
                             {
                             continuar_domicilio = false;
                             }
@@ -4841,7 +4848,7 @@ bool continuar_domicilio;
 //seleciona as vendas
 DataResumo->tbVendasOperadoras->Close();
 DataResumo->tbVendasOperadoras->SQL->Clear();
-DataResumo->tbVendasOperadoras->SQL->Add("select * from vendas where vendas.ADQID = 7 and vendas.BANCO is null");
+DataResumo->tbVendasOperadoras->SQL->Add("select * from vendas where vendas.ADQID = 7 and vendas.BANCO is null and vendas.DATA_VENDA >= '2022-01-01'");
 DataResumo->tbVendasOperadoras->Open();
 
 DataResumo->tbVendasOperadoras->Last();
@@ -4877,26 +4884,46 @@ Label7->Caption = final;
         {
             if(Data1->tbDomicilioCliente->RecordCount > 1)
             {
-            //SELECIONA O DOMICÍLIO BANCÁRIO DO CLIENTE
-            Edit1->Text = DataResumo->tbVendasOperadorasADQID->AsString;
-            consulta = "select * from domicilio_cliente where domicilio_cliente.CODIGO is not null and domicilio_cliente.COD_ADQUIRENTE = '" + Edit1->Text + "'";
-            Edit1->Text = DataResumo->tbVendasOperadorasCOD_CLIENTE->AsString;
-            consulta += " and domicilio_cliente.COD_CLIENTE = '" + Edit1->Text + "'";
-            consulta += " and domicilio_cliente.CNPJ = '" + DataResumo->tbVendasOperadorasCNPJ->AsString + "'";
-            consulta += " and domicilio_cliente.COD_ESTABELECIMENTO = '" + DataResumo->tbVendasOperadorasESTABELECIMENTO->AsString + "'";
+            //LOCALIZA O CLIENTE
+			consulta = "Select * from cliente_operadora where cliente_operadora.COD_ADQUIRENTE = 7 and cliente_operadora.CODIGO_ESTABELECIMENTO = '" + DataResumo->tbVendasOperadorasESTABELECIMENTO->AsString + "'";
 
-             	if(Data1->tbDomicilioCliente->Active)
+				if(DataResumo->tbClientesOperadoras->Active)
+				{
+				DataResumo->tbClientesOperadoras->EmptyDataSet();
+				}
+
+			DataResumo->tbClientesOperadoras->Close();
+			DataResumo->tbClientesOperadoras->SQL->Clear();
+			DataResumo->tbClientesOperadoras->SQL->Add(consulta);
+			DataResumo->tbClientesOperadoras->Open();
+
+				if(DataResumo->tbClientesOperadoras->RecordCount == 1)
                 {
-                Data1->tbDomicilioCliente->EmptyDataSet();
+                //SELECIONA O DOMICÍLIO BANCÁRIO DO CLIENTE
+                Edit1->Text = DataResumo->tbVendasOperadorasADQID->AsString;
+                consulta = "select * from domicilio_cliente where domicilio_cliente.CODIGO is not null and domicilio_cliente.COD_ADQUIRENTE = '" + Edit1->Text + "'";
+                Edit1->Text = DataResumo->tbVendasOperadorasCOD_CLIENTE->AsString;
+                consulta += " and domicilio_cliente.COD_CLIENTE = '" + Edit1->Text + "'";
+                consulta += " and domicilio_cliente.CNPJ = '" + DataResumo->tbVendasOperadorasCNPJ->AsString + "'";
+                consulta += " and domicilio_cliente.COD_ESTABELECIMENTO = '" + DataResumo->tbClientesOperadorasCODIGO->AsString + "'";
+
+                    if(Data1->tbDomicilioCliente->Active)
+                    {
+                    Data1->tbDomicilioCliente->EmptyDataSet();
+                    }
+
+                Data1->tbDomicilioCliente->Close();
+                Data1->tbDomicilioCliente->SQL->Clear();
+                Data1->tbDomicilioCliente->SQL->Add(consulta);
+                Data1->tbDomicilioCliente->Open();
+
+                    if(Data1->tbDomicilioCliente->RecordCount != 1)
+                        continuar_domicilio = false;
                 }
-
-            Data1->tbDomicilioCliente->Close();
-            Data1->tbDomicilioCliente->SQL->Clear();
-            Data1->tbDomicilioCliente->SQL->Add(consulta);
-            Data1->tbDomicilioCliente->Open();
-
-            	if(Data1->tbDomicilioCliente->RecordCount != 1)
-                    continuar_domicilio = false;
+                else
+                {
+                continuar_domicilio = false;
+                }
             }
 
             if(continuar_domicilio)
