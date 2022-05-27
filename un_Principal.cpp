@@ -1073,6 +1073,16 @@ TDate ontem  = Date() - 1;
                                     hora_autorizacao += auxiliar.SubString(11, 2) + ":";
                                     hora_autorizacao += auxiliar.SubString(13, 2);
 
+                                    auxiliar = node->ChildNodes->FindNode("CaptureLocalDateTime")->Text;
+
+                                    data_captura = auxiliar.SubString(7, 2) + "/";
+                                    data_captura += auxiliar.SubString(5, 2) + "/";
+                                    data_captura += auxiliar.SubString(0, 4);
+
+                                    hora_captura = auxiliar.SubString(9, 2) + ":";
+                                    hora_captura += auxiliar.SubString(11, 2) + ":";
+                                    hora_captura += auxiliar.SubString(13, 2);
+
                                         if(pagamentos > 0)
                                         {
                                         //<Installments>
@@ -1144,6 +1154,8 @@ TDate ontem  = Date() - 1;
                                                 Data2->tbPagamentoStoneCODIGO_TRANSACAO->Value = codigo_transacao;
                                                 Data2->tbPagamentoStoneDATA_AUTORIZACAO->Value = StrToDate(data_autorizacao);
                                                 Data2->tbPagamentoStoneHORA_AUTORIZACAO->Value = StrToTime(hora_autorizacao);
+                                                Data2->tbPagamentoStoneDATA_CAPTURA->Value = StrToDate(data_captura);
+                                                Data2->tbPagamentoStoneHORA_CAPTURA->Value = StrToTime(hora_captura);
 
                                                     if(desconto_antecipacao > 0)
                                                     {
@@ -2695,7 +2707,7 @@ Label6->Caption = 0;
             consulta += " and vendas.NSU = '" + nsu + "'";
             consulta += " and vendas.AUTORIZACAO = '" + autorizacao + "'";
 
-            Edit1->Text = Data2->tbVendaStoneDATA_AUTORIZACAO->AsString.SubString(7,4) + "-" + Data2->tbVendaStoneDATA_AUTORIZACAO->AsString.SubString(4,2) + "-" + Data2->tbVendaStoneDATA_AUTORIZACAO->AsString.SubString(0,2);
+            Edit1->Text = Data2->tbVendaStoneDATA_CAPTURA->AsString.SubString(7,4) + "-" + Data2->tbVendaStoneDATA_CAPTURA->AsString.SubString(4,2) + "-" + Data2->tbVendaStoneDATA_CAPTURA->AsString.SubString(0,2);
 
             consulta += " and vendas.DATA_VENDA = '" + Edit1->Text + "'";
 
@@ -2762,8 +2774,8 @@ Label6->Caption = 0;
                 DataResumo->tbVendasOperadorasADQUIRENTE->Value = "Stone";
 
                 DataResumo->tbVendasOperadorasDATA_PREVISTA_PAGTO->Value = Data2->tbVendaStonePREVISAO_PAGAMENTO->AsDateTime;
-                DataResumo->tbVendasOperadorasDATA_VENDA->Value = Data2->tbVendaStoneDATA_AUTORIZACAO->AsDateTime;
-                DataResumo->tbVendasOperadorasHORA_TRANSACAO->Value = Data2->tbVendaStoneHORA_AUTORIZACAO->AsDateTime;
+                DataResumo->tbVendasOperadorasDATA_VENDA->Value = Data2->tbVendaStoneDATA_CAPTURA->AsDateTime;
+                DataResumo->tbVendasOperadorasHORA_TRANSACAO->Value = Data2->tbVendaStoneHORA_CAPTURA->AsDateTime;
                 DataResumo->tbVendasOperadorasCARTAO->Value = Data2->tbVendaStoneNUM_CARTAO->AsString;
                 DataResumo->tbVendasOperadorasAUTORIZACAO->Value = autorizacao;
                 DataResumo->tbVendasOperadorasNSU->Value = nsu;
@@ -3297,8 +3309,8 @@ Label6->Caption = 0;
 
                 DataResumo->tbPagamentosOperadorasDATA_PREV_PAG_ORIGINAL->Value = Data2->tbPagamentoStonePAGAMENTO_REAL_ANTECIPADO->AsDateTime;
                 DataResumo->tbPagamentosOperadorasDATA_PAGAMENTO->Value = Data2->tbPagamentoStonePAGAMENTO_PARCELA->AsDateTime;
-                DataResumo->tbPagamentosOperadorasDATA_VENDA->Value = Data2->tbPagamentoStoneDATA_AUTORIZACAO->AsDateTime;
-                DataResumo->tbPagamentosOperadorasHORA_VENDA->Value = Data2->tbPagamentoStoneHORA_AUTORIZACAO->AsDateTime;
+                DataResumo->tbPagamentosOperadorasDATA_VENDA->Value = Data2->tbPagamentoStoneDATA_CAPTURA->AsDateTime;
+                DataResumo->tbPagamentosOperadorasHORA_VENDA->Value = Data2->tbPagamentoStoneHORA_CAPTURA->AsDateTime;
 
                 /*PAGAMENTO NORMAL
                 1 - NORMAL
@@ -3568,7 +3580,7 @@ Label6->Caption = 0;
                 consulta += " and vendas.PARCELA = '" + DataResumo->tbPagamentosOperadorasPARCELA->AsString + "'";
                 consulta += " and vendas.NSU = '" + nsu + "'";
 
-                Edit1->Text = Data2->tbPagamentoStoneDATA_AUTORIZACAO->AsString.SubString(7,4) + "-" + Data2->tbPagamentoStoneDATA_AUTORIZACAO->AsString.SubString(4,2) + "-" + Data2->tbPagamentoStoneDATA_AUTORIZACAO->AsString.SubString(0,2);
+                Edit1->Text = Data2->tbPagamentoStoneDATA_CAPTURA->AsString.SubString(7,4) + "-" + Data2->tbPagamentoStoneDATA_CAPTURA->AsString.SubString(4,2) + "-" + Data2->tbPagamentoStoneDATA_CAPTURA->AsString.SubString(0,2);
 
                 consulta += " and vendas.DATA_VENDA = '" + Edit1->Text + "'";
 
@@ -3823,8 +3835,8 @@ Label6->Caption = 0;
 
                     DataResumo->tbPagamentosOperadorasDATA_PREV_PAG_ORIGINAL->Value = Data2->tbPagamentoStonePAGAMENTO_PARCELA->AsDateTime;
                     DataResumo->tbPagamentosOperadorasDATA_PAGAMENTO->Value = DataResumo->tbPagamentosOperadorasDATA_PREV_PAG_ORIGINAL->AsDateTime;
-                    DataResumo->tbPagamentosOperadorasDATA_VENDA->Value = Data2->tbPagamentoStoneDATA_AUTORIZACAO->AsDateTime;
-                    DataResumo->tbPagamentosOperadorasHORA_VENDA->Value = Data2->tbPagamentoStoneHORA_AUTORIZACAO->AsDateTime;
+                    DataResumo->tbPagamentosOperadorasDATA_VENDA->Value = Data2->tbPagamentoStoneDATA_CAPTURA->AsDateTime;
+                    DataResumo->tbPagamentosOperadorasHORA_VENDA->Value = Data2->tbPagamentoStoneHORA_CAPTURA->AsDateTime;
 
                     /*PAGAMENTO NORMAL
                     1 - NORMAL
@@ -4099,7 +4111,7 @@ Label6->Caption = 0;
                     consulta += " and vendas.PARCELA = '" + DataResumo->tbPagamentosOperadorasPARCELA->AsString + "'";
                     consulta += " and vendas.NSU = '" + nsu + "'";
 
-                    Edit1->Text = Data2->tbPagamentoStoneDATA_AUTORIZACAO->AsString.SubString(7,4) + "-" + Data2->tbPagamentoStoneDATA_AUTORIZACAO->AsString.SubString(4,2) + "-" + Data2->tbPagamentoStoneDATA_AUTORIZACAO->AsString.SubString(0,2);
+                    Edit1->Text = Data2->tbPagamentoStoneDATA_CAPTURA->AsString.SubString(7,4) + "-" + Data2->tbPagamentoStoneDATA_CAPTURA->AsString.SubString(4,2) + "-" + Data2->tbPagamentoStoneDATA_CAPTURA->AsString.SubString(0,2);
 
                     consulta += " and vendas.DATA_VENDA = '" + Edit1->Text + "'";
 
@@ -10673,6 +10685,93 @@ Application->ProcessMessages();
         }
 
     DataProcessamento->tbPagamentosDuplicidade3->Next();
+    Label6->Caption = contador + 1;
+    Application->ProcessMessages();
+    }
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TPrincipal::Atualizardatadevenda1Click(TObject *Sender)
+{
+Label21->Caption = "Atualizando data de venda - Stone";
+Label2->Caption = "";
+Label10->Caption = 0;
+Label7->Caption = 0;
+Label6->Caption = 0;
+
+AnsiString consulta;
+bool continuar_domicilio;
+
+//seleciona as vendas
+DataResumo->tbVendasOperadoras->Close();
+DataResumo->tbVendasOperadoras->SQL->Clear();
+DataResumo->tbVendasOperadoras->SQL->Add("select * from vendas where vendas.ADQID = 7 and vendas.COD_CLIENTE = 910");
+DataResumo->tbVendasOperadoras->Open();
+
+DataResumo->tbVendasOperadoras->Last();
+int final = DataResumo->tbVendasOperadoras->RecordCount;
+DataResumo->tbVendasOperadoras->First();
+
+ProgressBar1->Max = final;
+ProgressBar1->Position = 0;
+Label7->Caption = final;
+
+    for(int contador = 0; contador < final; contador++)
+    {
+    //SELECIONA O COMPROVANTE
+    consulta = "SELECT * FROM edi_stone_comprovante_venda where edi_stone_comprovante_venda.NUM_PARCELA = '" + DataResumo->tbVendasOperadorasPARCELA->AsString + "'";
+    consulta += " and edi_stone_comprovante_venda.NSU = '" + DataResumo->tbVendasOperadorasNSU->AsString + "'";
+    consulta += " and edi_stone_comprovante_venda.CODIGO_AUTORIZACAO = '" + DataResumo->tbVendasOperadorasAUTORIZACAO->AsString + "'";
+
+    Edit1->Text = formatarData(3, DataResumo->tbVendasOperadorasDATA_VENDA->AsString);
+    consulta += " and edi_stone_comprovante_venda.DATA_AUTORIZACAO = '" + Edit1->Text + "'";
+
+    Data2->tbVendaStone->Close();
+    Data2->tbVendaStone->SQL->Clear();
+    Data2->tbVendaStone->SQL->Add(consulta);
+    Data2->tbVendaStone->Open();
+
+        if(Data2->tbVendaStone->RecordCount == 1)
+        {
+        DataResumo->tbVendasOperadoras->Edit();
+        DataResumo->tbVendasOperadorasDATA_VENDA->Value = Data2->tbVendaStoneDATA_CAPTURA->AsDateTime;
+        DataResumo->tbVendasOperadorasHORA_TRANSACAO->Value = Data2->tbVendaStoneHORA_CAPTURA->AsDateTime;
+        DataResumo->tbVendasOperadoras->ApplyUpdates(0);
+
+        	if(DataResumo->tbVendasOperadorasVINCULADO_PAGAMENTO->AsString == 'S')
+            {
+           	//TENTA LOCALIZAR O PAGAMENTO
+            consulta = "SELECT * FROM pagamentos_operadoras where pagamentos_operadoras.CNPJ = '" + DataResumo->tbVendasOperadorasCNPJ->AsString + "'";
+            consulta += " and pagamentos_operadoras.COD_ADQUIRENTE = 7";
+
+            consulta += " and pagamentos_operadoras.PARCELA = '" + DataResumo->tbVendasOperadorasPARCELA->AsString + "'";
+            consulta += " and pagamentos_operadoras.NSU = '" + DataResumo->tbVendasOperadorasNSU->AsString + "'";
+
+            Edit1->Text = formatarData(3, Data2->tbVendaStoneDATA_AUTORIZACAO->AsString);
+            consulta += " and pagamentos_operadoras.DATA_VENDA = '" + Edit1->Text + "'";
+
+                if(DataResumo->tbPagamentosOperadoras->Active)
+                {
+                DataResumo->tbPagamentosOperadoras->EmptyDataSet();
+                }
+
+            DataResumo->tbPagamentosOperadoras->Close();
+            DataResumo->tbPagamentosOperadoras->SQL->Clear();
+            DataResumo->tbPagamentosOperadoras->SQL->Add(consulta);
+            DataResumo->tbPagamentosOperadoras->Open();
+
+                if(DataResumo->tbPagamentosOperadoras->RecordCount == 1)
+                {
+                DataResumo->tbPagamentosOperadoras->Edit();
+                DataResumo->tbPagamentosOperadorasDATA_VENDA->Value = Data2->tbVendaStoneDATA_CAPTURA->AsDateTime;
+                DataResumo->tbPagamentosOperadorasHORA_VENDA->Value = Data2->tbVendaStoneHORA_CAPTURA->AsDateTime;
+                DataResumo->tbPagamentosOperadoras->ApplyUpdates(0);
+                }
+            }
+        }
+
+    DataResumo->tbVendasOperadoras->Next();
+
     Label6->Caption = contador + 1;
     Application->ProcessMessages();
     }

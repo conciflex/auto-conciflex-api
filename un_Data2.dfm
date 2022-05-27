@@ -477,6 +477,16 @@ object Data2: TData2
       Origin = 'ID_PAGAMENTO'
       Size = 30
     end
+    object tbPagamentoStoneDATA_CAPTURA: TDateField
+      AutoGenerateValue = arDefault
+      FieldName = 'DATA_CAPTURA'
+      Origin = 'DATA_CAPTURA'
+    end
+    object tbPagamentoStoneHORA_CAPTURA: TTimeField
+      AutoGenerateValue = arDefault
+      FieldName = 'HORA_CAPTURA'
+      Origin = 'HORA_CAPTURA'
+    end
   end
   object DataCancelamentoStone: TDataSource
     DataSet = tbCancelamentoStone
@@ -613,6 +623,7 @@ object Data2: TData2
       FieldName = 'CODIGO'
       Origin = 'CODIGO'
       ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = True
     end
     object tbBonuscredVendaOPERADORA: TStringField
       AutoGenerateValue = arDefault
@@ -761,6 +772,7 @@ object Data2: TData2
       FieldName = 'CODIGO'
       Origin = 'CODIGO'
       ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = True
     end
     object tbBonuscredPagamentoOPERADORA: TStringField
       AutoGenerateValue = arDefault
@@ -914,6 +926,7 @@ object Data2: TData2
       FieldName = 'CODIGO'
       Origin = 'CODIGO'
       ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = True
     end
     object tbBonuscredExtraOPERADORA: TStringField
       AutoGenerateValue = arDefault
@@ -1018,6 +1031,7 @@ object Data2: TData2
       FieldName = 'CODIGO'
       Origin = 'CODIGO'
       ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = True
     end
     object tbBonuscredCadastroCOD_CLIENTE: TSingleField
       AutoGenerateValue = arDefault

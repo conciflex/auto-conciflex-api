@@ -1307,6 +1307,10 @@ object Principal: TPrincipal
           Caption = 'Preencher dados banc'#225'rios nos pagamentos'
           OnClick = Preencherdadosbancriosnospagamentos1Click
         end
+        object Atualizardatadevenda1: TMenuItem
+          Caption = 'Atualizar data de venda'
+          OnClick = Atualizardatadevenda1Click
+        end
       end
     end
   end
