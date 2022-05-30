@@ -3,7 +3,7 @@ object Principal: TPrincipal
   Top = 0
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'Auto Conciflex API'
-  ClientHeight = 420
+  ClientHeight = 422
   ClientWidth = 681
   Color = clGray
   Font.Charset = DEFAULT_CHARSET
@@ -1194,9 +1194,9 @@ object Principal: TPrincipal
           Caption = 'Tratar Antecipa'#231#245'es'
           OnClick = TratarAntecipacoesPagSeguroClick
         end
-        object ratarCancelamentos1: TMenuItem
+        object TratarCancelamentosPagSeguro: TMenuItem
           Caption = 'Tratar Cancelamentos'
-          OnClick = ratarCancelamentos1Click
+          OnClick = TratarCancelamentosPagSeguroClick
         end
       end
       object Stone2: TMenuItem

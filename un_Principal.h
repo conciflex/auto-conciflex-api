@@ -209,7 +209,7 @@ __published:	// IDE-managed Components
 	TMenuItem *Marcardadosbrutospa1;
 	TMenuItem *AjustesBonuscred;
 	TMenuItem *AutomaticoBonuscred;
-	TMenuItem *ratarCancelamentos1;
+	TMenuItem *TratarCancelamentosPagSeguro;
 	TMenuItem *Corrigirndeparcelarecebimentonico1;
 	TMenuItem *Atualizardatadevenda1;
 	void __fastcall FormCreate(TObject *Sender);
@@ -254,7 +254,7 @@ __published:	// IDE-managed Components
 	void __fastcall AjustesBonuscredClick(TObject *Sender);
 	void __fastcall Label77Click(TObject *Sender);
 	void __fastcall AutomaticoBonuscredClick(TObject *Sender);
-	void __fastcall ratarCancelamentos1Click(TObject *Sender);
+	void __fastcall TratarCancelamentosPagSeguroClick(TObject *Sender);
 	void __fastcall Corrigirndeparcelarecebimentonico1Click(TObject *Sender);
 	void __fastcall Atualizardatadevenda1Click(TObject *Sender);
 private:	// User declarations

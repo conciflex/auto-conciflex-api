@@ -5579,6 +5579,7 @@ Button2Click(Sender);
 TratarVendasPagSeguroClick(Sender);
 TratarPagamentosPagSeguroClick(Sender);
 TratarAntecipacoesPagSeguroClick(Sender);
+TratarCancelamentosPagSeguroClick(Sender);
 }
 //---------------------------------------------------------------------------
 
@@ -10361,7 +10362,7 @@ AjustesBonuscredClick(Sender);
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TPrincipal::ratarCancelamentos1Click(TObject *Sender)
+void __fastcall TPrincipal::TratarCancelamentosPagSeguroClick(TObject *Sender)
 {
 AnsiString consulta, cnpj_cliente, atualiza, data;
 int final_parcelas;
@@ -10565,6 +10566,104 @@ Application->ProcessMessages();
 	{
 	Data3->tbSeguroVenda->EmptyDataSet();
 	}
+
+//SELECIONA TODOS OS PAGAMENTOS DA PAGSEGURO EM TABELA BRUTA AINDA NÃO TRATADOS
+Data3->tbSeguroPagamento->Close();
+Data3->tbSeguroPagamento->SQL->Clear();
+Data3->tbSeguroPagamento->SQL->Add("select * from edi_pagseguro_pagamento where edi_pagseguro_pagamento.TIPO_EVENTO = '6' and edi_pagseguro_pagamento.PLANO > 0 and edi_pagseguro_pagamento.PARCELA = 0 and edi_pagseguro_pagamento.TRATADO = 'N'");
+Data3->tbSeguroPagamento->Open();
+
+Data3->tbSeguroPagamento->Last();
+final = Data3->tbSeguroPagamento->RecordCount;
+Data3->tbSeguroPagamento->First();
+
+Label21->Caption = "Tratando Arquivos PagSeguro";
+Label2->Caption = "Tratando Cancelamento de Pagamento";
+Label10->Caption = 0;
+Label6->Caption = 0;
+Label7->Caption = final;
+
+ProgressBar1->Max = final;
+ProgressBar1->Position = 0;
+
+Application->ProcessMessages();
+
+	for(int contador = 0; contador < final; contador++)
+	{
+    final_parcelas =  Data3->tbSeguroPagamentoQUANTIDADE_PARCELA->AsInteger;
+
+        if(final_parcelas == 0)
+        {
+        final_parcelas = 1;
+        }
+
+        for(int contador_parcelas = 1; contador_parcelas <= final_parcelas; contador_parcelas++)
+        {
+        //TENTA LOCALIZAR A VENDA
+        consulta = "select * from vendas where vendas.CODIGO is not null";
+        consulta += " and vendas.ADQID = 108";
+
+        Edit1->Text = Data3->tbSeguroPagamentoESTABELECIMENTO->AsString;
+        consulta += " and vendas.ESTABELECIMENTO = '" + Edit1->Text + "'";
+
+            //PIX
+            if(Data3->tbSeguroPagamentoMEIO_PAGAMENTO->AsInteger == 11)
+            {
+            consulta += " and vendas.NSU = '" + Data3->tbSeguroPagamentoCODIGO_TRANSACAO->AsString + "'";
+            consulta += " and vendas.AUTORIZACAO = '" + Data3->tbSeguroPagamentoCODIGO_TRANSACAO->AsString + "'";
+            }
+            else
+            {
+            consulta += " and vendas.NSU = '" + Data3->tbSeguroPagamentoNSU->AsString + "'";
+            consulta += " and vendas.AUTORIZACAO = '" + Data3->tbSeguroPagamentoCODIGO_AUTORIZACAO->AsString + "'";
+            }
+
+        Edit1->Text = contador_parcelas;
+        consulta += " and vendas.PARCELA = '" + Edit1->Text + "'";
+
+        Edit1->Text = formatarData(3, Data3->tbSeguroPagamentoDATA_INICIAL_TRANSACAO->AsString);
+        consulta += " and vendas.DATA_VENDA = '" + Edit1->Text + "'";
+
+
+            if(DataResumo->tbVendasOperadoras->Active)
+            {
+            DataResumo->tbVendasOperadoras->EmptyDataSet();
+            }
+
+        DataResumo->tbVendasOperadoras->Close();
+        DataResumo->tbVendasOperadoras->SQL->Clear();
+        DataResumo->tbVendasOperadoras->SQL->Add(consulta);
+        DataResumo->tbVendasOperadoras->Open();
+
+            if(DataResumo->tbVendasOperadoras->RecordCount == 1)
+            {
+            DataResumo->tbVendasOperadoras->Edit();
+
+            DataResumo->tbVendasOperadorasCOD_STATUS_FINANCEIRO->Value = 3; // CANCELADO
+            DataResumo->tbVendasOperadorasVINCULADO_PAGAMENTO->Value = 'N';
+            DataResumo->tbVendasOperadorasDATA_CANCELAMENTO->Value = Data3->tbSeguroPagamentoDATA_VENDA_AJUSTE->AsDateTime;
+
+            DataResumo->tbVendasOperadoras->ApplyUpdates(0);
+            }
+        }
+
+    Data3->tbSeguroPagamento->Edit();
+    Data3->tbSeguroPagamentoTRATADO->Value = 'S';
+    Data3->tbSeguroPagamento->ApplyUpdates(0);
+
+    Data3->tbSeguroPagamento->Next();
+
+    Label6->Caption = contador+1;
+    ProgressBar1->Position = contador+1;
+
+    Application->ProcessMessages();
+    }
+
+	if(Data3->tbSeguroPagamento->Active)
+	{
+	Data3->tbSeguroPagamento->EmptyDataSet();
+	}
+
 
 Button6Click(Sender);
 
