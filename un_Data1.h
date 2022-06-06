@@ -253,6 +253,9 @@ __published:	// IDE-managed Components
 	TStringField *tbPagamentosOperadorasNUMERO_OPERACAO_ANTECIPACAO;
 	TDateField *tbPagamentosOperadorasDATA_CANCELAMENTO;
 	TIntegerField *tbDomicilioClienteCOD_ESTABELECIMENTO;
+	void __fastcall ConexaoError(TObject *ASender, TObject *AInitiator, Exception *&AException);
+
+
 private:	// User declarations
 public:		// User declarations
 	__fastcall TData1(TComponent* Owner);

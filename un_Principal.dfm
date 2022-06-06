@@ -4,7 +4,7 @@ object Principal: TPrincipal
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'Auto Conciflex API'
   ClientHeight = 422
-  ClientWidth = 681
+  ClientWidth = 682
   Color = clGray
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -253,10 +253,6 @@ object Principal: TPrincipal
     object TabSheet2: TTabSheet
       Caption = 'Stone'
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object GroupBox4: TGroupBox
         Left = 3
         Top = 3
@@ -532,10 +528,6 @@ object Principal: TPrincipal
     object TabSheet3: TTabSheet
       Caption = 'PagSeguro'
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object GroupBox5: TGroupBox
         Left = 3
         Top = 0
@@ -839,10 +831,6 @@ object Principal: TPrincipal
     object TabSheet4: TTabSheet
       Caption = 'B'#244'nusCred'
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object GroupBox2: TGroupBox
         Left = 3
         Top = 1

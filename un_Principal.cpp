@@ -1552,14 +1552,14 @@ TDate ontem  = Date() - 1;
 
                                             Data2->tbEventoStone->ApplyUpdates(0);
 
-                                            atualiza = "update edi_stone_evento_financeiro set edi_stone_evento_financeiro.VALOR_EVENTO = ROUND(VALOR_EVENTO, 2)";
+											atualiza = "update edi_stone_evento_financeiro set edi_stone_evento_financeiro.VALOR_EVENTO = ROUND(VALOR_EVENTO, 2)";
                                             atualiza += " where edi_stone_evento_financeiro.CODIGO = " + Data2->tbEventoStoneCODIGO->AsString;
 
-                                            Data1->tbExcluir->Close();
-                                            Data1->tbExcluir->SQL->Clear();
-                                            Data1->tbExcluir->SQL->Add(atualiza);
-                                            Data1->tbExcluir->ExecSQL();
-                                            }
+											Data1->tbExcluir->Close();
+											Data1->tbExcluir->SQL->Clear();
+											Data1->tbExcluir->SQL->Add(atualiza);
+											Data1->tbExcluir->ExecSQL();
+											}
                                         }
 
 
@@ -1575,9 +1575,26 @@ TDate ontem  = Date() - 1;
                                         Data2->tbEventoStone->Open();
 
                                             if(Data2->tbEventoStone->RecordCount == 1)
-                                            {
-                                            consulta = "select * from edi_stone_comprovante_pagamento where edi_stone_comprovante_pagamento.CODIGO is not null";
-                                            consulta += " and edi_stone_comprovante_pagamento.ID_PAGAMENTO = '" + Data2->tbEventoStoneID_PAGAMENTO->AsString + "'";
+											{
+											atualiza = "update edi_stone_comprovante_pagamento set edi_stone_comprovante_pagamento.AGENCIA = '" + agencia + "'";
+											atualiza += ", edi_stone_comprovante_pagamento.ARRANJO_PAGAMENTO = '" + IntToStr(arranjo_pagamento) + "'";
+											atualiza += ", edi_stone_comprovante_pagamento.BANCO = '" + IntToStr(banco) + "'";
+											atualiza += ", edi_stone_comprovante_pagamento.NUM_CONTA = '" + num_conta + "'";
+											atualiza += ", edi_stone_comprovante_pagamento.ID_PAGAMENTO = '" + id_pagamento + "'";
+											atualiza += " where edi_stone_comprovante_pagamento.ID_PAGAMENTO = '" + Data2->tbEventoStoneID_PAGAMENTO->AsString + "'";
+
+											Data1->tbExcluir->Close();
+											Data1->tbExcluir->SQL->Clear();
+											Data1->tbExcluir->SQL->Add(atualiza);
+											Data1->tbExcluir->ExecSQL();
+
+											Data2->tbEventoStone->Edit();
+                                            Data2->tbEventoStoneID_PAGAMENTO->Value = id_pagamento;
+											Data2->tbEventoStone->ApplyUpdates(0);
+
+
+											/*consulta = "select * from edi_stone_comprovante_pagamento where edi_stone_comprovante_pagamento.CODIGO is not null";
+											consulta += " and edi_stone_comprovante_pagamento.ID_PAGAMENTO = '" + Data2->tbEventoStoneID_PAGAMENTO->AsString + "'";
 
                                             Data2->tbPagamentoStone->Close();
                                             Data2->tbPagamentoStone->SQL->Clear();
@@ -1611,7 +1628,7 @@ TDate ontem  = Date() - 1;
 
                                             Data2->tbEventoStone->Edit();
                                             Data2->tbEventoStoneID_PAGAMENTO->Value = id_pagamento;
-                                            Data2->tbEventoStone->ApplyUpdates(0);
+											Data2->tbEventoStone->ApplyUpdates(0);    */
                                             }
                                         }
 
@@ -1668,17 +1685,29 @@ TDate ontem  = Date() - 1;
 
                                         if(id_pagamento != "")
                                         {
-                                        consulta = "select * from edi_stone_comprovante_pagamento where edi_stone_comprovante_pagamento.CODIGO is not null";
+										/*consulta = "select * from edi_stone_comprovante_pagamento where edi_stone_comprovante_pagamento.CODIGO is not null";
                                         consulta += " and edi_stone_comprovante_pagamento.ID_PAGAMENTO = " + id_pagamento;
 
                                         Data2->tbPagamentoStone->Close();
                                         Data2->tbPagamentoStone->SQL->Clear();
                                         Data2->tbPagamentoStone->SQL->Add(consulta);
-                                        Data2->tbPagamentoStone->Open();
+										Data2->tbPagamentoStone->Open();  */
 
-                                            if(Data2->tbPagamentoStone->RecordCount >= 1)
-                                            {
-                                            Data2->tbPagamentoStone->Last();
+											//if(Data2->tbPagamentoStone->RecordCount >= 1)
+											//{
+											atualiza = "update edi_stone_comprovante_pagamento set edi_stone_comprovante_pagamento.AGENCIA = '" + agencia + "'";
+											atualiza += ", edi_stone_comprovante_pagamento.ARRANJO_PAGAMENTO = '" + IntToStr(arranjo_pagamento) + "'";
+											atualiza += ", edi_stone_comprovante_pagamento.BANCO = '" + IntToStr(banco) + "'";
+											atualiza += ", edi_stone_comprovante_pagamento.NUM_CONTA = '" + num_conta + "'";
+											atualiza += " where edi_stone_comprovante_pagamento.ID_PAGAMENTO = '" + id_pagamento + "'";
+
+											Data1->tbExcluir->Close();
+											Data1->tbExcluir->SQL->Clear();
+											Data1->tbExcluir->SQL->Add(atualiza);
+											Data1->tbExcluir->ExecSQL();
+
+
+											/*Data2->tbPagamentoStone->Last();
                                             int final3 = Data2->tbPagamentoStone->RecordCount;
                                             Data2->tbPagamentoStone->First();
 
@@ -1688,8 +1717,8 @@ TDate ontem  = Date() - 1;
 
                                                 Data2->tbPagamentoStone->Edit();
 
-                                                Data2->tbPagamentoStoneAGENCIA->Value = agencia;
-                                                Data2->tbPagamentoStoneARRANJO_PAGAMENTO->Value = arranjo_pagamento;
+												Data2->tbPagamentoStoneAGENCIA->Value = agencia;
+												Data2->tbPagamentoStoneARRANJO_PAGAMENTO->Value = arranjo_pagamento;
                                                 Data2->tbPagamentoStoneBANCO->Value = banco;
                                                 Data2->tbPagamentoStoneNUM_CONTA->Value = num_conta;
 
@@ -1697,12 +1726,24 @@ TDate ontem  = Date() - 1;
 
                                                 Data2->tbPagamentoStone->Next();
                                                 Application->ProcessMessages();
-                                                }
-                                            }
+												}   */
+											//}
 
 
-                                        consulta = "select * from edi_stone_evento_financeiro where edi_stone_evento_financeiro.CODIGO is not null";
-                                        consulta += " and edi_stone_evento_financeiro.ID_PAGAMENTO = " + id_pagamento;
+										atualiza = "update edi_stone_evento_financeiro set edi_stone_evento_financeiro.AGENCIA = '" + agencia + "'";
+										atualiza += ", edi_stone_evento_financeiro.ARRANJO_PAGAMENTO = '" + IntToStr(arranjo_pagamento) + "'";
+										atualiza += ", edi_stone_evento_financeiro.BANCO = '" + IntToStr(banco) + "'";
+										atualiza += ", edi_stone_evento_financeiro.NUM_CONTA = '" + num_conta + "'";
+										atualiza += " where edi_stone_evento_financeiro.ID_PAGAMENTO = '" + id_pagamento + "'";
+
+										Data1->tbExcluir->Close();
+										Data1->tbExcluir->SQL->Clear();
+										Data1->tbExcluir->SQL->Add(atualiza);
+										Data1->tbExcluir->ExecSQL();
+
+
+										/*consulta = "select * from edi_stone_evento_financeiro where edi_stone_evento_financeiro.CODIGO is not null";
+										consulta += " and edi_stone_evento_financeiro.ID_PAGAMENTO = " + id_pagamento;
 
                                         Data2->tbEventoStone->Close();
                                         Data2->tbEventoStone->SQL->Clear();
@@ -1722,7 +1763,7 @@ TDate ontem  = Date() - 1;
                                                 Data2->tbEventoStone->Edit();
 
                                                 Data2->tbEventoStoneAGENCIA->Value = agencia;
-                                                Data2->tbEventoStoneARRANJO_PAGAMENTO->Value = arranjo_pagamento;
+												Data2->tbEventoStoneARRANJO_PAGAMENTO->Value = arranjo_pagamento;
                                                 Data2->tbEventoStoneBANCO->Value = banco;
                                                 Data2->tbEventoStoneNUM_CONTA->Value = num_conta;
 
@@ -1731,7 +1772,7 @@ TDate ontem  = Date() - 1;
                                                 Data2->tbEventoStone->Next();
                                                 Application->ProcessMessages();
                                                 }
-                                            }
+											} */
                                         }
 
                                     Label30->Caption = contador2 + 1;
@@ -4729,6 +4770,7 @@ AnsiString consulta;
 
 consulta = "select vendas.NSU, vendas.PARCELA, vendas.AUTORIZACAO, vendas.DATA_VENDA, vendas.CNPJ, count(vendas.CODIGO) as total";
 consulta += " from vendas where vendas.ADQID = 7";
+consulta += " and vendas.DATA_VENDA >= '2022-05-01' and vendas.CNPJ <> '' and vendas.CNPJ is not null";
 consulta += " group by vendas.NSU, vendas.PARCELA, vendas.AUTORIZACAO, vendas.DATA_VENDA, vendas.CNPJ";
 consulta += " HAVING COUNT(vendas.CODIGO) > 1";
 
@@ -4767,7 +4809,7 @@ Application->ProcessMessages();
     DataResumo->tbVendasOperadoras->SQL->Add(consulta);
     DataResumo->tbVendasOperadoras->Open();
 
-        if(DataResumo->tbVendasOperadoras->RecordCount > 0)
+		if(DataResumo->tbVendasOperadoras->RecordCount > 0)
         {
         DataResumo->tbVendasOperadoras->Last();
 
@@ -4791,6 +4833,7 @@ AnsiString consulta;
 
 consulta = "select pagamentos_operadoras.NSU, pagamentos_operadoras.PARCELA, pagamentos_operadoras.DATA_PAGAMENTO, pagamentos_operadoras.CNPJ, count(pagamentos_operadoras.CODIGO) as total";
 consulta += " from pagamentos_operadoras where pagamentos_operadoras.COD_ADQUIRENTE = 7";
+consulta += " and pagamentos_operadoras.DATA_PAGAMENTO >= '2022-05-01' and pagamentos_operadoras.CNPJ is not null and pagamentos_operadoras.CNPJ <> ''";
 consulta += " group by pagamentos_operadoras.NSU, pagamentos_operadoras.PARCELA, pagamentos_operadoras.DATA_PAGAMENTO, pagamentos_operadoras.CNPJ";
 consulta += " HAVING COUNT(pagamentos_operadoras.CODIGO) > 1";
 
@@ -5029,7 +5072,7 @@ Label21->Caption = "Vincular vendas e pagamentos operadora - stone";
 
 DataResumo->tbPagamentosOperadoras->Close();
 DataResumo->tbPagamentosOperadoras->SQL->Clear();
-DataResumo->tbPagamentosOperadoras->SQL->Add("Select * from pagamentos_operadoras where pagamentos_operadoras.CODIGO is not null and pagamentos_operadoras.COD_STATUS_FINANCEIRO = 1 and pagamentos_operadoras.COD_VENDA is null and pagamentos_operadoras.COD_CLIENTE > 0 and pagamentos_operadoras.COD_ADQUIRENTE = 7 and pagamentos_operadoras.DATA_PAGAMENTO >= '2022-01-01'");
+DataResumo->tbPagamentosOperadoras->SQL->Add("Select * from pagamentos_operadoras where pagamentos_operadoras.CODIGO is not null and pagamentos_operadoras.COD_STATUS_FINANCEIRO = 1 and pagamentos_operadoras.COD_VENDA is null and pagamentos_operadoras.COD_CLIENTE > 0 and pagamentos_operadoras.COD_ADQUIRENTE = 7 and pagamentos_operadoras.DATA_PAGAMENTO >= '2022-05-01' and COD_TIPO_LANCAMENTO <> 2 and COD_TIPO_LANCAMENTO <> 3");
 DataResumo->tbPagamentosOperadoras->Open();
 
 DataResumo->tbPagamentosOperadoras->Last();
@@ -5061,11 +5104,11 @@ Label10->Caption = "";
     consulta += " and vendas.PARCELA = '" + DataResumo->tbPagamentosOperadorasPARCELA->AsString + "'";
     consulta += " and vendas.NSU = '" + DataResumo->tbPagamentosOperadorasNSU->AsString + "'";
 
-    Edit1->Text = DataResumo->tbPagamentosOperadorasDATA_VENDA->AsString.SubString(7,4) + "-" + DataResumo->tbPagamentosOperadorasDATA_VENDA->AsString.SubString(4,2) + "-" + DataResumo->tbPagamentosOperadorasDATA_VENDA->AsString.SubString(0,2);
+	Edit1->Text = DataResumo->tbPagamentosOperadorasDATA_VENDA->AsString.SubString(7,4) + "-" + DataResumo->tbPagamentosOperadorasDATA_VENDA->AsString.SubString(4,2) + "-" + DataResumo->tbPagamentosOperadorasDATA_VENDA->AsString.SubString(0,2);
 
     consulta += " and vendas.DATA_VENDA = '" + Edit1->Text + "'";
 
-        if(DataResumo->tbVendasOperadoras->Active)
+		if(DataResumo->tbVendasOperadoras->Active)
         {
         DataResumo->tbVendasOperadoras->EmptyDataSet();
         }
@@ -5075,7 +5118,7 @@ Label10->Caption = "";
     DataResumo->tbVendasOperadoras->SQL->Add(consulta);
     DataResumo->tbVendasOperadoras->Open();
 
-        if(DataResumo->tbVendasOperadoras->RecordCount == 1)
+		if(DataResumo->tbVendasOperadoras->RecordCount == 1)
         {
         DataResumo->tbPagamentosOperadoras->Edit();
 
@@ -5088,7 +5131,7 @@ Label10->Caption = "";
         DataResumo->tbPagamentosOperadorasVINCULADO_VENDA->Value = 'S';
         DataResumo->tbPagamentosOperadorasENCONTRADA_VENDA->Value = 'S';
         DataResumo->tbPagamentosOperadorasCOD_VENDA->Value = DataResumo->tbVendasOperadorasCODIGO->AsFloat;
-        DataResumo->tbPagamentosOperadorasCODIGO_AUTORIZACAO->Value = DataResumo->tbVendasOperadorasAUTORIZACAO->AsString;
+		DataResumo->tbPagamentosOperadorasCODIGO_AUTORIZACAO->Value = DataResumo->tbVendasOperadorasAUTORIZACAO->AsString;
         DataResumo->tbPagamentosOperadorasTOTAL_PARCELAS->Value = DataResumo->tbVendasOperadorasTOTAL_PARCELAS->AsInteger;
         DataResumo->tbPagamentosOperadorasNUMERO_CARTAO->Value = DataResumo->tbVendasOperadorasCARTAO->AsString;
         DataResumo->tbPagamentosOperadorasNUMERO_TERMINAL->Value = DataResumo->tbVendasOperadorasTERMINAL->AsString;
@@ -5706,7 +5749,7 @@ Application->ProcessMessages();
                     if(Data1->tbGrupos->RecordCount == 1)
                     {
                     DataResumo->tbVendasOperadorasEMPRESA->Value = Data1->tbGruposNOME_EMPRESA->AsString;
-                    DataResumo->tbVendasOperadorasCNPJ->Value = Data1->tbGruposCNPJ->AsString;
+					DataResumo->tbVendasOperadorasCNPJ->Value = Data1->tbGruposCNPJ->AsString;
                     DataResumo->tbVendasOperadorasCOD_CLIENTE->Value = Data1->tbGruposCOD_CLIENTE->AsFloat;
                     DataResumo->tbVendasOperadorasCOD_GRUPO_CLIENTE->Value = Data1->tbGruposCODIGO->AsFloat;
 
@@ -8734,7 +8777,7 @@ Edit3->Text = Time();
         {
         Label21->Caption = "Leitura de Arquivos Stone";
 
-        DateTimePicker1->Date = Date() - 2;
+		DateTimePicker1->Date = Date() - 3;
         DateTimePicker2->Date = Date() - 1;
 
             if(Time() >= "05:10" && !lido_stone)
@@ -8751,7 +8794,7 @@ Edit3->Text = Time();
 
                 if(Time() <= "05:10" && !reprocessado_seguro)
                 {
-                DateTimePicker3->Date = Date() - 1;
+				DateTimePicker3->Date = Date() - 2;
                 }
                 else
                 {
@@ -8769,7 +8812,7 @@ Edit3->Text = Time();
         {
         Label21->Caption = "Leitura de Arquivos Bônuscred";
 
-        DateTimePicker5->Date = Date() - 2;
+        DateTimePicker5->Date = Date() - 3;
         DateTimePicker6->Date = Date() - 1;
 
             if(Time() >= "05:10" && !lido_bonuscred)
@@ -10804,7 +10847,7 @@ bool continuar_domicilio;
 //seleciona as vendas
 DataResumo->tbVendasOperadoras->Close();
 DataResumo->tbVendasOperadoras->SQL->Clear();
-DataResumo->tbVendasOperadoras->SQL->Add("select * from vendas where vendas.ADQID = 7 and vendas.COD_CLIENTE = 910");
+DataResumo->tbVendasOperadoras->SQL->Add("select * from vendas where vendas.ADQID = 7 and vendas.COD_CLIENTE = 910 and DATA_VENDA >= '2022-05-01'");
 DataResumo->tbVendasOperadoras->Open();
 
 DataResumo->tbVendasOperadoras->Last();
@@ -10856,24 +10899,25 @@ Label7->Caption = final;
 
             DataResumo->tbPagamentosOperadoras->Close();
             DataResumo->tbPagamentosOperadoras->SQL->Clear();
-            DataResumo->tbPagamentosOperadoras->SQL->Add(consulta);
-            DataResumo->tbPagamentosOperadoras->Open();
+			DataResumo->tbPagamentosOperadoras->SQL->Add(consulta);
+			DataResumo->tbPagamentosOperadoras->Open();
 
-                if(DataResumo->tbPagamentosOperadoras->RecordCount == 1)
+				if(DataResumo->tbPagamentosOperadoras->RecordCount == 1)
                 {
-                DataResumo->tbPagamentosOperadoras->Edit();
+				DataResumo->tbPagamentosOperadoras->Edit();
                 DataResumo->tbPagamentosOperadorasDATA_VENDA->Value = Data2->tbVendaStoneDATA_CAPTURA->AsDateTime;
                 DataResumo->tbPagamentosOperadorasHORA_VENDA->Value = Data2->tbVendaStoneHORA_CAPTURA->AsDateTime;
-                DataResumo->tbPagamentosOperadoras->ApplyUpdates(0);
+				DataResumo->tbPagamentosOperadoras->ApplyUpdates(0);
                 }
             }
         }
 
-    DataResumo->tbVendasOperadoras->Next();
+	DataResumo->tbVendasOperadoras->Next();
 
-    Label6->Caption = contador + 1;
-    Application->ProcessMessages();
-    }
+	Label6->Caption = contador + 1;
+	Application->ProcessMessages();
+	}
 }
 //---------------------------------------------------------------------------
+
 
