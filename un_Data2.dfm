@@ -604,6 +604,11 @@ object Data2: TData2
       Origin = 'ID_PAGAMENTO'
       Size = 30
     end
+    object tbCancelamentoStoneCOD_PAGAMENTO: TIntegerField
+      AutoGenerateValue = arDefault
+      FieldName = 'COD_PAGAMENTO'
+      Origin = 'COD_PAGAMENTO'
+    end
   end
   object DataBonuscredVenda: TDataSource
     DataSet = tbBonuscredVenda

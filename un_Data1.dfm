@@ -1,7 +1,7 @@
 object Data1: TData1
   OldCreateOrder = False
   Height = 333
-  Width = 487
+  Width = 557
   object Conexao: TFDConnection
     Params.Strings = (
       'Database=conciflex'
@@ -17,6 +17,7 @@ object Data1: TData1
     ResourceOptions.AutoReconnect = True
     UpdateOptions.AssignedValues = [uvLockWait, uvAutoCommitUpdates]
     UpdateOptions.AutoCommitUpdates = True
+    Connected = True
     LoginPrompt = False
     Transaction = FDTransaction1
     UpdateTransaction = FDTransaction1
@@ -1327,6 +1328,444 @@ object Data1: TData1
       AutoGenerateValue = arDefault
       FieldName = 'DATA_CANCELAMENTO'
       Origin = 'DATA_CANCELAMENTO'
+    end
+  end
+  object DataPagamentosOperadoras2: TDataSource
+    DataSet = tbPagamentosOperadoras2
+    Left = 464
+    Top = 154
+  end
+  object tbPagamentosOperadoras2: TFDQuery
+    CachedUpdates = True
+    Connection = Conexao
+    SQL.Strings = (
+      
+        'Select * from pagamentos_operadoras where pagamentos_operadoras.' +
+        'CODIGO is null')
+    Left = 464
+    Top = 142
+    object tbPagamentosOperadoras2CODIGO: TFDAutoIncField
+      FieldName = 'CODIGO'
+      Origin = 'CODIGO'
+      ProviderFlags = [pfInWhere, pfInKey]
+    end
+    object tbPagamentosOperadoras2DATA_PROCESSAMENTO: TDateField
+      AutoGenerateValue = arDefault
+      FieldName = 'DATA_PROCESSAMENTO'
+      Origin = 'DATA_PROCESSAMENTO'
+    end
+    object tbPagamentosOperadoras2HORA_PROCESSAMENTO: TTimeField
+      AutoGenerateValue = arDefault
+      FieldName = 'HORA_PROCESSAMENTO'
+      Origin = 'HORA_PROCESSAMENTO'
+    end
+    object tbPagamentosOperadoras2ID_LOJA: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'ID_LOJA'
+      Origin = 'ID_LOJA'
+      Size = 25
+    end
+    object tbPagamentosOperadoras2DATA_VENDA: TDateField
+      AutoGenerateValue = arDefault
+      FieldName = 'DATA_VENDA'
+      Origin = 'DATA_VENDA'
+    end
+    object tbPagamentosOperadoras2HORA_VENDA: TTimeField
+      AutoGenerateValue = arDefault
+      FieldName = 'HORA_VENDA'
+      Origin = 'HORA_VENDA'
+    end
+    object tbPagamentosOperadoras2VALOR_BRUTO: TFloatField
+      AutoGenerateValue = arDefault
+      FieldName = 'VALOR_BRUTO'
+      Origin = 'VALOR_BRUTO'
+    end
+    object tbPagamentosOperadoras2VALOR_DESCONTO: TFloatField
+      AutoGenerateValue = arDefault
+      FieldName = 'VALOR_DESCONTO'
+      Origin = 'VALOR_DESCONTO'
+    end
+    object tbPagamentosOperadoras2VALOR_LIQUIDO: TFloatField
+      AutoGenerateValue = arDefault
+      FieldName = 'VALOR_LIQUIDO'
+      Origin = 'VALOR_LIQUIDO'
+    end
+    object tbPagamentosOperadoras2NUMERO_CARTAO: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'NUMERO_CARTAO'
+      Origin = 'NUMERO_CARTAO'
+      Size = 50
+    end
+    object tbPagamentosOperadoras2BANCO: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'BANCO'
+      Origin = 'BANCO'
+      Size = 10
+    end
+    object tbPagamentosOperadoras2COD_BANCO: TSingleField
+      AutoGenerateValue = arDefault
+      FieldName = 'COD_BANCO'
+      Origin = 'COD_BANCO'
+    end
+    object tbPagamentosOperadoras2AGENCIA: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'AGENCIA'
+      Origin = 'AGENCIA'
+    end
+    object tbPagamentosOperadoras2CONTA: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'CONTA'
+      Origin = 'CONTA'
+    end
+    object tbPagamentosOperadoras2CODIGO_AUTORIZACAO: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'CODIGO_AUTORIZACAO'
+      Origin = 'CODIGO_AUTORIZACAO'
+      Size = 50
+    end
+    object tbPagamentosOperadoras2NSU: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'NSU'
+      Origin = 'NSU'
+      Size = 50
+    end
+    object tbPagamentosOperadoras2COD_CLIENTE: TSingleField
+      AutoGenerateValue = arDefault
+      FieldName = 'COD_CLIENTE'
+      Origin = 'COD_CLIENTE'
+    end
+    object tbPagamentosOperadoras2COD_STATUS: TSingleField
+      AutoGenerateValue = arDefault
+      FieldName = 'COD_STATUS'
+      Origin = 'COD_STATUS'
+    end
+    object tbPagamentosOperadoras2COD_ADQUIRENTE: TSingleField
+      AutoGenerateValue = arDefault
+      FieldName = 'COD_ADQUIRENTE'
+      Origin = 'COD_ADQUIRENTE'
+    end
+    object tbPagamentosOperadoras2TAXA_PERCENTUAL: TSingleField
+      AutoGenerateValue = arDefault
+      FieldName = 'TAXA_PERCENTUAL'
+      Origin = 'TAXA_PERCENTUAL'
+    end
+    object tbPagamentosOperadoras2VALOR_TAXA: TSingleField
+      AutoGenerateValue = arDefault
+      FieldName = 'VALOR_TAXA'
+      Origin = 'VALOR_TAXA'
+    end
+    object tbPagamentosOperadoras2COD_BANDEIRA: TSingleField
+      AutoGenerateValue = arDefault
+      FieldName = 'COD_BANDEIRA'
+      Origin = 'COD_BANDEIRA'
+    end
+    object tbPagamentosOperadoras2COD_TIPO_PAGAMENTO: TSingleField
+      AutoGenerateValue = arDefault
+      FieldName = 'COD_TIPO_PAGAMENTO'
+      Origin = 'COD_TIPO_PAGAMENTO'
+    end
+    object tbPagamentosOperadoras2ENCONTRADA_VENDA: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'ENCONTRADA_VENDA'
+      Origin = 'ENCONTRADA_VENDA'
+      Size = 1
+    end
+    object tbPagamentosOperadoras2DATA_PAGAMENTO: TDateField
+      AutoGenerateValue = arDefault
+      FieldName = 'DATA_PAGAMENTO'
+      Origin = 'DATA_PAGAMENTO'
+    end
+    object tbPagamentosOperadoras2COD_GRUPO_CLIENTE: TSingleField
+      AutoGenerateValue = arDefault
+      FieldName = 'COD_GRUPO_CLIENTE'
+      Origin = 'COD_GRUPO_CLIENTE'
+    end
+    object tbPagamentosOperadoras2CNPJ: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'CNPJ'
+      Origin = 'CNPJ'
+      Size = 45
+    end
+    object tbPagamentosOperadoras2EMPRESA: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'EMPRESA'
+      Origin = 'EMPRESA'
+      Size = 90
+    end
+    object tbPagamentosOperadoras2OUTROS_CREDITOS: TFloatField
+      AutoGenerateValue = arDefault
+      FieldName = 'OUTROS_CREDITOS'
+      Origin = 'OUTROS_CREDITOS'
+    end
+    object tbPagamentosOperadoras2COD_MEIO_CAPTURA: TSingleField
+      AutoGenerateValue = arDefault
+      FieldName = 'COD_MEIO_CAPTURA'
+      Origin = 'COD_MEIO_CAPTURA'
+    end
+    object tbPagamentosOperadoras2PARCELA: TIntegerField
+      AutoGenerateValue = arDefault
+      FieldName = 'PARCELA'
+      Origin = 'PARCELA'
+    end
+    object tbPagamentosOperadoras2TOTAL_PARCELAS: TIntegerField
+      AutoGenerateValue = arDefault
+      FieldName = 'TOTAL_PARCELAS'
+      Origin = 'TOTAL_PARCELAS'
+    end
+    object tbPagamentosOperadoras2COD_STATUS_FINANCEIRO: TSingleField
+      AutoGenerateValue = arDefault
+      FieldName = 'COD_STATUS_FINANCEIRO'
+      Origin = 'COD_STATUS_FINANCEIRO'
+    end
+    object tbPagamentosOperadoras2VINCULADO_VENDA: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'VINCULADO_VENDA'
+      Origin = 'VINCULADO_VENDA'
+      Size = 1
+    end
+    object tbPagamentosOperadoras2COD_VENDA: TSingleField
+      AutoGenerateValue = arDefault
+      FieldName = 'COD_VENDA'
+      Origin = 'COD_VENDA'
+    end
+    object tbPagamentosOperadoras2COD_FORMA_PAGAMENTO: TSingleField
+      AutoGenerateValue = arDefault
+      FieldName = 'COD_FORMA_PAGAMENTO'
+      Origin = 'COD_FORMA_PAGAMENTO'
+    end
+    object tbPagamentosOperadoras2TAXA_MANUAL: TSingleField
+      AutoGenerateValue = arDefault
+      FieldName = 'TAXA_MANUAL'
+      Origin = 'TAXA_MANUAL'
+    end
+    object tbPagamentosOperadoras2RESUMO_DESCONTO: TFloatField
+      AutoGenerateValue = arDefault
+      FieldName = 'RESUMO_DESCONTO'
+      Origin = 'RESUMO_DESCONTO'
+    end
+    object tbPagamentosOperadoras2RESUMO_LIQUIDO: TFloatField
+      AutoGenerateValue = arDefault
+      FieldName = 'RESUMO_LIQUIDO'
+      Origin = 'RESUMO_LIQUIDO'
+    end
+    object tbPagamentosOperadoras2DIFERENCA_DESCONTO: TFloatField
+      AutoGenerateValue = arDefault
+      FieldName = 'DIFERENCA_DESCONTO'
+      Origin = 'DIFERENCA_DESCONTO'
+    end
+    object tbPagamentosOperadoras2DIFERENCA_LIQUIDO: TFloatField
+      AutoGenerateValue = arDefault
+      FieldName = 'DIFERENCA_LIQUIDO'
+      Origin = 'DIFERENCA_LIQUIDO'
+    end
+    object tbPagamentosOperadoras2IDENTIFICADOR_RO: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'IDENTIFICADOR_RO'
+      Origin = 'IDENTIFICADOR_RO'
+      Size = 90
+    end
+    object tbPagamentosOperadoras2CALCULADO_DESCONTO: TFloatField
+      AutoGenerateValue = arDefault
+      FieldName = 'CALCULADO_DESCONTO'
+      Origin = 'CALCULADO_DESCONTO'
+    end
+    object tbPagamentosOperadoras2CALCULADORA_LIQUIDO: TFloatField
+      AutoGenerateValue = arDefault
+      FieldName = 'CALCULADORA_LIQUIDO'
+      Origin = 'CALCULADORA_LIQUIDO'
+    end
+    object tbPagamentosOperadoras2RO_TRATADO: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'RO_TRATADO'
+      Origin = 'RO_TRATADO'
+      Size = 1
+    end
+    object tbPagamentosOperadoras2DATA_PREV_PAG_ORIGINAL: TDateField
+      AutoGenerateValue = arDefault
+      FieldName = 'DATA_PREV_PAG_ORIGINAL'
+      Origin = 'DATA_PREV_PAG_ORIGINAL'
+    end
+    object tbPagamentosOperadoras2ID_VENDA_ERP: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'ID_VENDA_ERP'
+      Origin = 'ID_VENDA_ERP'
+      Size = 50
+    end
+    object tbPagamentosOperadoras2NOME_ARQUIVO: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'NOME_ARQUIVO'
+      Origin = 'NOME_ARQUIVO'
+      Size = 255
+    end
+    object tbPagamentosOperadoras2COD_PRODUTO: TSingleField
+      AutoGenerateValue = arDefault
+      FieldName = 'COD_PRODUTO'
+      Origin = 'COD_PRODUTO'
+    end
+    object tbPagamentosOperadoras2TID: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'TID'
+      Origin = 'TID'
+      Size = 90
+    end
+    object tbPagamentosOperadoras2OBSERVACOES: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'OBSERVACOES'
+      Origin = 'OBSERVACOES'
+      Size = 300
+    end
+    object tbPagamentosOperadoras2DUPLICIDADE_VERIFICADA: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'DUPLICIDADE_VERIFICADA'
+      Origin = 'DUPLICIDADE_VERIFICADA'
+      Size = 1
+    end
+    object tbPagamentosOperadoras2NUMERO_RESUMO_VENDA: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'NUMERO_RESUMO_VENDA'
+      Origin = 'NUMERO_RESUMO_VENDA'
+      Size = 30
+    end
+    object tbPagamentosOperadoras2CHAVE_VENDA_OPERADORA: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'CHAVE_VENDA_OPERADORA'
+      Origin = 'CHAVE_VENDA_OPERADORA'
+      Size = 60
+    end
+    object tbPagamentosOperadoras2CHAVE_VENDA_ERP: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'CHAVE_VENDA_ERP'
+      Origin = 'CHAVE_VENDA_ERP'
+      Size = 60
+    end
+    object tbPagamentosOperadoras2CHAVE_PAGAMENTO: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'CHAVE_PAGAMENTO'
+      Origin = 'CHAVE_PAGAMENTO'
+      Size = 60
+    end
+    object tbPagamentosOperadoras2DIVERGENCIA: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'DIVERGENCIA'
+      Origin = 'DIVERGENCIA'
+      Size = 200
+    end
+    object tbPagamentosOperadoras2JUSTIFICATIVA: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'JUSTIFICATIVA'
+      Origin = 'JUSTIFICATIVA'
+      Size = 160
+    end
+    object tbPagamentosOperadoras2TAXA_ANTECIPACAO: TSingleField
+      AutoGenerateValue = arDefault
+      FieldName = 'TAXA_ANTECIPACAO'
+      Origin = 'TAXA_ANTECIPACAO'
+    end
+    object tbPagamentosOperadoras2VALOR_TAXA_ANTECIPACAO: TFloatField
+      AutoGenerateValue = arDefault
+      FieldName = 'VALOR_TAXA_ANTECIPACAO'
+      Origin = 'VALOR_TAXA_ANTECIPACAO'
+    end
+    object tbPagamentosOperadoras2NUMERO_TERMINAL: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'NUMERO_TERMINAL'
+      Origin = 'NUMERO_TERMINAL'
+      Size = 50
+    end
+    object tbPagamentosOperadoras2NUMERO_OPERACAO_ANTECIPACAO: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'NUMERO_OPERACAO_ANTECIPACAO'
+      Origin = 'NUMERO_OPERACAO_ANTECIPACAO'
+      Size = 60
+    end
+    object tbPagamentosOperadoras2COD_TIPO_LANCAMENTO: TSingleField
+      AutoGenerateValue = arDefault
+      FieldName = 'COD_TIPO_LANCAMENTO'
+      Origin = 'COD_TIPO_LANCAMENTO'
+    end
+    object tbPagamentosOperadoras2COD_AJUSTE: TSingleField
+      AutoGenerateValue = arDefault
+      FieldName = 'COD_AJUSTE'
+      Origin = 'COD_AJUSTE'
+    end
+    object tbPagamentosOperadoras2RETORNO_BAIXA: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'RETORNO_BAIXA'
+      Origin = 'RETORNO_BAIXA'
+      Size = 1
+    end
+    object tbPagamentosOperadoras2CHAVE_EXTRATO_BANCARIO: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'CHAVE_EXTRATO_BANCARIO'
+      Origin = 'CHAVE_EXTRATO_BANCARIO'
+      Size = 200
+    end
+    object tbPagamentosOperadoras2DATA_CANCELAMENTO: TDateField
+      AutoGenerateValue = arDefault
+      FieldName = 'DATA_CANCELAMENTO'
+      Origin = 'DATA_CANCELAMENTO'
+    end
+    object tbPagamentosOperadoras2COD_STATUS_EXTRATO_BANCARIO: TSingleField
+      AutoGenerateValue = arDefault
+      FieldName = 'COD_STATUS_EXTRATO_BANCARIO'
+      Origin = 'COD_STATUS_EXTRATO_BANCARIO'
+    end
+    object tbPagamentosOperadoras2FLAG_INFOTECH: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'FLAG_INFOTECH'
+      Origin = 'FLAG_INFOTECH'
+      Size = 1
+    end
+    object tbPagamentosOperadoras2AUTORIZADOR: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'AUTORIZADOR'
+      Origin = 'AUTORIZADOR'
+      Size = 50
+    end
+    object tbPagamentosOperadoras2CAMPO_ADICIONAL1: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'CAMPO_ADICIONAL1'
+      Origin = 'CAMPO_ADICIONAL1'
+      Size = 120
+    end
+    object tbPagamentosOperadoras2CAMPO_ADICIONAL2: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'CAMPO_ADICIONAL2'
+      Origin = 'CAMPO_ADICIONAL2'
+      Size = 120
+    end
+    object tbPagamentosOperadoras2CAMPO_ADICIONAL3: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'CAMPO_ADICIONAL3'
+      Origin = 'CAMPO_ADICIONAL3'
+      Size = 120
+    end
+    object tbPagamentosOperadoras2VALOR_BRUTO_ERP: TFloatField
+      AutoGenerateValue = arDefault
+      FieldName = 'VALOR_BRUTO_ERP'
+      Origin = 'VALOR_BRUTO_ERP'
+    end
+    object tbPagamentosOperadoras2PERCENTUAL_TAXA_CALC: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'PERCENTUAL_TAXA_CALC'
+      Origin = 'PERCENTUAL_TAXA_CALC'
+      Size = 1
+    end
+    object tbPagamentosOperadoras2COD_TIPO_INT_ERP: TSingleField
+      AutoGenerateValue = arDefault
+      FieldName = 'COD_TIPO_INT_ERP'
+      Origin = 'COD_TIPO_INT_ERP'
+    end
+    object tbPagamentosOperadoras2TAXA_MINIMA: TStringField
+      AutoGenerateValue = arDefault
+      FieldName = 'TAXA_MINIMA'
+      Origin = 'TAXA_MINIMA'
+      Size = 1
+    end
+    object tbPagamentosOperadoras2TARIFA_TRANSACAO: TFloatField
+      AutoGenerateValue = arDefault
+      FieldName = 'TARIFA_TRANSACAO'
+      Origin = 'TARIFA_TRANSACAO'
     end
   end
 end

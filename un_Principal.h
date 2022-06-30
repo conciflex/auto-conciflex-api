@@ -212,6 +212,10 @@ __published:	// IDE-managed Components
 	TMenuItem *TratarCancelamentosPagSeguro;
 	TMenuItem *Corrigirndeparcelarecebimentonico1;
 	TMenuItem *Atualizardatadevenda1;
+	TMenuItem *TratarCancelamentoVendaStone;
+	TMenuItem *TratarCancelamentoPagamentoStone;
+	TMenuItem *Preencherndoterminal1;
+	TMenuItem *Corrigirvalorespagamentonico1;
 	void __fastcall FormCreate(TObject *Sender);
 	void __fastcall Button17Click(TObject *Sender);
 	void __fastcall Button6Click(TObject *Sender);
@@ -257,6 +261,10 @@ __published:	// IDE-managed Components
 	void __fastcall TratarCancelamentosPagSeguroClick(TObject *Sender);
 	void __fastcall Corrigirndeparcelarecebimentonico1Click(TObject *Sender);
 	void __fastcall Atualizardatadevenda1Click(TObject *Sender);
+	void __fastcall TratarCancelamentoVendaStoneClick(TObject *Sender);
+	void __fastcall TratarCancelamentoPagamentoStoneClick(TObject *Sender);
+	void __fastcall Preencherndoterminal1Click(TObject *Sender);
+	void __fastcall Corrigirvalorespagamentonico1Click(TObject *Sender);
 private:	// User declarations
 public:		// User declarations
 	__fastcall TPrincipal(TComponent* Owner);

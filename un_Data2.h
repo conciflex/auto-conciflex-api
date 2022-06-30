@@ -213,6 +213,7 @@ __published:	// IDE-managed Components
 	TStringField *tbBonuscredCadastroINTEGRA_API_BONUSCRED;
 	TDateField *tbPagamentoStoneDATA_CAPTURA;
 	TTimeField *tbPagamentoStoneHORA_CAPTURA;
+	TIntegerField *tbCancelamentoStoneCOD_PAGAMENTO;
 private:	// User declarations
 public:		// User declarations
 	__fastcall TData2(TComponent* Owner);

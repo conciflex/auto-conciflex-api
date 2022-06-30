@@ -13,7 +13,7 @@ object Principal: TPrincipal
   Font.Style = []
   Menu = MainMenu1
   OldCreateOrder = False
-  Position = poDesktopCenter
+  Position = poScreenCenter
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
@@ -217,7 +217,7 @@ object Principal: TPrincipal
         end
       end
       object Memo3: TMemo
-        Left = 8
+        Left = 3
         Top = 100
         Width = 5000
         Height = 98
@@ -1205,6 +1205,14 @@ object Principal: TPrincipal
           Caption = 'Tratar Ajustes'
           OnClick = TratarAjustesStoneClick
         end
+        object TratarCancelamentoVendaStone: TMenuItem
+          Caption = 'Tratar Cancelamento - Venda'
+          OnClick = TratarCancelamentoVendaStoneClick
+        end
+        object TratarCancelamentoPagamentoStone: TMenuItem
+          Caption = 'Tratar Cancelamento - Pagamento'
+          OnClick = TratarCancelamentoPagamentoStoneClick
+        end
       end
     end
     object Excluses1: TMenuItem
@@ -1271,6 +1279,14 @@ object Principal: TPrincipal
         object Corrigirndeparcelarecebimentonico1: TMenuItem
           Caption = 'Corrigir n'#186' de parcela recebimento '#250'nico'
           OnClick = Corrigirndeparcelarecebimentonico1Click
+        end
+        object Preencherndoterminal1: TMenuItem
+          Caption = 'Preencher n'#186' do terminal'
+          OnClick = Preencherndoterminal1Click
+        end
+        object Corrigirvalorespagamentonico1: TMenuItem
+          Caption = 'Corrigir valores pagamento '#250'nico'
+          OnClick = Corrigirvalorespagamentonico1Click
         end
       end
       object Stone4: TMenuItem

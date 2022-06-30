@@ -649,7 +649,7 @@ object DataProcessamento: TDataProcessamento
   end
   object DataPagamentosDuplicidade: TDataSource
     DataSet = tbPagamentosDuplicidade
-    Left = 55
+    Left = 63
     Top = 87
   end
   object tbPagamentosDuplicidade: TFDQuery
@@ -668,7 +668,7 @@ object DataProcessamento: TDataProcessamento
         'A, pagamentos_operadoras.DATA_PAGAMENTO,'#11
       'pagamentos_operadoras.CNPJ'#11
       'HAVING COUNT(pagamentos_operadoras.CODIGO) > 1')
-    Left = 55
+    Left = 63
     Top = 74
     object tbPagamentosDuplicidadeNSU: TStringField
       AutoGenerateValue = arDefault
